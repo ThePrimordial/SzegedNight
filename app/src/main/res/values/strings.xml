@@ -9,4 +9,7 @@
     <string name="Shops">Éjjel-Nappalik</string>
     <string name="ATM_Finder">ATM-Kereső</string>
     <string name="TobaccoShops">Dohányboltok</string>
+    <string name="title_activity_browser_page">BrowserPage</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
