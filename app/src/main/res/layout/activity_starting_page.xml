@@ -13,52 +13,59 @@
         />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/Pubs"
         android:id="@+id/btnPubs"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:onClick="onClick"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/Parties"
         android:id="@+id/btnParties"
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical"
+        android:onClick="onClick" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/Restaurants"
         android:id="@+id/btnRestaurants"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:onClick="onClick" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/Taxies"
         android:id="@+id/btnTaxies"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:onClick="onClick" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/Shops"
         android:id="@+id/btnShops"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:onClick="onClick" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/ATM_Finder"
         android:id="@+id/btnATM"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:onClick="onClick" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/TobaccoShops"
         android:id="@+id/btnTobaccoShops"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:onClick="onClick" />
 
 </LinearLayout>
