@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">SzegedNight</string>
+    <string name="action_settings">Settings</string>
+    <string name="Szeged_Night">SzegedNight</string>
+    <string name="Pubs">Kocsmák</string>
+    <string name="Parties">Szórakozóhelyek</string>
+    <string name="Restaurants">Kajáldák</string>
+    <string name="Taxies">Taxik</string>
+    <string name="Shops">Éjjel-Nappalik</string>
+    <string name="ATM_Finder">ATM-Kereső</string>
+    <string name="TobaccoShops">Dohányboltok</string>
+</resources>
