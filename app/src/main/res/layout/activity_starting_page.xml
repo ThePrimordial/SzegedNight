@@ -4,17 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_01">>
+    android:background="@drawable/background_01"><![CDATA[>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Szeged_Night"
-        android:id="@+id/tvSzegedNight"
-        android:textSize="50sp"
-        android:layout_gravity="center_vertical"
-        />
 
+    ]]>
 
     <Button
         android:layout_width="wrap_content"
@@ -94,4 +87,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    </RelativeLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:background="@drawable/SzegedNIGHTS"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/btnRestaurants"
+        android:layout_alignEnd="@+id/btnRestaurants" />
+
+</RelativeLayout>
