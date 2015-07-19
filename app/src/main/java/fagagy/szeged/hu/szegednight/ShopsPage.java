@@ -6,18 +6,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class BrowserPage extends Activity {
+public class ShopsPage extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browser_page);
+        setContentView(R.layout.activity_day_night_page);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_browser_page, menu);
+        getMenuInflater().inflate(R.menu.menu_day_night_page, menu);
         return true;
     }
 

@@ -1,14 +1,14 @@
 package fagagy.szeged.hu.szegednight;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 
-public class StartingPage extends ActionBarActivity {
+public class StartingPage extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +24,39 @@ public class StartingPage extends ActionBarActivity {
     }
 
     public void onClick(View v){
-        if(v.getId() == R.id.btnPubs){
-            Intent i = new Intent();
-            i.setClass(this, BrowserPage.class);
-            startActivity(i);
+        int id = v.getId();
+        Intent i = new Intent();
+        switch(id){
+            case R.id.btnPubs:
+                i.setClass(this, BrowserPage.class);
+                startActivity(i);
+                break;
+            case R.id.btnATM:
+                i.setClass(this, AtmPage.class);
+                startActivity(i);
+                break;
+            case R.id.btnParties:
+                i.setClass(this, PartiesPage.class);
+                startActivity(i);
+                break;
+            case R.id.btnShops:
+                i.setClass(this, ShopsPage.class);
+                startActivity(i);
+                break;
+            case R.id.btnTaxies:
+                i.setClass(this, TaxiPage.class);
+                startActivity(i);
+                break;
+            case R.id.btnTobaccoShops:
+                i.setClass(this, TobaccoShopsPage.class);
+                startActivity(i);
+                break;
+            case R.id.btnRestaurants:
+                i.setClass(this, RestaurantsPage.class);
+                startActivity(i);
+                break;
+            default:
+                break;
         }
     }
 

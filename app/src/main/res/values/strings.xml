@@ -12,4 +12,10 @@
     <string name="title_activity_browser_page">BrowserPage</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_atm_page">AtmPage</string>
+    <string name="title_activity_parties_page">PartiesPage</string>
+    <string name="title_activity_taxi_page">TaxiPage</string>
+    <string name="title_activity_day_night_page">DayNightPage</string>
+    <string name="title_activity_tobacco_page">TobaccoPage</string>
+    <string name="title_activity_restaurants_page">RestaurantsPage</string>
 </resources>
