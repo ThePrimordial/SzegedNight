@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background_01"><![CDATA[>
-
-
     ]]>
 
     <Button
@@ -19,7 +17,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/btnRestaurants"
         android:layout_alignEnd="@+id/btnRestaurants"
-        android:layout_above="@+id/btnParties" />
+        android:layout_above="@+id/btnParties"
+        android:theme="@style/AppTheme"
+        />
 
     <Button
         android:layout_width="wrap_content"
@@ -30,7 +30,9 @@
         android:layout_alignTop="@+id/btnRestaurants"
         android:layout_toLeftOf="@+id/btnRestaurants"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:theme="@style/AppTheme"
+        />
 
     <Button
         android:layout_width="200dp"
@@ -40,7 +42,9 @@
         android:onClick="onClick"
         android:layout_above="@+id/btnShops"
         android:layout_toRightOf="@+id/btnTaxies"
-        android:layout_toEndOf="@+id/btnTaxies" />
+        android:layout_toEndOf="@+id/btnTaxies"
+        android:theme="@style/AppTheme"
+        />
 
     <Button
         android:layout_width="200dp"
@@ -51,7 +55,9 @@
         android:onClick="onClick"
         android:layout_alignTop="@+id/btnShops"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:theme="@style/AppTheme"
+        />
 
     <Button
         android:layout_width="200dp"
@@ -62,7 +68,9 @@
         android:onClick="onClick"
         android:layout_above="@+id/btnATM"
         android:layout_toRightOf="@+id/btnTobaccoShops"
-        android:layout_toEndOf="@+id/btnTobaccoShops" />
+        android:layout_toEndOf="@+id/btnTobaccoShops"
+        android:theme="@style/AppTheme"
+        />
 
     <Button
         android:layout_width="200dp"
@@ -73,7 +81,9 @@
         android:onClick="onClick"
         android:layout_alignTop="@+id/btnTobaccoShops"
         android:layout_toEndOf="@+id/btnTobaccoShops"
-        android:layout_toRightOf="@+id/btnTobaccoShops" />
+        android:layout_toRightOf="@+id/btnTobaccoShops"
+        android:theme="@style/AppTheme"
+        />
 
     <Button
         android:layout_width="200dp"
@@ -85,13 +95,15 @@
         android:layout_marginBottom="45dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:theme="@style/AppTheme"
+        />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:background="@drawable/SzegedNIGHTS"
+        android:background="@drawable/szegednights"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/btnRestaurants"
         android:layout_alignEnd="@+id/btnRestaurants" />
