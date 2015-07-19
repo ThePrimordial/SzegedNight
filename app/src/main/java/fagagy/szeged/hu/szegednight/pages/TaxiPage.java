@@ -1,23 +1,25 @@
-package fagagy.szeged.hu.szegednight;
+package fagagy.szeged.hu.szegednight.pages;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import fagagy.szeged.hu.szegednight.R;
 
-public class RestaurantsPage extends Activity {
+
+public class TaxiPage extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurants_page);
+        setContentView(R.layout.activity_taxi_page);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_restaurants_page, menu);
+        getMenuInflater().inflate(R.menu.menu_taxi_page, menu);
         return true;
     }
 

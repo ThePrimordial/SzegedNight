@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".StartingPage"
+            android:name=".pages.StartingPage"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -18,62 +18,62 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BrowserPage"
+            android:name=".pages.BrowserPage"
             android:label="@string/title_activity_browser_page"
-            android:parentActivityName=".StartingPage"
+            android:parentActivityName=".pages.StartingPage"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StartingPage" />
+                android:value=".pages.StartingPage" />
         </activity>
         <activity
-            android:name=".AtmPage"
+            android:name=".pages.AtmPage"
             android:label="@string/title_activity_atm_page"
-            android:parentActivityName=".StartingPage"
+            android:parentActivityName=".pages.StartingPage"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StartingPage" />
+                android:value=".pages.StartingPage" />
         </activity>
         <activity
-            android:name=".PartiesPage"
+            android:name=".pages.PartiesPage"
             android:label="@string/title_activity_parties_page"
-            android:parentActivityName=".StartingPage" >
+            android:parentActivityName=".pages.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StartingPage" />
+                android:value=".pages.StartingPage" />
         </activity>
         <activity
-            android:name=".TaxiPage"
+            android:name=".pages.TaxiPage"
             android:label="@string/title_activity_taxi_page"
-            android:parentActivityName=".StartingPage" >
+            android:parentActivityName=".pages.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StartingPage" />
+                android:value=".pages.StartingPage" />
         </activity>
         <activity
-            android:name=".ShopsPage"
+            android:name=".pages.ShopsPage"
             android:label="@string/title_activity_day_night_page"
-            android:parentActivityName=".StartingPage" >
+            android:parentActivityName=".pages.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StartingPage" />
+                android:value=".pages.StartingPage" />
         </activity>
         <activity
-            android:name=".TobaccoShopsPage"
+            android:name=".pages.TobaccoShopsPage"
             android:label="@string/title_activity_tobacco_page"
-            android:parentActivityName=".StartingPage" >
+            android:parentActivityName=".pages.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StartingPage" />
+                android:value=".pages.StartingPage" />
         </activity>
         <activity
-            android:name=".RestaurantsPage"
+            android:name=".pages.RestaurantsPage"
             android:label="@string/title_activity_restaurants_page"
-            android:parentActivityName=".StartingPage" >
+            android:parentActivityName=".pages.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StartingPage" />
+                android:value=".pages.StartingPage" />
         </activity>
     </application>
 
