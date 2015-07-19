@@ -1,0 +1,96 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background02"><![CDATA[>
+    ]]>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/imageView"
+        android:background="@drawable/szegednights" />
+
+    <ImageButton
+        android:background="@drawable/btn_pub_02"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/Pubs"
+        android:id="@+id/btnPubs"
+        android:onClick="onClick" />
+
+    <ImageButton
+        android:background="@drawable/btn_party_02"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/Parties"
+        android:id="@+id/btnParties"
+        android:onClick="onClick"
+        android:theme="@style/AppTheme" />
+
+    <ImageButton
+        android:background="@drawable/btn_restau_02"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/Restaurants"
+        android:id="@+id/btnRestaurants"
+        android:onClick="onClick"
+        android:theme="@style/AppTheme" />
+
+    <ImageButton
+        android:background="@drawable/btn_taxi_02"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/Taxies"
+        android:id="@+id/btnTaxies"
+        android:onClick="onClick"
+        android:theme="@style/AppTheme"
+        />
+
+    <ImageButton
+        android:background="@drawable/btn_shops_02"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/Shops"
+        android:id="@+id/btnShops"
+        android:onClick="onClick"
+        android:theme="@style/AppTheme"
+        />
+
+    <ImageButton
+        android:background="@drawable/btn_atm_02"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/ATM_Finder"
+        android:id="@+id/btnATM"
+        android:onClick="onClick"
+        android:theme="@style/AppTheme"
+        />
+
+    <ImageButton
+        android:background="@drawable/btn_trafik_02"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/TobaccoShops"
+        android:id="@+id/btnTobaccoShops"
+        android:onClick="onClick"
+        android:theme="@style/AppTheme"
+        />
+
+</LinearLayout>
