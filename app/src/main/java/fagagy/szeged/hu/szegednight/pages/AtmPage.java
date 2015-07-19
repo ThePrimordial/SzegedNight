@@ -1,23 +1,25 @@
-package fagagy.szeged.hu.szegednight;
+package fagagy.szeged.hu.szegednight.pages;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import fagagy.szeged.hu.szegednight.R;
 
-public class TobaccoShopsPage extends Activity {
+
+public class AtmPage extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tobacco_page);
+        setContentView(R.layout.activity_atm_page);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tobacco_page, menu);
+        getMenuInflater().inflate(R.menu.menu_atm_page, menu);
         return true;
     }
 

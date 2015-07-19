@@ -1,9 +1,11 @@
-package fagagy.szeged.hu.szegednight;
+package fagagy.szeged.hu.szegednight.pages;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import fagagy.szeged.hu.szegednight.R;
 
 
 public class ShopsPage extends Activity {

@@ -18,4 +18,6 @@
     <string name="title_activity_day_night_page">DayNightPage</string>
     <string name="title_activity_tobacco_page">TobaccoPage</string>
     <string name="title_activity_restaurants_page">RestaurantsPage</string>
+    <string name="Distance">Distance</string>
+    <string name="Open">Nyitva</string>
 </resources>
