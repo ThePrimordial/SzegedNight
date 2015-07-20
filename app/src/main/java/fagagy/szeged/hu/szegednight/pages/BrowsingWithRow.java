@@ -16,8 +16,8 @@ import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pubList.Pub;
 import fagagy.szeged.hu.szegednight.pubList.PubAdapter;
 
+public class BrowsingWithRow extends ListActivity {
 
-public class BrowserPage extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -30,31 +30,12 @@ public class StartingPage extends Activity {
         Intent i = new Intent();
         switch(id){
             case R.id.btnPubs:
-                i.setClass(this, BrowserPage.class);
+                i.setClass(this, BrowsingWithSwipe.class);
                 startActivity(i);
-                break;
-            case R.id.btnATM:
-                i.setClass(this, AtmPage.class);
-                startActivity(i);
-                break;
-            case R.id.btnParties:
-                i.setClass(this, PartiesPage.class);
-                startActivity(i);
-                break;
-            case R.id.btnShops:
-                i.setClass(this, ShopsPage.class);
-                startActivity(i);
-                break;
-            case R.id.btnTaxies:
-                i.setClass(this, TaxiPage.class);
-                startActivity(i);
-                break;
-            case R.id.btnTobaccoShops:
-                i.setClass(this, TobaccoShopsPage.class);
-                startActivity(i);
+                overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_in_top);
                 break;
             case R.id.btnRestaurants:
-                i.setClass(this, RestaurantsPage.class);
+                i.setClass(this, BrowsingWithRow.class);
                 startActivity(i);
                 break;
             default:

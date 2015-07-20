@@ -2,9 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fagagy.szeged.hu.szegednight" >
 
+    <uses-sdk android:minSdkVersion="11" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/nights_ico"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -17,63 +28,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
-            android:name=".pages.BrowserPage"
-            android:label="@string/title_activity_browser_page"
-            android:parentActivityName=".pages.StartingPage"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".pages.StartingPage" />
-        </activity>
-        <activity
-            android:name=".pages.AtmPage"
-            android:label="@string/title_activity_atm_page"
-            android:parentActivityName=".pages.StartingPage"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".pages.StartingPage" />
-        </activity>
-        <activity
-            android:name=".pages.PartiesPage"
-            android:label="@string/title_activity_parties_page"
+            android:name=".pages.BrowsingWithSwipe"
+            android:label="@string/title_activity_pub_browser_page"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".pages.StartingPage" />
+                android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
         </activity>
         <activity
-            android:name=".pages.TaxiPage"
-            android:label="@string/title_activity_taxi_page"
+            android:name=".pages.BrowsingWithRow"
+            android:label="@string/title_activity_browsing_with_row"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".pages.StartingPage" />
-        </activity>
-        <activity
-            android:name=".pages.ShopsPage"
-            android:label="@string/title_activity_day_night_page"
-            android:parentActivityName=".pages.StartingPage" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".pages.StartingPage" />
-        </activity>
-        <activity
-            android:name=".pages.TobaccoShopsPage"
-            android:label="@string/title_activity_tobacco_page"
-            android:parentActivityName=".pages.StartingPage" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".pages.StartingPage" />
-        </activity>
-        <activity
-            android:name=".pages.RestaurantsPage"
-            android:label="@string/title_activity_restaurants_page"
-            android:parentActivityName=".pages.StartingPage" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".pages.StartingPage" />
+                android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
         </activity>
     </application>
 
