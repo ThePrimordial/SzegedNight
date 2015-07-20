@@ -15,7 +15,7 @@
         android:background="@drawable/szegednights" />
 
     <ImageButton
-        android:background="@drawable/btn_pub_02"
+        android:background="@drawable/btn_pub"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
         android:onClick="onClick" />
 
     <ImageButton
-        android:background="@drawable/btn_party_02"
+        android:background="@drawable/btn_party"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
         android:theme="@style/AppTheme" />
 
     <ImageButton
-        android:background="@drawable/btn_restau_02"
+        android:background="@drawable/btn_restau"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
         android:theme="@style/AppTheme" />
 
     <ImageButton
-        android:background="@drawable/btn_taxi_02"
+        android:background="@drawable/btn_taxi"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
         />
 
     <ImageButton
-        android:background="@drawable/btn_shops_02"
+        android:background="@drawable/btn_shops"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
         />
 
     <ImageButton
-        android:background="@drawable/btn_atm_02"
+        android:background="@drawable/btn_atm"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
         />
 
     <ImageButton
-        android:background="@drawable/btn_trafik_02"
+        android:background="@drawable/btn_trafik"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_width="wrap_content"
