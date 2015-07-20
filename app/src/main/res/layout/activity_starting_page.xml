@@ -14,6 +14,8 @@
 
     <ImageButton
         android:background="@drawable/btn_pub_02"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/Pubs"
@@ -22,6 +24,8 @@
 
     <ImageButton
         android:background="@drawable/btn_party_02"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/Parties"
@@ -31,6 +35,8 @@
 
     <ImageButton
         android:background="@drawable/btn_restau_02"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/Restaurants"
@@ -40,6 +46,8 @@
 
     <ImageButton
         android:background="@drawable/btn_taxi_02"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/Taxies"
@@ -51,6 +59,8 @@
 
     <ImageButton
         android:background="@drawable/btn_shops_02"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/Shops"
@@ -62,6 +72,8 @@
 
     <ImageButton
         android:background="@drawable/btn_atm_02"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/ATM_Finder"
@@ -73,6 +85,8 @@
 
     <ImageButton
         android:background="@drawable/btn_trafik_02"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/TobaccoShops"
