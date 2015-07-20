@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/RestaurantName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="3dp"
+        android:textSize="30sp"
+        android:text="restname" />
+
+    <TextView
+        android:id="@+id/RestaurantDistance"
+        android:text="@string/Distance"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/RestaurantName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/RestaurantOpen"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="open"
+        android:layout_alignTop="@+id/RestaurantDistance"
+        android:layout_toLeftOf="@+id/RestaurantDistance"
+        android:layout_toEndOf="@id/RestaurantName"
+        />
+
+</RelativeLayout>

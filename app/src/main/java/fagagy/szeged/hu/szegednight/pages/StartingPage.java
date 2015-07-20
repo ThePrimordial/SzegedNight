@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import fagagy.szeged.hu.szegednight.R;
+import fagagy.szeged.hu.szegednight.pubRescources.PubBrowser;
+import fagagy.szeged.hu.szegednight.restaurantRescources.RestaurantBrowser;
 
 
 public class StartingPage extends Activity {
@@ -30,12 +32,12 @@ public class StartingPage extends Activity {
         Intent i = new Intent();
         switch(id){
             case R.id.btnPubs:
-                i.setClass(this, BrowsingWithSwipe.class);
+                i.setClass(this, PubBrowser.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_in_top);
                 break;
             case R.id.btnRestaurants:
-                i.setClass(this, BrowsingWithRow.class);
+                i.setClass(this, RestaurantBrowser.class);
                 startActivity(i);
                 break;
             default:

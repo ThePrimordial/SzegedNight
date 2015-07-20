@@ -37,7 +37,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".pages.BrowsingWithSwipe"
+            android:name=".pubRescources.PubBrowser"
             android:label="@string/title_activity_pub_browser_page"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
@@ -45,8 +45,8 @@
                 android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
         </activity>
         <activity
-            android:name=".pages.BrowsingWithRow"
-            android:label="@string/title_activity_browsing_with_row"
+            android:name=".restaurantRescources.RestaurantBrowser"
+            android:label="@string/title_activity_restaurants_page"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

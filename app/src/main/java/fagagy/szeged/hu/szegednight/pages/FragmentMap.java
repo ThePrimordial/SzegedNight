@@ -8,12 +8,9 @@ import android.view.ViewGroup;
 
 import fagagy.szeged.hu.szegednight.R;
 
-/**
- * Created by ¡d·m on 15/07/20.
- */
 public class FragmentMap extends Fragment {
 
-    public static final String TAG = "FragmentMap";
+    public static final String TAG = "T√©rk√©pN√©zet";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package fagagy.szeged.hu.szegednight.pubList;
+package fagagy.szeged.hu.szegednight.pubRescources;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -48,7 +48,7 @@ public class PubAdapter extends BaseAdapter {
 
         final Pub pub = pubList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View pubView = inflater.inflate(R.layout.fragmentrow, null);
+        View pubView = inflater.inflate(R.layout.pubfragmentrow, null);
 
         TextView pubListOpenText = (TextView) pubView.findViewById(R.id.PubOpen);
         TextView pubListDistanceText = (TextView) pubView.findViewById(R.id.PubDistance);

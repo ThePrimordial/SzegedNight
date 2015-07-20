@@ -1,6 +1,4 @@
-package fagagy.szeged.hu.szegednight.pubList;
-
-import java.util.Comparator;
+package fagagy.szeged.hu.szegednight.pubRescources;
 
 /**
  * Created by Ádám on 15/07/19.
