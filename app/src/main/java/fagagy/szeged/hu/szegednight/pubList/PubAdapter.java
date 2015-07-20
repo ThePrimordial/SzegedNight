@@ -1,13 +1,11 @@
 package fagagy.szeged.hu.szegednight.pubList;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -50,7 +48,7 @@ public class PubAdapter extends BaseAdapter {
 
         final Pub pub = pubList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View pubView = inflater.inflate(R.layout.pubrow, null);
+        View pubView = inflater.inflate(R.layout.fragmentrow, null);
 
         TextView pubListOpenText = (TextView) pubView.findViewById(R.id.PubOpen);
         TextView pubListDistanceText = (TextView) pubView.findViewById(R.id.PubDistance);
