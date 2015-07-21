@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.FragmentAdapter;
-import fagagy.szeged.hu.szegednight.pubRescources.PubFragmentList;
 
 public class RestaurantBrowser extends FragmentActivity {
 

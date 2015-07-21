@@ -9,6 +9,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,12 +37,9 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState){
 
         super.onActivityCreated(savedInstanceState);
-        pubList.add(new Pub("Cool Club", true, 3.2));
-        pubList.add(new Pub("Pivo", false, 0.4));
-        pubList.add(new Pub("Var", true, 7.2));
 
         Collections.sort(pubList, new Comparator<Pub>() {
             @Override
