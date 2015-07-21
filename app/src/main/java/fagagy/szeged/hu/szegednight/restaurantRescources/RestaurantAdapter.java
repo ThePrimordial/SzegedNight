@@ -50,16 +50,16 @@ public class RestaurantAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View resView = inflater.inflate(R.layout.restaurantfragmentrow, null);
 
-        TextView resListOpenText = (TextView) resView.findViewById(R.id.RestaurantName);
+        TextView resListOpenText = (TextView) resView.findViewById(R.id.RestaurantOpen);
         TextView resListDistanceText = (TextView) resView.findViewById(R.id.RestaurantDistance);
-        TextView resListNameText = (TextView) resView.findViewById(R.id.RestaurantOpen);
+        TextView resListNameText = (TextView) resView.findViewById(R.id.RestaurantName);
 
         if (restaurant.isOpen()){
             resListOpenText.setText("Nyitva!");
-            resListOpenText.setTextColor(Color.YELLOW);
+            resListOpenText.setTextColor(Color.GREEN);
         }else if(!restaurant.isOpen()) {
             resListOpenText.setText("Zarva! :( ");
-            resListOpenText.setTextColor(Color.CYAN);
+            resListOpenText.setTextColor(Color.RED);
         }
         resListDistanceText.setText(restaurant.getDistance() + " km");
         resListNameText.setText(restaurant.getName());

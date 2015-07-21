@@ -17,7 +17,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/nights_ico"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/no_title" >
         <activity
             android:name=".pages.StartingPage"
             android:label="@string/app_name"
