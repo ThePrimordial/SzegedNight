@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/PubName"
-        android:layout_width="200dp"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:padding="3dp"
@@ -22,7 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/PubName"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/PubOpen"
+        android:layout_toEndOf="@+id/PubOpen" />
 
     <TextView
         android:id="@+id/PubOpen"
@@ -31,9 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="open"
-        android:layout_alignTop="@+id/PubDistance"
-        android:layout_toLeftOf="@+id/PubDistance"
-        android:layout_toEndOf="@id/PubName"
-        />
+        android:layout_alignBottom="@+id/PubName"
+        android:layout_toRightOf="@+id/PubName"
+        android:layout_toEndOf="@+id/PubName" />
 
 </RelativeLayout>
