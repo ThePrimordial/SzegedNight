@@ -47,17 +47,15 @@ public class StartingPage extends Activity {
         if (!isNetworkAvailable()) {
             Toast.makeText(this, "Nincs internetkapcsolat. Adatbázis elavult lehet!", Toast.LENGTH_LONG)
                     .show();
-        } else {
-            try {
-                List<ParseObject> serverList = null;
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Pub");
-                serverList = query.find();
-                ParseObject.unpinAll("Pub", serverList);
-                ParseObject.pinAll("Pub", serverList);
-                Toast.makeText(this, "Alkalmazás adatbázis frissítése megtörtént!", Toast.LENGTH_LONG)
-                        .show();
-            } catch (ParseException e) {
-            }
+        } else try {
+            List<ParseObject> serverList;
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Pub");
+            serverList = query.find();
+            ParseObject.unpinAll("Pub", serverList);
+            ParseObject.pinAll("Pub", serverList);
+            Toast.makeText(this, "Alkalmazás adatbázis frissítése megtörtént!", Toast.LENGTH_LONG)
+                    .show();
+        } catch (ParseException e) {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting_page);
@@ -92,6 +90,8 @@ public class StartingPage extends Activity {
 
     public class FetchCordinates extends AsyncTask<String, Integer, String> {
 
+        Location myLoc;
+
         @Override
         protected String doInBackground(String... params) {
             return null;
@@ -104,19 +104,20 @@ public class StartingPage extends Activity {
             lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locListener = new MyCurrentLocationListener();
             lm.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, 0, 0,
+                    LocationManager.GPS_PROVIDER, 5000, 50,
                     locListener);
-            lm.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 0, 0,
-                    locListener);
-
+            myLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Toast.makeText(StartingPage.this, "CIGÁNYOK", Toast.LENGTH_LONG)
-                    .show();
+            if(myLoc == null) {
+                Toast.makeText(StartingPage.this, "Nem érhető el GPS pozíció", Toast.LENGTH_LONG)
+                        .show();
+            }else
+                Toast.makeText(StartingPage.this, "GPS pozíció megtalálva!", Toast.LENGTH_LONG)
+                        .show();
         }
     }
 

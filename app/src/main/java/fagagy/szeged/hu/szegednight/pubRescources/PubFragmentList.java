@@ -52,7 +52,8 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     private ArrayList<Pub> pubList = new ArrayList<>();
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
-    private Location myLoc;
+    private Location gpsLoc;
+    private Location networkLoc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,13 +62,13 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
         lm.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 0, 0,
+                LocationManager.NETWORK_PROVIDER, 20000, 50,
                 locListener);
         lm.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 0, 0,
+                LocationManager.GPS_PROVIDER, 20000, 50,
                 locListener);
-        myLoc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        myLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        networkLoc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -92,36 +93,37 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         } catch (ParseException e1) {
         }
 
-
-        Log.d("coordcheck", "myloc lat" +  String.valueOf(myLoc.getLatitude()));
-        Log.d("coordcheck", "myloc long" + String.valueOf(myLoc.getLongitude()));
-
-        if (myLoc == null) {
+        if (gpsLoc == null && networkLoc == null) {
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
-                double distance = 0;
+                double distance  = 0;
                 Boolean open = serverList.get(i).getBoolean("Open");
                 Pub p1 = new Pub(name, open, distance);
-
                 pubList.add(p1);
             }
-        } else {
+        } else if(gpsLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
-                Log.d("coordcheck", "target lat" + String.valueOf(serverList.get(i).getDouble("Longitude")));
-                Log.d("coordcheck", "target long" + String.valueOf(serverList.get(i).getDouble("Latitude")));
                 Location targetLocation = new Location("");
                 targetLocation.setLongitude(serverList.get(i).getDouble("Longitude"));
                 targetLocation.setLatitude(serverList.get(i).getDouble("Latitude"));
-                double distance = myLoc.distanceTo(targetLocation)/1000;
-
+                double distance = gpsLoc.distanceTo(targetLocation)/1000;
                 Boolean open = serverList.get(i).getBoolean("Open");
                 Pub p1 = new Pub(name, open, distance);
-
                 pubList.add(p1);
             }
-        }
+        } else
+            for (int i = 0; i < serverList.size(); i++) {
+                String name = serverList.get(i).getString("Name");
+                Location targetLocation = new Location("");
+                targetLocation.setLongitude(serverList.get(i).getDouble("Longitude"));
+                targetLocation.setLatitude(serverList.get(i).getDouble("Latitude"));
+                double distance = networkLoc.distanceTo(targetLocation) / 1000;
+                Boolean open = serverList.get(i).getBoolean("Open");
+                Pub p1 = new Pub(name, open, distance);
+                pubList.add(p1);
+            }
 
         Collections.sort(pubList, new Comparator<Pub>() {
             @Override
