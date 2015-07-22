@@ -20,4 +20,5 @@ public class PubBrowser extends FragmentActivity {
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(adapter);
     }
+
 }

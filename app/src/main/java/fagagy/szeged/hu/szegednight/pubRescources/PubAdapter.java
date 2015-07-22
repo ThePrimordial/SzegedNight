@@ -8,13 +8,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 
 /**
- * Created by Ádám on 15/07/19.
+ * Created by ï¿½dï¿½m on 15/07/19.
  */
 public class PubAdapter extends BaseAdapter {
 
@@ -53,6 +54,7 @@ public class PubAdapter extends BaseAdapter {
         TextView pubListOpenText = (TextView) pubView.findViewById(R.id.PubOpen);
         TextView pubListDistanceText = (TextView) pubView.findViewById(R.id.PubDistance);
         TextView pubListNameText = (TextView) pubView.findViewById(R.id.PubName);
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         if (pub.isOpen()){
             pubListOpenText.setText("Nyitva!");
@@ -61,7 +63,7 @@ public class PubAdapter extends BaseAdapter {
             pubListOpenText.setText("Zarva! :( ");
             pubListOpenText.setTextColor(Color.RED);
         }
-        pubListDistanceText.setText(pub.getDistance() + " km");
+        pubListDistanceText.setText(numberFormat.format(pub.getDistance()) + " km");
         pubListNameText.setText(pub.getName());
 
 
