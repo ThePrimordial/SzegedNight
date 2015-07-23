@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
+import fagagy.szeged.hu.szegednight.atmRescources.AtmBrowser;
 import fagagy.szeged.hu.szegednight.pubRescources.PubBrowser;
 import fagagy.szeged.hu.szegednight.restaurantRescources.RestaurantBrowser;
 
@@ -49,16 +50,17 @@ public class StartingPage extends Activity {
             Toast.makeText(this, "Nincs internetkapcsolat. Adatbázis elavult lehet!", Toast.LENGTH_LONG)
                     .show();
         } else try {
-            List<ParseObject> pubserverList;
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Pub");
-            pubserverList = query.find();
-            ParseObject.unpinAll("Pub", pubserverList);
-            ParseObject.pinAll("Pub", pubserverList);
-            List<ParseObject> resServerList;
-            ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Restaurant");
-            resServerList = query2.find();
-            ParseObject.unpinAll("Restaurant", resServerList);
-            ParseObject.pinAll("Restaurant", resServerList);
+            ArrayList<String> whatToRefresh = new ArrayList<>();
+            whatToRefresh.add("Pub");
+            whatToRefresh.add("Restaurant");
+            whatToRefresh.add("ATM");
+            for(int i = 0; i < whatToRefresh.size(); i++) {
+                List<ParseObject> serverList;
+                ParseQuery<ParseObject> query = ParseQuery.getQuery(whatToRefresh.get(i));
+                serverList = query.find();
+                ParseObject.unpinAll(whatToRefresh.get(i), serverList);
+                ParseObject.pinAll(whatToRefresh.get(i), serverList);
+            }
             Toast.makeText(this, "Alkalmazás adatbázis frissítése megtörtént!", Toast.LENGTH_LONG)
                     .show();
         } catch (ParseException e) {
@@ -87,6 +89,10 @@ public class StartingPage extends Activity {
                 break;
             case R.id.btnRestaurants:
                 i.setClass(this, RestaurantBrowser.class);
+                startActivity(i);
+                break;
+            case R.id.btnATM:
+                i.setClass(this, AtmBrowser.class);
                 startActivity(i);
                 break;
             default:

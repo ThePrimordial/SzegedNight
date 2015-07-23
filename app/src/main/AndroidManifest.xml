@@ -38,7 +38,7 @@
 
         <activity
             android:name=".pubRescources.PubBrowser"
-            android:label="@string/title_activity_pub_browser_page"
+            android:label="Kocsmák"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -46,7 +46,15 @@
         </activity>
         <activity
             android:name=".restaurantRescources.RestaurantBrowser"
-            android:label="@string/title_activity_restaurants_page"
+            android:label="Gyorséttermek"
+            android:parentActivityName=".pages.StartingPage" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
+        </activity>
+        <activity
+            android:name=".atmRescources.AtmBrowser"
+            android:label="Bankautomaták"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
