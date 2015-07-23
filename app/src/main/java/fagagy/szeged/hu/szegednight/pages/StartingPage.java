@@ -23,6 +23,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
@@ -48,11 +49,16 @@ public class StartingPage extends Activity {
             Toast.makeText(this, "Nincs internetkapcsolat. Adatbázis elavult lehet!", Toast.LENGTH_LONG)
                     .show();
         } else try {
-            List<ParseObject> serverList;
+            List<ParseObject> pubserverList;
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Pub");
-            serverList = query.find();
-            ParseObject.unpinAll("Pub", serverList);
-            ParseObject.pinAll("Pub", serverList);
+            pubserverList = query.find();
+            ParseObject.unpinAll("Pub", pubserverList);
+            ParseObject.pinAll("Pub", pubserverList);
+            List<ParseObject> resServerList;
+            ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Restaurant");
+            resServerList = query2.find();
+            ParseObject.unpinAll("Restaurant", resServerList);
+            ParseObject.pinAll("Restaurant", resServerList);
             Toast.makeText(this, "Alkalmazás adatbázis frissítése megtörtént!", Toast.LENGTH_LONG)
                     .show();
         } catch (ParseException e) {

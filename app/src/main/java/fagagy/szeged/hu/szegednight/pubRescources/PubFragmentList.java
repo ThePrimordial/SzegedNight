@@ -97,7 +97,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
-                double distance  = 0;
+                double distance  = 0.00;
                 Boolean open = serverList.get(i).getBoolean("Open");
                 Pub p1 = new Pub(name, open, distance);
                 pubList.add(p1);

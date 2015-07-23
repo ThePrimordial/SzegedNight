@@ -35,4 +35,5 @@
         android:layout_toRightOf="@+id/PubName"
         android:layout_toEndOf="@+id/PubName" />
 
+
 </RelativeLayout>

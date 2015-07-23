@@ -63,7 +63,13 @@ public class PubAdapter extends BaseAdapter {
             pubListOpenText.setText("Zarva! :( ");
             pubListOpenText.setTextColor(Color.RED);
         }
-        pubListDistanceText.setText(numberFormat.format(pub.getDistance()) + " km");
+        if(pub.getDistance() > 1){
+            pubListDistanceText.setText(numberFormat.format(pub.getDistance()) + " km");
+        }else{
+            double dist = pub.getDistance()*1000;
+            int intDistance = (int) dist;
+            pubListDistanceText.setText(intDistance + " m");
+        }
         pubListNameText.setText(pub.getName());
 
 

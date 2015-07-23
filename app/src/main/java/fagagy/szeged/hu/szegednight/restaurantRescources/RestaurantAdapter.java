@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class RestaurantAdapter extends BaseAdapter {
         TextView resListOpenText = (TextView) resView.findViewById(R.id.RestaurantOpen);
         TextView resListDistanceText = (TextView) resView.findViewById(R.id.RestaurantDistance);
         TextView resListNameText = (TextView) resView.findViewById(R.id.RestaurantName);
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         if (restaurant.isOpen()){
             resListOpenText.setText("Nyitva!");
@@ -61,9 +63,14 @@ public class RestaurantAdapter extends BaseAdapter {
             resListOpenText.setText("Zarva! :( ");
             resListOpenText.setTextColor(Color.RED);
         }
-        resListDistanceText.setText(restaurant.getDistance() + " km");
+        if(restaurant.getDistance() > 1){
+            resListDistanceText.setText(numberFormat.format(restaurant.getDistance()) + " km");
+        }else{
+            double dist = restaurant.getDistance()*1000;
+            int intDistance = (int) dist;
+        resListDistanceText.setText(intDistance + " m");
+        }
         resListNameText.setText(restaurant.getName());
-
 
         return resView;
     }
