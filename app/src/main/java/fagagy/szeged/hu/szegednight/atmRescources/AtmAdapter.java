@@ -1,10 +1,13 @@
 package fagagy.szeged.hu.szegednight.atmRescources;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -20,11 +23,11 @@ public class AtmAdapter extends BaseAdapter {
 
     final List<Atm> atmList;
 
-    public AtmAdapter(final Context context, final ArrayList<Atm> atmList){
+    public AtmAdapter(final Context context, final ArrayList<Atm> atmList) {
         this.atmList = atmList;
     }
 
-    public void addAtm(Atm atm){
+    public void addAtm(Atm atm) {
         atmList.add(atm);
     }
 
@@ -48,24 +51,41 @@ public class AtmAdapter extends BaseAdapter {
 
         final Atm atm = atmList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View pubView = inflater.inflate(R.layout.atmfragmentrow, null);
+        View atmView = inflater.inflate(R.layout.atmfragmentrow, null);
 
-        TextView atmListNameText = (TextView) pubView.findViewById(R.id.AtmName);
-        TextView atmistDistanceText = (TextView) pubView.findViewById(R.id.AtmDistance);
+        TextView atmListNameText = (TextView) atmView.findViewById(R.id.AtmName);
+        TextView atmistDistanceText = (TextView) atmView.findViewById(R.id.AtmDistance);
         DecimalFormat numberFormat = new DecimalFormat("#.00");
-        /**
-         * TODO Kép megoldása
-         */
-        if(atm.getDistance() > 1){
+
+        ImageView logo = (ImageView) atmView.findViewById(R.id.typeImage);
+        switch (atm.getType()) {
+            case "bb":logo.setImageResource(R.drawable.bb_logo_w);
+                break;
+            case "erste":logo.setImageResource(R.drawable.erste_logo_w);
+                break;
+            case "cib":logo.setImageResource(R.drawable.cib_logo_w);
+                break;
+            case "kh":logo.setImageResource(R.drawable.kah_logo_w);
+                break;
+            case "rf":logo.setImageResource(R.drawable.raiffeisen_logo_w);
+                break;
+            case "mkb":logo.setImageResource(R.drawable.mkb_logo_w);
+                break;
+            case "otp":logo.setImageResource(R.drawable.otp_logo_w);
+                break;
+            default:
+                break;
+        }
+
+        if (atm.getDistance() > 1) {
             atmistDistanceText.setText(numberFormat.format(atm.getDistance()) + " km");
-        }else{
-            double dist = atm.getDistance()*1000;
+        } else {
+            double dist = atm.getDistance() * 1000;
             int intDistance = (int) dist;
             atmistDistanceText.setText(intDistance + " m");
         }
         atmListNameText.setText(atm.getName());
 
-        return pubView;
+        return atmView;
     }
 }
-
