@@ -6,34 +6,50 @@
 
     <TextView
         android:id="@+id/PubName"
-        android:layout_width="200dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:textSize="25sp"
+        android:text="pubname"
         android:layout_alignParentTop="true"
-        android:padding="3dp"
-        android:textSize="30sp"
-        android:text="pubname" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/PubDistance"
         android:text="@string/Distance"
-        android:textSize="20sp"
-        android:padding="5dp"
+        android:textSize="18sp"
+        android:padding="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/PubName"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/PubName"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/PubOpen" />
 
     <TextView
         android:id="@+id/PubOpen"
         android:textSize="20sp"
-        android:padding="5dp"
+        android:padding="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="open"
-        android:layout_alignBottom="@+id/PubName"
-        android:layout_toRightOf="@+id/PubName"
-        android:layout_toEndOf="@+id/PubName" />
+        android:layout_below="@+id/PubName"
+        android:layout_alignLeft="@+id/PubName"
+        android:layout_alignStart="@+id/PubName"
+        android:layout_toLeftOf="@+id/PubDistance"
+        android:layout_toStartOf="@+id/PubDistance" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:background="@drawable/beer_jar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/PubOpen"
+        android:layout_toStartOf="@+id/PubName" />
 
 
 </RelativeLayout>
