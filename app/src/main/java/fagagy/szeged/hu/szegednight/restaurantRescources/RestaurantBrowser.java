@@ -16,7 +16,7 @@ public class RestaurantBrowser extends FragmentActivity {
         setContentView(R.layout.activity_browsing_with_swipe);
 
         Fragment resFragment = new RestaurantFragmentList();
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), resFragment);
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), resFragment, "Restaurant");
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(adapter);
     }

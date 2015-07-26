@@ -1,20 +1,14 @@
 package fagagy.szeged.hu.szegednight.pages;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -37,6 +31,7 @@ public class StartingPage extends Activity {
 
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
+
 
 
     @Override
@@ -93,6 +88,10 @@ public class StartingPage extends Activity {
                 break;
             case R.id.btnATM:
                 i.setClass(this, AtmBrowser.class);
+                startActivity(i);
+                break;
+            case R.id.btnTobaccoShops:
+                i.setClass(this, FragmentMap.class);
                 startActivity(i);
                 break;
             default:

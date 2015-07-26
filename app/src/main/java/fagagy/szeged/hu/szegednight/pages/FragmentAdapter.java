@@ -13,11 +13,11 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     public static final int NUM_ITEMS = 2;
     private ArrayList<Fragment> fragments;
 
-    public FragmentAdapter(FragmentManager fm, Fragment specificFragmentRow) {
+    public FragmentAdapter(FragmentManager fm, Fragment specificFragmentRow, String type) {
         super(fm);
-        fragments = new ArrayList<Fragment>();
+        fragments = new ArrayList<>();
         fragments.add(specificFragmentRow);
-        fragments.add(new FragmentMap());
+        fragments.add(new FragmentMap().newInstance(type));
 
     }
 

@@ -1,21 +1,131 @@
 package fagagy.szeged.hu.szegednight.pages;
 
+import android.content.Context;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 
 public class FragmentMap extends Fragment {
 
-    public static final String TAG = "TérképNézet";
+    MapView mMapView;
+    private GoogleMap googleMap;
+    public static final String TAG = "Térképnézet";
+
+    public static FragmentMap newInstance(String type) {
+        FragmentMap map = new FragmentMap();
+        Bundle bdl = new Bundle(2);
+        bdl.putString("TYPE", type);
+        map.setArguments(bdl);
+        return map;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.activity_map_fragment, container,
+                false);
 
-        View v = View.inflate(getActivity(), R.layout.fragmentmap, null);
+        String type = getArguments().getString("TYPE");
+
+        mMapView = (MapView) v.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
+
+        mMapView.onResume();// needed to get the map to display immediately
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        setUpMarkers(type);
+
         return v;
     }
-}
+
+    private void setUpMarkers(String type) {
+        googleMap = mMapView.getMap();
+        List<ParseObject> serverList = null;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(type);
+        try {
+            serverList = query.fromPin(type).find();
+        } catch (ParseException e1) {
+        }
+
+        for (int i = 0; i < serverList.size(); i++) {
+
+            String name = serverList.get(i).getString("Name");
+            Double longitude = serverList.get(i).getDouble("Longitude");
+            Double latitude = serverList.get(i).getDouble("Latitude");
+
+            MarkerOptions marker = new MarkerOptions().position(
+                    new LatLng(latitude, longitude)).title(name);
+            googleMap.addMarker(marker);
+
+        }
+
+        LocationManager mng = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        Location location = mng.getLastKnownLocation(mng.getBestProvider(new Criteria(), false));
+
+        double myLat = location.getLatitude();
+        double myLong = location.getLongitude();
+
+        MarkerOptions marker = new MarkerOptions().position(
+                new LatLng(myLat, myLong)).title("Saját Pozíció");
+        googleMap.addMarker(marker);
+        /**
+         * TODO Egyedi saját hely ikon
+         */
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLong), 15);
+        googleMap.animateCamera(cameraUpdate);
+    }
+
+        @Override
+        public void onResume () {
+            super.onResume();
+            mMapView.onResume();
+        }
+
+        @Override
+        public void onPause () {
+            super.onPause();
+            mMapView.onPause();
+        }
+
+        @Override
+        public void onDestroy () {
+            super.onDestroy();
+            mMapView.onDestroy();
+        }
+
+        @Override
+        public void onLowMemory () {
+            super.onLowMemory();
+            mMapView.onLowMemory();
+        }
+    }
