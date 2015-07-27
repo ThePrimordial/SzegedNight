@@ -57,7 +57,7 @@ public class RestaurantAdapter extends BaseAdapter {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         if (restaurant.isOpen()){
-            resListOpenText.setText("Nyitva!");
+            resListOpenText.setText("Nyitva! " + restaurant.getOpenUntil() + ".00-ig");
             resListOpenText.setTextColor(Color.GREEN);
         }else if(!restaurant.isOpen()) {
             resListOpenText.setText("Zarva! :( ");

@@ -47,6 +47,7 @@ public class PubAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+
         final Pub pub = pubList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View pubView = inflater.inflate(R.layout.pubfragmentrow, null);
@@ -57,7 +58,7 @@ public class PubAdapter extends BaseAdapter {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         if (pub.isOpen()){
-            pubListOpenText.setText("Nyitva!");
+            pubListOpenText.setText("Nyitva! " + pub.getOpenUntil() + ".00-ig");
             pubListOpenText.setTextColor(Color.GREEN);
         }else if(!pub.isOpen()) {
             pubListOpenText.setText("Zarva! :( ");

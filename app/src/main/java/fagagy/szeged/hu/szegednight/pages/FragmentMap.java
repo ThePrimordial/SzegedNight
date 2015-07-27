@@ -122,7 +122,7 @@ public class FragmentMap extends Fragment {
         MarkerOptions marker = new MarkerOptions().position(
                 new LatLng(myLat, myLong)).title("Saját Pozíció");
         googleMap.addMarker(marker);
-        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLong), 15);
         googleMap.animateCamera(cameraUpdate);
     }

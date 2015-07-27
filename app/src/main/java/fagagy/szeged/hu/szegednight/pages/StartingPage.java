@@ -39,6 +39,7 @@ public class StartingPage extends Activity {
 
         FetchCordinates fetchCordinates = new FetchCordinates();
         fetchCordinates.execute();
+        ParseQuery.clearAllCachedResults();
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "JQGvIPiUsllFbVsmq63xWd34UQxrKOusu2M5XLlr", "x24qzq57nI7xKwkl89M6zbuIez35ILsywXasVKee");
         if (!isNetworkAvailable()) {
@@ -49,11 +50,11 @@ public class StartingPage extends Activity {
             whatToRefresh.add("Pub");
             whatToRefresh.add("Restaurant");
             whatToRefresh.add("ATM");
+            whatToRefresh.add("Tobacco");
             for(int i = 0; i < whatToRefresh.size(); i++) {
                 List<ParseObject> serverList;
                 ParseQuery<ParseObject> query = ParseQuery.getQuery(whatToRefresh.get(i));
                 serverList = query.find();
-                ParseObject.unpinAll(whatToRefresh.get(i), serverList);
                 ParseObject.pinAll(whatToRefresh.get(i), serverList);
             }
             Toast.makeText(this, "Alkalmazás adatbázis frissítése megtörtént!", Toast.LENGTH_LONG)

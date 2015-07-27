@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,13 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
@@ -57,7 +62,14 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        generateRows();
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        int currHour = calendar.get(Calendar.HOUR_OF_DAY);
+        String sDay = getDay(day);
+        generateRows(sDay, currHour);
 
         RestaurantAdapter adapter = new RestaurantAdapter(getActivity(), resList);
         setListAdapter(adapter);
@@ -66,7 +78,20 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
 
     }
 
-    private void generateRows() {
+    private String getDay(int day) {
+        switch (day){
+            case 1:return "Sunday";
+            case 2:return "Monday";
+            case 3:return "Tuesday";
+            case 4:return "Wednesday";
+            case 5:return "Thursday";
+            case 6:return "Friday";
+            case 7:return "Saturday";
+        }
+        return null;
+    }
+
+    private void generateRows(String day, int currHour) {
         List<ParseObject> serverList = null;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Restaurant");
         try {
@@ -79,7 +104,7 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance  = 0.00;
-                Boolean open = serverList.get(i).getBoolean("Open");
+                Boolean open = checkOpen(serverList, day, currHour, i);
                 Restaurant r1 = new Restaurant(name, open, distance);
                 resList.add(r1);
             }
@@ -92,11 +117,19 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
                 double distance = gpsLoc.distanceTo(targetLocation) / 1000;
-                Boolean open = serverList.get(i).getBoolean("Open");
-                Restaurant r1 = new Restaurant(name, open, distance);
-                r1.setLatitude(latitude);
-                r1.setLongitude(longitude);
-                resList.add(r1);
+                Boolean open = checkOpen(serverList, day, currHour, i);
+                String openUntil = getOpenUntil(serverList, day, currHour, i);
+                if(!open) {
+                    Restaurant r1 = new Restaurant(name, open, distance);
+                    r1.setLatitude(latitude);
+                    r1.setLongitude(longitude);
+                    resList.add(r1);
+                }else{
+                    Restaurant r1 = new Restaurant(name, open, distance, openUntil);
+                    r1.setLatitude(latitude);
+                    r1.setLongitude(longitude);
+                    resList.add(r1);
+                }
             }
         } else
             for (int i = 0; i < serverList.size(); i++) {
@@ -107,13 +140,20 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
                 double distance = networkLoc.distanceTo(targetLocation) / 1000;
-                Boolean open = serverList.get(i).getBoolean("Open");
-                Restaurant r1 = new Restaurant(name, open, distance);
-                r1.setLatitude(latitude);
-                r1.setLongitude(longitude);
-                resList.add(r1);
+                Boolean open = checkOpen(serverList, day, currHour, i);
+                String openUntil = getOpenUntil(serverList, day, currHour, i);
+                if (!open) {
+                    Restaurant r1 = new Restaurant(name, open, distance);
+                    r1.setLatitude(latitude);
+                    r1.setLongitude(longitude);
+                    resList.add(r1);
+                } else {
+                    Restaurant r1 = new Restaurant(name, open, distance, openUntil);
+                    r1.setLatitude(latitude);
+                    r1.setLongitude(longitude);
+                    resList.add(r1);
+                }
             }
-
         Collections.sort(resList, new Comparator<Restaurant>() {
             @Override
             public int compare(Restaurant p1, Restaurant p2) {
@@ -121,6 +161,47 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
             }
         });
     }
+
+    private String getOpenUntil(List<ParseObject> serverList, String day, int currHour, int position) {
+
+        try {
+            return String.valueOf(serverList.get(position).getJSONArray(day).get(1));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "Database error";
+    }
+
+    private Boolean checkOpen(List<ParseObject> serverList, String day, int currHour, int position) {
+
+        if(currHour < 5) {
+            try {
+                int openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
+                Log.d("openHour1", String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
+                if (openHour > currHour) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else
+            try {
+                int openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
+                Log.d("openHour0", String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
+                if (openHour < currHour) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        return null;
+    }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
