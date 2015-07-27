@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background02">
 
     <TextView
         android:id="@+id/PubName"
@@ -24,11 +25,11 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:textAlignment="gravity"
-        android:layout_above="@+id/PubOpen"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/PubName"
-        android:layout_toEndOf="@+id/PubName" />
+        android:layout_alignTop="@+id/PubOpen"
+        android:layout_toRightOf="@+id/PubOpen"
+        android:layout_toEndOf="@+id/PubOpen" />
 
     <TextView
         android:id="@+id/PubOpen"
@@ -37,11 +38,8 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="open"
-        android:layout_below="@+id/PubName"
-        android:layout_alignLeft="@+id/PubName"
-        android:layout_alignStart="@+id/PubName"
-        android:layout_toLeftOf="@+id/PubDistance"
-        android:layout_toStartOf="@+id/PubDistance" />
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="90dp"

@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background02">
 
     <TextView
         android:id="@+id/RestaurantName"
@@ -34,8 +35,8 @@
         android:layout_height="wrap_content"
         android:text="open"
         android:layout_below="@+id/RestaurantName"
-        android:layout_toRightOf="@+id/imageView4"
-        android:layout_toEndOf="@+id/imageView4" />
+        android:layout_toRightOf="@+id/RestaurantName"
+        android:layout_toEndOf="@+id/RestaurantName" />
 
     <ImageView
         android:layout_width="90dp"
