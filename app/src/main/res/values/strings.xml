@@ -26,4 +26,6 @@
     <string name="title_activity_maps_route">Map</string>
     <string name="title_activity_map_route">Map</string>
     <string name="title_activity_map_to_display">Map</string>
+    <string name="title_activity_draw_route_map">Map</string>
+    <string name="title_activity_draw_route">Map</string>
 </resources>

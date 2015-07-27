@@ -1,8 +1,10 @@
 package fagagy.szeged.hu.szegednight.restaurantRescources;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -85,22 +87,30 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
-                targetLocation.setLongitude(serverList.get(i).getDouble("Longitude"));
-                targetLocation.setLatitude(serverList.get(i).getDouble("Latitude"));
-                double distance = gpsLoc.distanceTo(targetLocation)/1000;
+                double longitude = serverList.get(i).getDouble("Longitude");
+                double latitude = serverList.get(i).getDouble("Latitude");
+                targetLocation.setLongitude(longitude);
+                targetLocation.setLatitude(latitude);
+                double distance = gpsLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = serverList.get(i).getBoolean("Open");
                 Restaurant r1 = new Restaurant(name, open, distance);
+                r1.setLatitude(latitude);
+                r1.setLongitude(longitude);
                 resList.add(r1);
             }
         } else
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
-                targetLocation.setLongitude(serverList.get(i).getDouble("Longitude"));
-                targetLocation.setLatitude(serverList.get(i).getDouble("Latitude"));
+                double longitude = serverList.get(i).getDouble("Longitude");
+                double latitude = serverList.get(i).getDouble("Latitude");
+                targetLocation.setLongitude(longitude);
+                targetLocation.setLatitude(latitude);
                 double distance = networkLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = serverList.get(i).getBoolean("Open");
                 Restaurant r1 = new Restaurant(name, open, distance);
+                r1.setLatitude(latitude);
+                r1.setLongitude(longitude);
                 resList.add(r1);
             }
 
@@ -115,7 +125,18 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Toast.makeText(getActivity(), "Működik", Toast.LENGTH_SHORT)
-                .show();
+        String uri =null;
+        if (gpsLoc == null && networkLoc == null) {
+            Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
+        } else if (gpsLoc != null) {
+            uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
+                    "&daddr="+resList.get(position).getLatitude()+","+resList.get(position).getLongitude();
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(i);
+        } else if(networkLoc != null)
+            uri = "http://maps.google.com/maps?saddr="+networkLoc.getLatitude()+","+networkLoc.getLongitude()+
+                    "&daddr="+resList.get(position).getLatitude()+","+resList.get(position).getLongitude();
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(i);
     }
 }

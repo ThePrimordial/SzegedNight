@@ -90,10 +90,6 @@ public class StartingPage extends Activity {
                 i.setClass(this, AtmBrowser.class);
                 startActivity(i);
                 break;
-            case R.id.btnTobaccoShops:
-                i.setClass(this, FragmentMap.class);
-                startActivity(i);
-                break;
             default:
                 break;
         }

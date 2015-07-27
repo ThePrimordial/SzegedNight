@@ -3,10 +3,12 @@ package fagagy.szeged.hu.szegednight.pubRescources;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -106,22 +108,30 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
-                targetLocation.setLongitude(serverList.get(i).getDouble("Longitude"));
-                targetLocation.setLatitude(serverList.get(i).getDouble("Latitude"));
-                double distance = gpsLoc.distanceTo(targetLocation)/1000;
+                double longitude = serverList.get(i).getDouble("Longitude");
+                double latitude = serverList.get(i).getDouble("Latitude");
+                targetLocation.setLongitude(longitude);
+                targetLocation.setLatitude(latitude);
+                double distance = networkLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = serverList.get(i).getBoolean("Open");
                 Pub p1 = new Pub(name, open, distance);
+                p1.setLatitude(latitude);
+                p1.setLongitude(longitude);
                 pubList.add(p1);
             }
         } else
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
-                targetLocation.setLongitude(serverList.get(i).getDouble("Longitude"));
-                targetLocation.setLatitude(serverList.get(i).getDouble("Latitude"));
-                double distance = networkLoc.distanceTo(targetLocation) / 1000;
+                double longitude = serverList.get(i).getDouble("Longitude");
+                double latitude = serverList.get(i).getDouble("Latitude");
+                targetLocation.setLongitude(longitude);
+                targetLocation.setLatitude(latitude);
+                double distance = gpsLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = serverList.get(i).getBoolean("Open");
                 Pub p1 = new Pub(name, open, distance);
+                p1.setLatitude(latitude);
+                p1.setLongitude(longitude);
                 pubList.add(p1);
             }
 
@@ -135,8 +145,20 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getActivity(), "Működik", Toast.LENGTH_SHORT)
-                .show();
+
+        String uri =null;
+        if (gpsLoc == null && networkLoc == null) {
+            Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
+        } else if (gpsLoc != null) {
+            uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
+                    "&daddr="+pubList.get(position).getLatitude()+","+pubList.get(position).getLongitude();
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(i);
+        } else if(networkLoc != null)
+            uri = "http://maps.google.com/maps?saddr="+networkLoc.getLatitude()+","+networkLoc.getLongitude()+
+                    "&daddr="+pubList.get(position).getLatitude()+","+pubList.get(position).getLongitude();
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(i);
     }
 
     @Override
@@ -148,3 +170,4 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     }
 
 }
+

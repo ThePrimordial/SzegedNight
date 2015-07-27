@@ -1,16 +1,21 @@
 package fagagy.szeged.hu.szegednight.atmRescources;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -22,13 +27,11 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
-import fagagy.szeged.hu.szegednight.pubRescources.Pub;
-import fagagy.szeged.hu.szegednight.pubRescources.PubAdapter;
 
 /**
  * Created by TheSorrow on 15/07/23.
  */
-public class AtmFragmentList  extends ListFragment implements AdapterView.OnItemClickListener {
+public class AtmFragmentList extends ListFragment implements AdapterView.OnItemClickListener {
 
     public static final String TAG = "ListaNézet";
     private ArrayList<Atm> atmList = new ArrayList<>();
@@ -36,6 +39,8 @@ public class AtmFragmentList  extends ListFragment implements AdapterView.OnItem
     private MyCurrentLocationListener locListener;
     private Location gpsLoc;
     private Location networkLoc;
+    private MapView mMapView;
+    private GoogleMap googleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,31 +84,41 @@ public class AtmFragmentList  extends ListFragment implements AdapterView.OnItem
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
-                double distance  = 0.00;
+                double distance = 0.00;
                 String type = serverList.get(i).getString("Type");
-                Atm a1 = new Atm(name,type, distance);
+                Atm a1 = new Atm(name, type, distance);
                 atmList.add(a1);
             }
-        } else if(gpsLoc != null) {
+        } else if (gpsLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
-                targetLocation.setLongitude(serverList.get(i).getDouble("Longitude"));
-                targetLocation.setLatitude(serverList.get(i).getDouble("Latitude"));
-                double distance = gpsLoc.distanceTo(targetLocation)/1000;
+                double longitude = serverList.get(i).getDouble("Longitude");
+                double latitude = serverList.get(i).getDouble("Latitude");
+                targetLocation.setLongitude(longitude);
+                targetLocation.setLatitude(latitude);
+                double distance = gpsLoc.distanceTo(targetLocation) / 1000;
                 String type = serverList.get(i).getString("Type");
                 Atm a1 = new Atm(name, type, distance);
+                a1.setLatitude(latitude);
+                a1.setLongitude(longitude);
+                Log.d("atmtype", a1.getType());
                 atmList.add(a1);
             }
         } else
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
-                targetLocation.setLongitude(serverList.get(i).getDouble("Longitude"));
-                targetLocation.setLatitude(serverList.get(i).getDouble("Latitude"));
-                double distance = networkLoc.distanceTo(targetLocation)/1000;
+                double longitude = serverList.get(i).getDouble("Longitude");
+                double latitude = serverList.get(i).getDouble("Latitude");
+                targetLocation.setLongitude(longitude);
+                targetLocation.setLatitude(latitude);
+                double distance = networkLoc.distanceTo(targetLocation) / 1000;
                 String type = serverList.get(i).getString("Type");
                 Atm a1 = new Atm(name, type, distance);
+                a1.setLatitude(latitude);
+                a1.setLongitude(longitude);
+                Log.d("atmtype", a1.getType());
                 atmList.add(a1);
             }
 
@@ -117,8 +132,20 @@ public class AtmFragmentList  extends ListFragment implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getActivity(), "Működik", Toast.LENGTH_SHORT)
-                .show();
+
+        String uri =null;
+        if (gpsLoc == null && networkLoc == null) {
+            Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
+        } else if (gpsLoc != null) {
+            uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
+                    "&daddr="+atmList.get(position).getLatitude()+","+atmList.get(position).getLongitude();
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(i);
+        } else if(networkLoc != null)
+            uri = "http://maps.google.com/maps?saddr="+networkLoc.getLatitude()+","+networkLoc.getLongitude()+
+                    "&daddr="+atmList.get(position).getLatitude()+","+atmList.get(position).getLongitude();
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(i);
     }
 
     @Override
