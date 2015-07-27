@@ -19,7 +19,7 @@ public class AtmBrowser extends FragmentActivity {
         setContentView(R.layout.activity_browsing_with_swipe);
 
         Fragment atmFragmentRow = new AtmFragmentList();
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), atmFragmentRow);
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), atmFragmentRow, "ATM");
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(adapter);
     }

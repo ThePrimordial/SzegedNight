@@ -1,20 +1,14 @@
 package fagagy.szeged.hu.szegednight.pages;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,11 +33,13 @@ public class StartingPage extends Activity {
     private MyCurrentLocationListener locListener;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         FetchCordinates fetchCordinates = new FetchCordinates();
         fetchCordinates.execute();
+        ParseQuery.clearAllCachedResults();
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "JQGvIPiUsllFbVsmq63xWd34UQxrKOusu2M5XLlr", "x24qzq57nI7xKwkl89M6zbuIez35ILsywXasVKee");
         if (!isNetworkAvailable()) {
@@ -54,11 +50,11 @@ public class StartingPage extends Activity {
             whatToRefresh.add("Pub");
             whatToRefresh.add("Restaurant");
             whatToRefresh.add("ATM");
+            whatToRefresh.add("Tobacco");
             for(int i = 0; i < whatToRefresh.size(); i++) {
                 List<ParseObject> serverList;
                 ParseQuery<ParseObject> query = ParseQuery.getQuery(whatToRefresh.get(i));
                 serverList = query.find();
-                ParseObject.unpinAll(whatToRefresh.get(i), serverList);
                 ParseObject.pinAll(whatToRefresh.get(i), serverList);
             }
             Toast.makeText(this, "Alkalmazás adatbázis frissítése megtörtént!", Toast.LENGTH_LONG)
