@@ -9,10 +9,10 @@
         android:id="@+id/PartyPlace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/White"
         android:padding="2dp"
         android:textSize="25sp"
         android:text="place"
+        android:textColor="@color/White"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/imageView2"
         android:layout_toEndOf="@+id/imageView2" />
@@ -20,38 +20,38 @@
     <TextView
         android:id="@+id/PartyEvent"
         android:text="event"
-        android:textColor="@color/White"
         android:textSize="18sp"
         android:padding="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/White"
         android:gravity="end"
         android:textAlignment="gravity"
-        android:layout_alignBottom="@+id/PartyDistance"
+        android:layout_alignBottom="@+id/PartyDate"
         android:layout_toRightOf="@+id/imageView2"
         android:layout_toEndOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/PartyDate"
-        android:textColor="@color/White"
         android:textSize="20sp"
         android:padding="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/White"
         android:text="date"
-        android:layout_alignBottom="@+id/PartyPlace"
-        android:layout_alignRight="@+id/PartyDistance"
-        android:layout_alignEnd="@+id/PartyDistance" />
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/PartyDistance"
-        android:textColor="@color/White"
         android:textSize="20sp"
         android:padding="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/White"
         android:text="distance"
-        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignBottom="@+id/PartyPlace"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -59,7 +59,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:id="@+id/imageView2"
-        android:background="@drawable/beer_jar"
+        android:src="@drawable/beer_jar"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

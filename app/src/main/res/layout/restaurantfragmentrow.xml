@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/White"
         android:padding="3dp"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:text="restname"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/imageView3"
@@ -35,8 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="open"
-        android:layout_alignTop="@+id/RestaurantDistance"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/RestaurantName"
+        android:layout_toRightOf="@+id/imageView3"
+        android:layout_toEndOf="@+id/imageView3" />
 
     <ImageView
         android:layout_width="70dp"
