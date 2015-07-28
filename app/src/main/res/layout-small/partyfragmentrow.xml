@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="2dp"
-        android:textSize="28sp"
+        android:textSize="24sp"
         android:text="place"
         android:textColor="@color/White"
         android:layout_alignParentTop="true"
@@ -20,7 +20,7 @@
     <TextView
         android:id="@+id/PartyEvent"
         android:text="event"
-        android:textSize="17sp"
+        android:textSize="15sp"
         android:padding="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
 
     <TextView
         android:id="@+id/PartyDate"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:padding="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
 
     <TextView
         android:id="@+id/PartyDistance"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:padding="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,8 +56,8 @@
         android:layout_alignParentEnd="true" />
 
     <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/imageView2"
         android:src="@drawable/party"
         android:layout_alignParentTop="true"

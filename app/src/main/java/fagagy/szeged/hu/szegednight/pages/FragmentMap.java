@@ -119,7 +119,7 @@ public class FragmentMap extends Fragment {
         LocationManager mng = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         MyCurrentLocationListener listener = new MyCurrentLocationListener();
         Location location = getLocation(mng, listener);
-        Log.d("lokáció", String.valueOf(location.getLongitude())+String.valueOf(location.getLatitude()));
+        Log.d("lokáció", String.valueOf(location.getLatitude()) + "" + String.valueOf(location.getLongitude()));
         double myLat = location.getLatitude();
         double myLong = location.getLongitude();
 
@@ -136,28 +136,27 @@ public class FragmentMap extends Fragment {
         Location location = null;
 
         try {
-            // getting GPS status
+
             boolean isGPSEnabled = locationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
-            // getting network status
             boolean isNetworkEnabled = locationManager
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             if (!isGPSEnabled && !isNetworkEnabled) {
                 Toast.makeText(getActivity(), "Nincs internet vagy GPS pozíció", Toast.LENGTH_LONG).show();
             } else {
-                if (isGPSEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 50, listener);
+                if (isNetworkEnabled) {
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 20000, 50, listener);
                     if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        Log.d("lokáció", "GPS Poz megtalálva");
+                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        Log.d("lokáció", "network pz megtalálva");
                     }
                 } else
                     if (location == null) {
                         locationManager.requestLocationUpdates(
-                                LocationManager.NETWORK_PROVIDER, 20000, 50, listener);
+                                LocationManager.GPS_PROVIDER, 20000, 50, listener);
                         if (locationManager != null) {
-                            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                            Log.d("lokáció", "GPS Poz nincs, Network van");
+                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            Log.d("lokáció", "gps pz megtalálva");
                         }
                     }
                 }
