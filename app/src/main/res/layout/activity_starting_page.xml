@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:id="@+id/imageView"
-        android:background="@drawable/szegednights1" />
+        android:stateListAnimator="@anim/AlphaAnimation" />
 
     <ImageButton
         android:background="@drawable/btn_pub"
