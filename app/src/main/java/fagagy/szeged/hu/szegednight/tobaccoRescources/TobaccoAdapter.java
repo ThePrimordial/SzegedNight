@@ -25,7 +25,7 @@ public class TobaccoAdapter extends BaseAdapter {
         this.tobaccoList = tobaccoList;
     }
 
-    public void addPub(Tobacco tobacco){
+    public void addTobacco(Tobacco tobacco){
         tobaccoList.add(tobacco);
     }
 

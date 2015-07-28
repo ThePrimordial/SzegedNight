@@ -22,8 +22,10 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.atmRescources.AtmBrowser;
+import fagagy.szeged.hu.szegednight.partyRescources.PartyBrowser;
 import fagagy.szeged.hu.szegednight.pubRescources.PubBrowser;
 import fagagy.szeged.hu.szegednight.restaurantRescources.RestaurantBrowser;
+import fagagy.szeged.hu.szegednight.shopRescources.ShopBrowser;
 import fagagy.szeged.hu.szegednight.tobaccoRescources.TobaccoBrowser;
 
 
@@ -73,6 +75,14 @@ public class StartingPage extends Activity {
                 i.setClass(this, TobaccoBrowser.class);
                 startActivity(i);
                 break;
+            case R.id.btnParties:
+                i.setClass(this, PartyBrowser.class);
+                startActivity(i);
+                break;
+            case R.id.btnShops:
+                i.setClass(this, ShopBrowser.class);
+                startActivity(i);
+                break;
             default:
                 break;
         }
@@ -103,6 +113,8 @@ public class StartingPage extends Activity {
                 whatToRefresh.add("Restaurant");
                 whatToRefresh.add("ATM");
                 whatToRefresh.add("Tobacco");
+                whatToRefresh.add("Party");
+                whatToRefresh.add("Shop");
                 for (int i = 0; i < whatToRefresh.size(); i++) {
                     ParseQuery<ParseObject> query = ParseQuery.getQuery(whatToRefresh.get(i));
                     ParseQuery<ParseObject> queryDelete = ParseQuery.getQuery(whatToRefresh.get(i)).fromLocalDatastore();
