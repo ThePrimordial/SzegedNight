@@ -42,7 +42,7 @@
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:background="@drawable/burger_icon"
+        android:src="@drawable/burger_icon"
         android:id="@+id/imageView3"
         android:layout_alignBottom="@+id/RestaurantOpen"
         android:layout_alignParentLeft="true"
