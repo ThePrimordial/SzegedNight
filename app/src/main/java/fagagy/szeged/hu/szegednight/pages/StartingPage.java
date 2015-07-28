@@ -24,6 +24,7 @@ import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.atmRescources.AtmBrowser;
 import fagagy.szeged.hu.szegednight.pubRescources.PubBrowser;
 import fagagy.szeged.hu.szegednight.restaurantRescources.RestaurantBrowser;
+import fagagy.szeged.hu.szegednight.tobaccoRescources.TobaccoBrowser;
 
 
 public class StartingPage extends Activity {
@@ -68,6 +69,10 @@ public class StartingPage extends Activity {
                 i.setClass(this, AtmBrowser.class);
                 startActivity(i);
                 break;
+            case R.id.btnTobaccoShops:
+                i.setClass(this, TobaccoBrowser.class);
+                startActivity(i);
+                break;
             default:
                 break;
         }
@@ -84,9 +89,13 @@ public class StartingPage extends Activity {
     public class UpdateDataBase extends AsyncTask<String, Integer, String> {
 
         @Override
+        protected void onPreExecute() {
+            Toast.makeText(getApplicationContext(), "Adatbázis frissítése folyamatban...", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
         protected String doInBackground(String... params) {
             try {
-                Toast.makeText(getApplicationContext(), "Adatbázis frissítése folyamatban...", Toast.LENGTH_LONG).show();
                 List<ParseObject> serverList;
                 List<ParseObject> deleteList;
                 ArrayList<String> whatToRefresh = new ArrayList<>();
@@ -109,7 +118,6 @@ public class StartingPage extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-
             Toast.makeText(getApplicationContext(), "Adatbázis frissítése megtörtént", Toast.LENGTH_LONG).show();
         }
     }
