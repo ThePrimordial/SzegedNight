@@ -33,46 +33,23 @@ public class StartingPage extends Activity {
     private MyCurrentLocationListener locListener;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         FetchCordinates fetchCordinates = new FetchCordinates();
         fetchCordinates.execute();
-        ParseQuery.clearAllCachedResults();
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "JQGvIPiUsllFbVsmq63xWd34UQxrKOusu2M5XLlr", "x24qzq57nI7xKwkl89M6zbuIez35ILsywXasVKee");
+
         if (!isNetworkAvailable()) {
             Toast.makeText(this, "Nincs internetkapcsolat. Adatbázis elavult lehet!", Toast.LENGTH_LONG)
                     .show();
-        } else try {
-            ArrayList<String> whatToRefresh = new ArrayList<>();
-            whatToRefresh.add("Pub");
-            whatToRefresh.add("Restaurant");
-            whatToRefresh.add("ATM");
-            whatToRefresh.add("Tobacco");
-            for(int i = 0; i < whatToRefresh.size(); i++) {
-                List<ParseObject> serverList;
-                ParseQuery<ParseObject> query = ParseQuery.getQuery(whatToRefresh.get(i));
-                serverList = query.find();
-                ParseObject.pinAll(whatToRefresh.get(i), serverList);
-            }
-            Toast.makeText(this, "Alkalmazás adatbázis frissítése megtörtént!", Toast.LENGTH_LONG)
-                    .show();
-        } catch (ParseException e) {
+        } else {
+            UpdateDataBase updateDataBase = new UpdateDataBase();
+            updateDataBase.execute();
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_starting_page);
         }
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_starting_page);
-
-    }
-
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-
     }
 
     public void onClick(View v) {
@@ -95,6 +72,48 @@ public class StartingPage extends Activity {
                 break;
         }
     }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
+    }
+
+    public class UpdateDataBase extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                Toast.makeText(getApplicationContext(), "Adatbázis frissítése folyamatban...", Toast.LENGTH_LONG).show();
+                List<ParseObject> serverList;
+                List<ParseObject> deleteList;
+                ArrayList<String> whatToRefresh = new ArrayList<>();
+                whatToRefresh.add("Pub");
+                whatToRefresh.add("Restaurant");
+                whatToRefresh.add("ATM");
+                whatToRefresh.add("Tobacco");
+                for (int i = 0; i < whatToRefresh.size(); i++) {
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery(whatToRefresh.get(i));
+                    ParseQuery<ParseObject> queryDelete = ParseQuery.getQuery(whatToRefresh.get(i)).fromLocalDatastore();
+                    serverList = query.find();
+                    deleteList = queryDelete.find();
+                    ParseObject.unpinAll(whatToRefresh.get(i), deleteList);
+                    ParseObject.pinAll(whatToRefresh.get(i), serverList);
+                }
+            } catch (ParseException e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            Toast.makeText(getApplicationContext(), "Adatbázis frissítése megtörtént", Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     public class FetchCordinates extends AsyncTask<String, Integer, String> {
 
@@ -120,10 +139,10 @@ public class StartingPage extends Activity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if(myLoc == null) {
+            if (myLoc == null) {
                 Toast.makeText(StartingPage.this, "Nem érhető el GPS pozíció", Toast.LENGTH_LONG)
                         .show();
-            }else
+            } else
                 Toast.makeText(StartingPage.this, "GPS pozíció megtalálva!", Toast.LENGTH_LONG)
                         .show();
         }
