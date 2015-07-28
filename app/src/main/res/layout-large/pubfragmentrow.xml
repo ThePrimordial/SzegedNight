@@ -8,6 +8,7 @@
         android:id="@+id/PubName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/White"
         android:padding="2dp"
         android:textSize="35sp"
         android:text="pubname"
@@ -18,6 +19,7 @@
     <TextView
         android:id="@+id/PubDistance"
         android:text="@string/Distance"
+        android:textColor="@color/White"
         android:textSize="25sp"
         android:padding="2dp"
         android:layout_width="match_parent"

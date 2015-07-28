@@ -8,6 +8,7 @@
         android:id="@+id/AtmName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/White"
         android:padding="2dp"
         android:textSize="35sp"
         android:text="AtmNév"
@@ -19,6 +20,7 @@
     <TextView
         android:id="@+id/AtmDistance"
         android:text="@string/Distance"
+        android:textColor="@color/White"
         android:textSize="30sp"
         android:padding="2dp"
         android:gravity="end"

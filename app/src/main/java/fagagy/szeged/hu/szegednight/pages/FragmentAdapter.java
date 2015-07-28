@@ -10,7 +10,6 @@ import fagagy.szeged.hu.szegednight.pubRescources.PubFragmentList;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
 
-    public static final int NUM_ITEMS = 2;
     private ArrayList<Fragment> fragments;
 
     public FragmentAdapter(FragmentManager fm, Fragment specificFragmentRow, String type) {
@@ -21,6 +20,14 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     }
 
+    //For party
+    public FragmentAdapter(FragmentManager fm, Fragment specificFragmentRow) {
+        super(fm);
+        fragments = new ArrayList<>();
+        fragments.add(specificFragmentRow);
+    }
+
+
     @Override
     public Fragment getItem(int position) {
         return fragments.get(position);
@@ -28,7 +35,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return NUM_ITEMS;
+        return fragments.size();
     }
 
     @Override
