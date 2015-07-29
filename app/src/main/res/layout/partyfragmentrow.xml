@@ -27,9 +27,9 @@
         android:textColor="@color/White"
         android:gravity="end"
         android:textAlignment="gravity"
-        android:layout_alignBottom="@+id/imageView2"
-        android:layout_toRightOf="@+id/imageView2"
-        android:layout_toEndOf="@+id/imageView2" />
+        android:layout_below="@+id/PartyDistance"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/PartyDate"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/White"
         android:text="distance"
-        android:layout_alignBottom="@+id/PartyEvent"
+        android:layout_alignBottom="@+id/imageView2"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
