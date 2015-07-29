@@ -1,7 +1,8 @@
-package fagagy.szeged.hu.szegednight.pubRescources;
+package fagagy.szeged.hu.szegednight.pubResources;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,12 @@ public class PubAdapter extends BaseAdapter {
             pubListDistanceText.setText(intDistance + " m");
         }
         pubListNameText.setText(pub.getName());
+
+        if(position % 2 == 0){
+            pubView.setBackground(ContextCompat.getDrawable(pubView.getContext(), R.drawable.border_ui1));
+        }else {
+            pubView.setBackground(ContextCompat.getDrawable(pubView.getContext(), R.drawable.border_ui2));
+        }
 
 
         return pubView;

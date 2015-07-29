@@ -1,9 +1,9 @@
-package fagagy.szeged.hu.szegednight.restaurantRescources;
+package fagagy.szeged.hu.szegednight.tobaccoResources;
 
 /**
- * Created by TheSorrow on 15/07/20.
+ * Created by TheSorrow on 15/07/27.
  */
-public class Restaurant {
+public class Tobacco {
 
     private String name;
     private double distance;
@@ -17,19 +17,19 @@ public class Restaurant {
     }
 
 
-    public Restaurant(String name, boolean open, double distance) {
+    public Tobacco(String name, boolean open, double distance) {
         this.name = name;
         this.open = open;
         this.distance = distance;
     }
 
-
-    public Restaurant(String name, boolean open, double distance, String openUntil) {
+    public Tobacco(String name, boolean open, double distance, String openUntil) {
         this.name = name;
         this.open = open;
         this.distance = distance;
         this.openUntil = openUntil;
     }
+
 
     public String getName() {
         return name;
@@ -59,3 +59,4 @@ public class Restaurant {
         return distance;
     }
 }
+

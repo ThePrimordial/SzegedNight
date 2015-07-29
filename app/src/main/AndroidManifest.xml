@@ -35,7 +35,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".pubRescources.PubBrowser"
+            android:name=".pubResources.PubBrowser"
             android:label="Kocsmák"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
@@ -43,7 +43,7 @@
                 android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
         </activity>
         <activity
-            android:name=".restaurantRescources.RestaurantBrowser"
+            android:name=".restaurantResources.RestaurantBrowser"
             android:label="Gyorséttermek"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
@@ -51,7 +51,7 @@
                 android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
         </activity>
         <activity
-            android:name=".atmRescources.AtmBrowser"
+            android:name=".atmResources.AtmBrowser"
             android:label="Bankautomaták"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
@@ -59,7 +59,7 @@
                 android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
         </activity>
         <activity
-            android:name=".tobaccoRescources.TobaccoBrowser"
+            android:name=".tobaccoResources.TobaccoBrowser"
             android:label="Dohányboltok"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
@@ -67,7 +67,7 @@
                 android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
         </activity>
         <activity
-            android:name=".partyRescources.PartyBrowser"
+            android:name=".partyResources.PartyBrowser"
             android:label="Parties"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data
@@ -75,7 +75,7 @@
                 android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
         </activity>
         <activity
-            android:name=".shopRescources.ShopBrowser"
+            android:name=".shopResources.ShopBrowser"
             android:label="Shops"
             android:parentActivityName=".pages.StartingPage" >
             <meta-data

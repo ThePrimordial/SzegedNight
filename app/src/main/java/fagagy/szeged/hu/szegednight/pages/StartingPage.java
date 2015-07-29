@@ -21,12 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
-import fagagy.szeged.hu.szegednight.atmRescources.AtmBrowser;
-import fagagy.szeged.hu.szegednight.partyRescources.PartyBrowser;
-import fagagy.szeged.hu.szegednight.pubRescources.PubBrowser;
-import fagagy.szeged.hu.szegednight.restaurantRescources.RestaurantBrowser;
-import fagagy.szeged.hu.szegednight.shopRescources.ShopBrowser;
-import fagagy.szeged.hu.szegednight.tobaccoRescources.TobaccoBrowser;
+import fagagy.szeged.hu.szegednight.atmResources.AtmBrowser;
+import fagagy.szeged.hu.szegednight.partyResources.PartyBrowser;
+import fagagy.szeged.hu.szegednight.pubResources.PubBrowser;
+import fagagy.szeged.hu.szegednight.restaurantResources.RestaurantBrowser;
+import fagagy.szeged.hu.szegednight.shopResources.ShopBrowser;
+import fagagy.szeged.hu.szegednight.tobaccoResources.TobaccoBrowser;
 
 
 public class StartingPage extends Activity {

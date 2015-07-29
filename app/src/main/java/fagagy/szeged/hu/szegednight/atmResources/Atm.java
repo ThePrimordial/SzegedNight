@@ -1,6 +1,4 @@
-package fagagy.szeged.hu.szegednight.atmRescources;
-
-import android.location.Location;
+package fagagy.szeged.hu.szegednight.atmResources;
 
 /**
  * Created by TheSorrow on 15/07/23.

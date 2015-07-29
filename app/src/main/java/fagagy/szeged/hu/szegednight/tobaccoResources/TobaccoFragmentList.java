@@ -1,4 +1,4 @@
-package fagagy.szeged.hu.szegednight.shopRescources;
+package fagagy.szeged.hu.szegednight.tobaccoResources;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,12 +31,12 @@ import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
 
 /**
- * Created by TheSorrow on 15/07/28.
+ * Created by TheSorrow on 15/07/27.
  */
-public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemClickListener {
+public class TobaccoFragmentList extends ListFragment implements AdapterView.OnItemClickListener {
 
     public static final String TAG = "ListaNézet";
-    private ArrayList<Shop> shopList = new ArrayList<>();
+    private ArrayList<Tobacco> tobaccoList = new ArrayList<>();
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
     private Location gpsLoc;
@@ -45,7 +45,7 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = View.inflate(getActivity(), R.layout.shopfragmentrow, null);
+        View v = View.inflate(getActivity(), R.layout.tobaccofragmentrow, null);
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
         lm.requestLocationUpdates(
@@ -73,31 +73,38 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
         String sDay = getDay(day);
         generateRows(sDay, currHour);
 
-        ShopAdapter shopAdapter = new ShopAdapter(getActivity(), shopList);
-        setListAdapter(shopAdapter);
+        TobaccoAdapter tobaccoAdapter = new TobaccoAdapter(getActivity(), tobaccoList);
+        setListAdapter(tobaccoAdapter);
         registerForContextMenu(getListView());
         getListView().setOnItemClickListener(this);
 
     }
 
     private String getDay(int day) {
-        switch (day){
-            case 1:return "Sunday";
-            case 2:return "Monday";
-            case 3:return "Tuesday";
-            case 4:return "Wednesday";
-            case 5:return "Thursday";
-            case 6:return "Friday";
-            case 7:return "Saturday";
+        switch (day) {
+            case 1:
+                return "Sunday";
+            case 2:
+                return "Monday";
+            case 3:
+                return "Tuesday";
+            case 4:
+                return "Wednesday";
+            case 5:
+                return "Thursday";
+            case 6:
+                return "Friday";
+            case 7:
+                return "Saturday";
         }
         return null;
     }
 
     private void generateRows(String day, int currHour) {
         List<ParseObject> serverList = null;
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Shop");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Tobacco");
         try {
-            serverList = query.fromPin("Shop").find();
+            serverList = query.fromPin("Tobacco").find();
         } catch (ParseException e1) {
         }
 
@@ -105,12 +112,12 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
-                double distance  = 0.00;
-                Boolean open = checkOpen(serverList,  day, currHour, i);
-                Shop s1 = new Shop(name, open, distance);
-                shopList.add(s1);
+                double distance = 0.00;
+                Boolean open = checkOpen(serverList, day, currHour, i);
+                Tobacco t1 = new Tobacco(name, open, distance);
+                tobaccoList.add(t1);
             }
-        } else if(gpsLoc != null) {
+        } else if (gpsLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
@@ -121,16 +128,16 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
                 double distance = gpsLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = checkOpen(serverList, day, currHour, i);
                 String openUntil = getOpenUntil(serverList, day, currHour, i);
-                if(!open) {
-                    Shop s1 = new Shop(name, false, distance);
-                    s1.setLatitude(latitude);
-                    s1.setLongitude(longitude);
-                    shopList.add(s1);
-                }else{
-                    Shop s1 = new Shop(name, true, distance, openUntil);
-                    s1.setLatitude(latitude);
-                    s1.setLongitude(longitude);
-                    shopList.add(s1);
+                if (!open) {
+                    Tobacco t1 = new Tobacco(name, false, distance);
+                    t1.setLatitude(latitude);
+                    t1.setLongitude(longitude);
+                    tobaccoList.add(t1);
+                } else {
+                    Tobacco t1 = new Tobacco(name, true, distance, openUntil);
+                    t1.setLatitude(latitude);
+                    t1.setLongitude(longitude);
+                    tobaccoList.add(t1);
                 }
             }
         } else
@@ -144,23 +151,23 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
                 double distance = networkLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = checkOpen(serverList, day, currHour, i);
                 String openUntil = getOpenUntil(serverList, day, currHour, i);
-                if(!open) {
-                    Shop s1 = new Shop(name, false, distance);
-                    s1.setLatitude(latitude);
-                    s1.setLongitude(longitude);
-                    shopList.add(s1);
-                }else{
-                    Shop s1 = new Shop(name, true, distance, openUntil);
-                    s1.setLatitude(latitude);
-                    s1.setLongitude(longitude);
-                    shopList.add(s1);
+                if (!open) {
+                    Tobacco t1 = new Tobacco(name, false, distance);
+                    t1.setLatitude(latitude);
+                    t1.setLongitude(longitude);
+                    tobaccoList.add(t1);
+                } else {
+                    Tobacco t1 = new Tobacco(name, true, distance, openUntil);
+                    t1.setLatitude(latitude);
+                    t1.setLongitude(longitude);
+                    tobaccoList.add(t1);
                 }
             }
 
-        Collections.sort(shopList, new Comparator<Shop>() {
+        Collections.sort(tobaccoList, new Comparator<Tobacco>() {
             @Override
-            public int compare(Shop s1, Shop s2) {
-                return Double.compare(s1.getDistance(), s2.getDistance());
+            public int compare(Tobacco t1, Tobacco t2) {
+                return Double.compare(t1.getDistance(), t2.getDistance());
             }
         });
     }
@@ -168,7 +175,11 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
     private String getOpenUntil(List<ParseObject> serverList, String day, int currHour, int position) {
 
         try {
-            return String.valueOf(serverList.get(position).getJSONArray(day).get(1));
+            if (String.valueOf(serverList.get(position).getJSONArray(day).get(1)).equals("24")){
+                return "0";
+            }else {
+                return String.valueOf(serverList.get(position).getJSONArray(day).get(1));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -177,60 +188,52 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
 
     private Boolean checkOpen(List<ParseObject> serverList, String day, int currHour, int position) {
 
-        if(currHour < 5) {
-            try {
-                int openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
-                Log.d("openHour1", String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
-                if (openHour > currHour) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else
-            try {
-                int openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
-                Log.d("openHour0", String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
-                if (openHour < currHour) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        int openHour = 0;
+        int closeHour = 0;
 
-        return null;
-    }
+        try {
+            openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
+            closeHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
+            Log.d("yxcv", "openhour" + String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
+            Log.d("yxcv", "closehour" + String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
+            Log.d("yxcv", "curr" + String.valueOf(currHour));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ;
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        String uri =null;
-        if (gpsLoc == null && networkLoc == null) {
-            Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
-        } else if (gpsLoc != null) {
-            uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
-                    "&daddr="+shopList.get(position).getLatitude()+","+shopList.get(position).getLongitude();
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            startActivity(i);
-        } else
-            uri = "http://maps.google.com/maps?saddr="+networkLoc.getLatitude()+","+networkLoc.getLongitude()+
-                    "&daddr="+shopList.get(position).getLatitude()+","+shopList.get(position).getLongitude();
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        startActivity(i);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (lm != null) {
-            lm.removeUpdates(locListener);
+        if (openHour <= currHour && currHour < closeHour) {
+            return true;
+        } else {
+            return false;
         }
     }
 
+        @Override
+        public void onItemClick (AdapterView < ? > parent, View view,int position, long id){
 
-}
+            String uri = null;
+            if (gpsLoc == null && networkLoc == null) {
+                Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
+            } else if (gpsLoc != null) {
+                uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+                        "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(i);
+            } else
+                uri = "http://maps.google.com/maps?saddr=" + networkLoc.getLatitude() + "," + networkLoc.getLongitude() +
+                        "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(i);
+        }
 
+        @Override
+        public void onPause () {
+            super.onPause();
+            if (lm != null) {
+                lm.removeUpdates(locListener);
+            }
+        }
+
+
+    }

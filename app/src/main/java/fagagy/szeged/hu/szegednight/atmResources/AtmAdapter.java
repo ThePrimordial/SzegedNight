@@ -1,8 +1,6 @@
-package fagagy.szeged.hu.szegednight.atmRescources;
+package fagagy.szeged.hu.szegednight.atmResources;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

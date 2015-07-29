@@ -1,4 +1,4 @@
-package fagagy.szeged.hu.szegednight.restaurantRescources;
+package fagagy.szeged.hu.szegednight.restaurantResources;
 
 import android.content.Context;
 import android.graphics.Color;

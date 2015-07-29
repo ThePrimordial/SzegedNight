@@ -1,4 +1,4 @@
-package fagagy.szeged.hu.szegednight.partyRescources;
+package fagagy.szeged.hu.szegednight.atmResources;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,38 +14,38 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
 
 /**
- * Created by TheSorrow on 15/07/28.
+ * Created by TheSorrow on 15/07/23.
  */
-public class PartyFragmentList extends ListFragment implements AdapterView.OnItemClickListener  {
+public class AtmFragmentList extends ListFragment implements AdapterView.OnItemClickListener {
 
     public static final String TAG = "ListaNézet";
-    private ArrayList<Party> partyList = new ArrayList<>();
+    private ArrayList<Atm> atmList = new ArrayList<>();
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
     private Location gpsLoc;
     private Location networkLoc;
+    private MapView mMapView;
+    private GoogleMap googleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = View.inflate(getActivity(), R.layout.partyfragmentrow, null);
+        View v = View.inflate(getActivity(), R.layout.atmfragmentrow, null);
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
         lm.requestLocationUpdates(
@@ -65,8 +65,8 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
         super.onActivityCreated(savedInstanceState);
         generateRows();
 
-        PartyAdapter partyAdapter = new PartyAdapter(getActivity(), partyList);
-        setListAdapter(partyAdapter);
+        AtmAdapter atmAdapter = new AtmAdapter(getActivity(), atmList);
+        setListAdapter(atmAdapter);
         registerForContextMenu(getListView());
         getListView().setOnItemClickListener(this);
 
@@ -74,59 +74,61 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
 
     private void generateRows() {
         List<ParseObject> serverList = null;
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Party");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ATM");
         try {
-            serverList = query.fromPin("Party").find();
+            serverList = query.fromPin("ATM").find();
         } catch (ParseException e1) {
         }
 
         if (gpsLoc == null && networkLoc == null) {
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
-                String place = serverList.get(i).getString("Place");
-                String event = serverList.get(i).getString("EventName");
-                Date date = serverList.get(i).getDate("Date");
-                double distance  = 0.00;
-                Party p1 = new Party(place, event, distance, date);
-                partyList.add(p1);
+                String name = serverList.get(i).getString("Name");
+                double distance = 0.00;
+                String type = serverList.get(i).getString("Type");
+                Atm a1 = new Atm(name, type, distance);
+                atmList.add(a1);
             }
-        } else if(gpsLoc != null) {
+        } else if (gpsLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
-                String place = serverList.get(i).getString("Place");
-                String event = serverList.get(i).getString("EventName");
-                Date date = serverList.get(i).getDate("Date");
+                String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
                 double longitude = serverList.get(i).getDouble("Longitude");
                 double latitude = serverList.get(i).getDouble("Latitude");
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
                 double distance = gpsLoc.distanceTo(targetLocation) / 1000;
-                Party p1 = new Party(place, event, distance, date);
-                partyList.add(p1);
+                String type = serverList.get(i).getString("Type");
+                Atm a1 = new Atm(name, type, distance);
+                a1.setLatitude(latitude);
+                a1.setLongitude(longitude);
+                Log.d("atmtype", a1.getType());
+                atmList.add(a1);
             }
         } else
             for (int i = 0; i < serverList.size(); i++) {
-                String place = serverList.get(i).getString("Place");
-                String event = serverList.get(i).getString("EventName");
-                Date date = serverList.get(i).getDate("Date");
+                String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
                 double longitude = serverList.get(i).getDouble("Longitude");
                 double latitude = serverList.get(i).getDouble("Latitude");
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
                 double distance = networkLoc.distanceTo(targetLocation) / 1000;
-                Party p1 = new Party(place, event, distance, date);
-                partyList.add(p1);
+                String type = serverList.get(i).getString("Type");
+                Atm a1 = new Atm(name, type, distance);
+                a1.setLatitude(latitude);
+                a1.setLongitude(longitude);
+                Log.d("atmtype", a1.getType());
+                atmList.add(a1);
             }
 
-        Collections.sort(partyList, new Comparator<Party>() {
+        Collections.sort(atmList, new Comparator<Atm>() {
             @Override
-            public int compare(Party p1, Party p2) {
-                return p1.getDate().compareTo(p2.getDate());
+            public int compare(Atm a1, Atm a2) {
+                return Double.compare(a1.getDistance(), a2.getDistance());
             }
         });
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -136,12 +138,12 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
             Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
         } else if (gpsLoc != null) {
             uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
-                    "&daddr="+partyList.get(position).getLatitude()+","+partyList.get(position).getLongitude();
+                    "&daddr="+atmList.get(position).getLatitude()+","+atmList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
-        } else
+        } else if(networkLoc != null)
             uri = "http://maps.google.com/maps?saddr="+networkLoc.getLatitude()+","+networkLoc.getLongitude()+
-                    "&daddr="+partyList.get(position).getLatitude()+","+partyList.get(position).getLongitude();
+                    "&daddr="+atmList.get(position).getLatitude()+","+atmList.get(position).getLongitude();
         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(i);
     }
@@ -153,6 +155,5 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
             lm.removeUpdates(locListener);
         }
     }
-
 
 }

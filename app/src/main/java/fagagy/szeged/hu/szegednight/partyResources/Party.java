@@ -1,4 +1,4 @@
-package fagagy.szeged.hu.szegednight.partyRescources;
+package fagagy.szeged.hu.szegednight.partyResources;
 
 import java.util.Date;
 

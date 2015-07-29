@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-import fagagy.szeged.hu.szegednight.pubRescources.PubFragmentList;
+import fagagy.szeged.hu.szegednight.pubResources.PubFragmentList;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
 

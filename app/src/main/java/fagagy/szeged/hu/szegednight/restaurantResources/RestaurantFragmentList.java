@@ -1,4 +1,4 @@
-package fagagy.szeged.hu.szegednight.restaurantRescources;
+package fagagy.szeged.hu.szegednight.restaurantResources;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +30,6 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
-import fagagy.szeged.hu.szegednight.pubRescources.Pub;
 
 public class RestaurantFragmentList extends ListFragment implements OnItemClickListener {
 
@@ -165,7 +164,11 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
     private String getOpenUntil(List<ParseObject> serverList, String day, int currHour, int position) {
 
         try {
-            return String.valueOf(serverList.get(position).getJSONArray(day).get(1));
+            if (String.valueOf(serverList.get(position).getJSONArray(day).get(1)).equals("24")){
+                return "0";
+            }else {
+                return String.valueOf(serverList.get(position).getJSONArray(day).get(1));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -174,32 +177,25 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
 
     private Boolean checkOpen(List<ParseObject> serverList, String day, int currHour, int position) {
 
-        if(currHour < 5) {
-            try {
-                int openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
-                Log.d("openHour1", String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
-                if (openHour > currHour) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else
-            try {
-                int openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
-                Log.d("openHour0", String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
-                if (openHour < currHour) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        int openHour = 0;
+        int closeHour = 0;
 
-        return null;
+        try {
+            openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
+            closeHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
+            Log.d("yxcv", "openhour" + String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
+            Log.d("yxcv", "closehour" + String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
+            Log.d("yxcv", "curr" + String.valueOf(currHour));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ;
+
+        if (openHour <= currHour && currHour < closeHour) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

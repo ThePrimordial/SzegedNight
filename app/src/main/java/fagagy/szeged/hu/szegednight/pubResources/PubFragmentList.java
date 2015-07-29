@@ -1,17 +1,11 @@
-package fagagy.szeged.hu.szegednight.pubRescources;
+package fagagy.szeged.hu.szegednight.pubResources;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,32 +15,21 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-import com.parse.DeleteCallback;
-import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import org.json.JSONException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Objects;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
-import fagagy.szeged.hu.szegednight.pages.StartingPage;
 
 /**
  * Created by TheSorrow on 15/07/20.
@@ -186,7 +169,11 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     private String getOpenUntil(List<ParseObject> serverList, String day, int currHour, int position) {
 
         try {
-            return String.valueOf(serverList.get(position).getJSONArray(day).get(1));
+            if (String.valueOf(serverList.get(position).getJSONArray(day).get(1)).equals("24")){
+                return "0";
+            }else {
+                return String.valueOf(serverList.get(position).getJSONArray(day).get(1));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -195,32 +182,25 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
 
     private Boolean checkOpen(List<ParseObject> serverList, String day, int currHour, int position) {
 
-        if(currHour < 5) {
-            try {
-                int openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
-                Log.d("openHour1", String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
-                if (openHour > currHour) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else
-            try {
-                int openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
-                Log.d("openHour0", String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
-                if (openHour < currHour) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        int openHour = 0;
+        int closeHour = 0;
 
-            return null;
+        try {
+            openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
+            closeHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
+            Log.d("yxcv", "openhour" + String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
+            Log.d("yxcv", "closehour" + String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
+            Log.d("yxcv", "curr" + String.valueOf(currHour));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ;
+
+        if (openHour <= currHour && currHour < closeHour) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

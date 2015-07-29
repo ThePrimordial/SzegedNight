@@ -1,28 +1,23 @@
-package fagagy.szeged.hu.szegednight.pubRescources;
+package fagagy.szeged.hu.szegednight.restaurantResources;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.FragmentAdapter;
 
-public class PubBrowser extends FragmentActivity {
-
-    public static FragmentManager fragmentManager;
+public class RestaurantBrowser extends FragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browsing_with_swipe);
 
-        fragmentManager = getSupportFragmentManager();
-        Fragment pubFragmentRow = new PubFragmentList();
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), pubFragmentRow, "Pub");
+        Fragment resFragment = new RestaurantFragmentList();
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), resFragment, "Restaurant");
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(adapter);
     }
-
 }

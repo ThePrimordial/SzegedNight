@@ -1,6 +1,9 @@
-package fagagy.szeged.hu.szegednight.pubRescources;
+package fagagy.szeged.hu.szegednight.shopResources;
 
-public class Pub {
+/**
+ * Created by TheSorrow on 15/07/28.
+ */
+public class Shop {
 
     private String name;
     private double distance;
@@ -14,13 +17,13 @@ public class Pub {
     }
 
 
-    public Pub(String name, boolean open, double distance) {
+    public Shop(String name, boolean open, double distance) {
         this.name = name;
         this.open = open;
         this.distance = distance;
     }
 
-    public Pub(String name, boolean open, double distance, String openUntil) {
+    public Shop(String name, boolean open, double distance, String openUntil) {
         this.name = name;
         this.open = open;
         this.distance = distance;

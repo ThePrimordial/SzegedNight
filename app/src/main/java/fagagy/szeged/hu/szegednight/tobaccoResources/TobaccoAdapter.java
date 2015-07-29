@@ -1,4 +1,4 @@
-package fagagy.szeged.hu.szegednight.tobaccoRescources;
+package fagagy.szeged.hu.szegednight.tobaccoResources;
 
 import android.content.Context;
 import android.graphics.Color;
