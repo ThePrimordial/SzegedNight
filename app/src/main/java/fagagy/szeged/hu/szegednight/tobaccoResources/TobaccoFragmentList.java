@@ -175,9 +175,9 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
     private String getOpenUntil(List<ParseObject> serverList, String day, int currHour, int position) {
 
         try {
-            if (String.valueOf(serverList.get(position).getJSONArray(day).get(1)).equals("24")){
+            if (String.valueOf(serverList.get(position).getJSONArray(day).get(1)).equals("24")) {
                 return "0";
-            }else {
+            } else {
                 return String.valueOf(serverList.get(position).getJSONArray(day).get(1));
             }
         } catch (JSONException e) {
@@ -198,39 +198,43 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
             e.printStackTrace();
         }
         ;
-
         if (openHour <= currHour && currHour < closeHour) {
             return true;
-        } else {
-            return false;
-        }
-    }
-
-        @Override
-        public void onItemClick (AdapterView < ? > parent, View view,int position, long id){
-
-            String uri = null;
-            if (gpsLoc == null && networkLoc == null) {
-                Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
-            } else if (gpsLoc != null) {
-                uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
-                        "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                startActivity(i);
-            } else if(gpsLoc == null && networkLoc != null)
-                uri = "http://maps.google.com/maps?saddr=" + networkLoc.getLatitude() + "," + networkLoc.getLongitude() +
-                        "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            startActivity(i);
-        }
-
-        @Override
-        public void onPause () {
-            super.onPause();
-            if (lm != null) {
-                lm.removeUpdates(locListener);
+        } else if (closeHour < 7) {
+            if (openHour <= currHour && currHour < 24) {
+                return true;
+            } else if (0 <= currHour && currHour < closeHour) {
+                return true;
             }
         }
-
-
+        return false;
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        String uri = null;
+        if (gpsLoc == null && networkLoc == null) {
+            Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
+        } else if (gpsLoc != null) {
+            uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+                    "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(i);
+        } else if (gpsLoc == null && networkLoc != null)
+            uri = "http://maps.google.com/maps?saddr=" + networkLoc.getLatitude() + "," + networkLoc.getLongitude() +
+                    "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(i);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (lm != null) {
+            lm.removeUpdates(locListener);
+        }
+    }
+
+
+}

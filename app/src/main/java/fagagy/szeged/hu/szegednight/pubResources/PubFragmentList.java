@@ -82,16 +82,23 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     }
 
     private String getDay(int day) {
-        switch (day){
-            case 1:return "Sunday";
-            case 2:return "Monday";
-            case 3:return "Tuesday";
-            case 4:return "Wednesday";
-            case 5:return "Thursday";
-            case 6:return "Friday";
-            case 7:return "Saturday";
+        switch (day) {
+            case 1:
+                return "Sunday";
+            case 2:
+                return "Monday";
+            case 3:
+                return "Tuesday";
+            case 4:
+                return "Wednesday";
+            case 5:
+                return "Thursday";
+            case 6:
+                return "Friday";
+            case 7:
+                return "Saturday";
         }
-            return null;
+        return null;
     }
 
     private void generateRows(String day, int currHour) {
@@ -106,12 +113,12 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
-                double distance  = 0.00;
-                Boolean open = checkOpen(serverList,  day, currHour, i);
+                double distance = 0.00;
+                Boolean open = checkOpen(serverList, day, currHour, i);
                 Pub p1 = new Pub(name, open, distance);
                 pubList.add(p1);
             }
-        } else if(gpsLoc != null) {
+        } else if (gpsLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
@@ -122,12 +129,12 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
                 double distance = gpsLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = checkOpen(serverList, day, currHour, i);
                 String openUntil = getOpenUntil(serverList, day, currHour, i);
-                if(!open) {
+                if (!open) {
                     Pub p1 = new Pub(name, open, distance);
                     p1.setLatitude(latitude);
                     p1.setLongitude(longitude);
                     pubList.add(p1);
-                }else{
+                } else {
                     Pub p1 = new Pub(name, open, distance, openUntil);
                     p1.setLatitude(latitude);
                     p1.setLongitude(longitude);
@@ -145,12 +152,12 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
                 double distance = networkLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = checkOpen(serverList, day, currHour, i);
                 String openUntil = getOpenUntil(serverList, day, currHour, i);
-                if(!open) {
+                if (!open) {
                     Pub p1 = new Pub(name, open, distance);
                     p1.setLatitude(latitude);
                     p1.setLongitude(longitude);
                     pubList.add(p1);
-                }else{
+                } else {
                     Pub p1 = new Pub(name, open, distance, openUntil);
                     p1.setLatitude(latitude);
                     p1.setLongitude(longitude);
@@ -169,9 +176,9 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     private String getOpenUntil(List<ParseObject> serverList, String day, int currHour, int position) {
 
         try {
-            if (String.valueOf(serverList.get(position).getJSONArray(day).get(1)).equals("24")){
+            if (String.valueOf(serverList.get(position).getJSONArray(day).get(1)).equals("24")) {
                 return "0";
-            }else {
+            } else {
                 return String.valueOf(serverList.get(position).getJSONArray(day).get(1));
             }
         } catch (JSONException e) {
@@ -191,29 +198,35 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        ;
+
 
         if (openHour <= currHour && currHour < closeHour) {
             return true;
-        } else {
-            return false;
+        } else if (closeHour < 7) {
+            if (openHour <= currHour && currHour < 24) {
+                return true;
+            } else if (0 <= currHour && currHour < closeHour) {
+                return true;
+            }
         }
+        return false;
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        String uri =null;
+        String uri = null;
         if (gpsLoc == null && networkLoc == null) {
             Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
         } else if (gpsLoc != null) {
-            uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
-                    "&daddr="+pubList.get(position).getLatitude()+","+pubList.get(position).getLongitude();
+            uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+                    "&daddr=" + pubList.get(position).getLatitude() + "," + pubList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
-        } else if(networkLoc != null)
-            uri = "http://maps.google.com/maps?saddr="+networkLoc.getLatitude()+","+networkLoc.getLongitude()+
-                    "&daddr="+pubList.get(position).getLatitude()+","+pubList.get(position).getLongitude();
+        } else if (networkLoc != null)
+            uri = "http://maps.google.com/maps?saddr=" + networkLoc.getLatitude() + "," + networkLoc.getLongitude() +
+                    "&daddr=" + pubList.get(position).getLatitude() + "," + pubList.get(position).getLongitude();
         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(i);
     }

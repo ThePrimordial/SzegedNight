@@ -86,9 +86,9 @@ public class AtmAdapter extends BaseAdapter {
         atmListNameText.setText(atm.getName());
 
         if(position % 2 == 0){
-            atmView.setBackground(ContextCompat.getDrawable(atmView.getContext(), R.drawable.border_ui1));
+            atmView.setBackgroundResource(R.drawable.border_ui1);
         }else {
-            atmView.setBackground(ContextCompat.getDrawable(atmView.getContext(), R.drawable.border_ui2));
+            atmView.setBackgroundResource(R.drawable.border_ui2);
         }
 
         return atmView;

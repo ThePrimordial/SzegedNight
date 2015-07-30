@@ -81,9 +81,9 @@ public class PartyAdapter extends BaseAdapter {
             partyDateText.setTextColor(Color.GREEN);
 
         if(position % 2 == 0){
-            partyView.setBackground(ContextCompat.getDrawable(partyView.getContext(), R.drawable.border_ui1));
+            partyView.setBackgroundResource(R.drawable.border_ui1);
         }else {
-            partyView.setBackground(ContextCompat.getDrawable(partyView.getContext(), R.drawable.border_ui2));
+            partyView.setBackgroundResource(R.drawable.border_ui2);
         }
 
         return partyView;

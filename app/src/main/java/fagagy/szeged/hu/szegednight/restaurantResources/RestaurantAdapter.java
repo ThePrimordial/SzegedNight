@@ -73,9 +73,9 @@ public class RestaurantAdapter extends BaseAdapter {
         }
         resListNameText.setText(restaurant.getName());
         if(position % 2 == 0){
-            resView.setBackground(ContextCompat.getDrawable(resView.getContext(), R.drawable.border_ui1));
+            resView.setBackgroundResource(R.drawable.border_ui1);
         }else {
-            resView.setBackground(ContextCompat.getDrawable(resView.getContext(), R.drawable.border_ui2));
+            resView.setBackgroundResource(R.drawable.border_ui2);
         }
 
         return resView;

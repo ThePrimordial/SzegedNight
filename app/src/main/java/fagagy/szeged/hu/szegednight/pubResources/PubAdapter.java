@@ -75,11 +75,10 @@ public class PubAdapter extends BaseAdapter {
         pubListNameText.setText(pub.getName());
 
         if(position % 2 == 0){
-            pubView.setBackground(ContextCompat.getDrawable(pubView.getContext(), R.drawable.border_ui1));
+            pubView.setBackgroundResource(R.drawable.border_ui1);
         }else {
-            pubView.setBackground(ContextCompat.getDrawable(pubView.getContext(), R.drawable.border_ui2));
+            pubView.setBackgroundResource(R.drawable.border_ui2);
         }
-
 
         return pubView;
     }

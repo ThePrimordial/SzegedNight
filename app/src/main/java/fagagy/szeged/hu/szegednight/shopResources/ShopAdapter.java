@@ -74,9 +74,9 @@ public class ShopAdapter extends BaseAdapter {
         shopListNameText.setText(shop.getName());
 
         if(position % 2 == 0){
-            shopView.setBackground(ContextCompat.getDrawable(shopView.getContext(), R.drawable.border_ui1));
+            shopView.setBackgroundResource(R.drawable.border_ui1);
         }else {
-            shopView.setBackground(ContextCompat.getDrawable(shopView.getContext(), R.drawable.border_ui2));
+            shopView.setBackgroundResource(R.drawable.border_ui2);
         }
 
         return shopView;

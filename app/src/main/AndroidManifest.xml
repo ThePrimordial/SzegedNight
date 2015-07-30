@@ -16,14 +16,14 @@
         android:allowBackup="true"
         android:icon="@mipmap/icon3"
         android:label="@string/app_name"
-        android:theme="@style/no_title" >
+        android:theme="@style/no_title"
+        android:largeHeap="true">
         <activity
             android:name=".pages.StartingPage"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
