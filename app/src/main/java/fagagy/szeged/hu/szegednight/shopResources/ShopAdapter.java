@@ -58,7 +58,7 @@ public class ShopAdapter extends BaseAdapter {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         if (shop.isOpen()){
-            shopListOpenText.setText("Nyitva! " + shop.getOpenUntil() + ".00-ig");
+            shopListOpenText.setText("Éjjel-Nappal nyitva");
             shopListOpenText.setTextColor(Color.GREEN);
         }else if(!shop.isOpen()) {
             shopListOpenText.setText("Zarva! :( ");

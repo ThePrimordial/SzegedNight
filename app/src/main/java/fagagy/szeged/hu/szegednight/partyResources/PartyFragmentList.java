@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -25,6 +26,8 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
+import fagagy.szeged.hu.szegednight.pages.StartingPage;
+import fagagy.szeged.hu.szegednight.pubResources.PubBrowser;
 
 /**
  * Created by TheSorrow on 15/07/28.

@@ -217,7 +217,7 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
                         "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(i);
-            } else
+            } else if(gpsLoc == null && networkLoc != null)
                 uri = "http://maps.google.com/maps?saddr=" + networkLoc.getLatitude() + "," + networkLoc.getLongitude() +
                         "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));

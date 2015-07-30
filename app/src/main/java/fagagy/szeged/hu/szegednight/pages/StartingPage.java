@@ -41,10 +41,9 @@ public class StartingPage extends Activity {
 
         FetchCordinates fetchCordinates = new FetchCordinates();
         fetchCordinates.execute();
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "JQGvIPiUsllFbVsmq63xWd34UQxrKOusu2M5XLlr", "x24qzq57nI7xKwkl89M6zbuIez35ILsywXasVKee");
-
         if (!isNetworkAvailable()) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_starting_page);
             Toast.makeText(this, "Nincs internetkapcsolat. Adatbázis elavult lehet!", Toast.LENGTH_LONG)
                     .show();
         } else {
