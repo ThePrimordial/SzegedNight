@@ -1,6 +1,7 @@
 package fagagy.szeged.hu.szegednight.atmResources;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,12 @@ public class AtmAdapter extends BaseAdapter {
             atmistDistanceText.setText(intDistance + " m");
         }
         atmListNameText.setText(atm.getName());
+
+        if(position % 2 == 0){
+            atmView.setBackground(ContextCompat.getDrawable(atmView.getContext(), R.drawable.border_ui1));
+        }else {
+            atmView.setBackground(ContextCompat.getDrawable(atmView.getContext(), R.drawable.border_ui2));
+        }
 
         return atmView;
     }

@@ -194,9 +194,6 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
         try {
             openHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
             closeHour = Integer.parseInt(String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
-            Log.d("yxcv", "openhour" + String.valueOf(serverList.get(position).getJSONArray(day).get(0)));
-            Log.d("yxcv", "closehour" + String.valueOf(serverList.get(position).getJSONArray(day).get(1)));
-            Log.d("yxcv", "curr" + String.valueOf(currHour));
         } catch (JSONException e) {
             e.printStackTrace();
         }

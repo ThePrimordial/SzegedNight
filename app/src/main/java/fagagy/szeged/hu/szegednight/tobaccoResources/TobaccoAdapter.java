@@ -2,6 +2,7 @@ package fagagy.szeged.hu.szegednight.tobaccoResources;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,11 @@ public class TobaccoAdapter extends BaseAdapter {
             tobaccoListDistanceText.setText(intDistance + " m");
         }
         tobaccoListNameText.setText(tobacco.getName());
-
+        if(position % 2 == 0){
+            tobaccoView.setBackground(ContextCompat.getDrawable(tobaccoView.getContext(), R.drawable.border_ui1));
+        }else {
+            tobaccoView.setBackground(ContextCompat.getDrawable(tobaccoView.getContext(), R.drawable.border_ui2));
+        }
 
         return tobaccoView;
     }

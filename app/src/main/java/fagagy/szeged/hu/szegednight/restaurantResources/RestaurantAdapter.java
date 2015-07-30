@@ -2,6 +2,7 @@ package fagagy.szeged.hu.szegednight.restaurantResources;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,11 @@ public class RestaurantAdapter extends BaseAdapter {
         resListDistanceText.setText(intDistance + " m");
         }
         resListNameText.setText(restaurant.getName());
+        if(position % 2 == 0){
+            resView.setBackground(ContextCompat.getDrawable(resView.getContext(), R.drawable.border_ui1));
+        }else {
+            resView.setBackground(ContextCompat.getDrawable(resView.getContext(), R.drawable.border_ui2));
+        }
 
         return resView;
     }

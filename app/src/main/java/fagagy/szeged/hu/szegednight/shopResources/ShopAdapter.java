@@ -2,6 +2,7 @@ package fagagy.szeged.hu.szegednight.shopResources;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,12 @@ public class ShopAdapter extends BaseAdapter {
             shopListDistanceText.setText(intDistance + " m");
         }
         shopListNameText.setText(shop.getName());
+
+        if(position % 2 == 0){
+            shopView.setBackground(ContextCompat.getDrawable(shopView.getContext(), R.drawable.border_ui1));
+        }else {
+            shopView.setBackground(ContextCompat.getDrawable(shopView.getContext(), R.drawable.border_ui2));
+        }
 
         return shopView;
     }

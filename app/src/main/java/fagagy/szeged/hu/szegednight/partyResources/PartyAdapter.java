@@ -2,6 +2,7 @@ package fagagy.szeged.hu.szegednight.partyResources;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,12 @@ public class PartyAdapter extends BaseAdapter {
             partyDateText.setTextColor(Color.RED);
         } else
             partyDateText.setTextColor(Color.GREEN);
+
+        if(position % 2 == 0){
+            partyView.setBackground(ContextCompat.getDrawable(partyView.getContext(), R.drawable.border_ui1));
+        }else {
+            partyView.setBackground(ContextCompat.getDrawable(partyView.getContext(), R.drawable.border_ui2));
+        }
 
         return partyView;
     }
