@@ -32,8 +32,9 @@
         android:layout_alignParentEnd="true" />
 
     <ImageView
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        android:padding="8dp"
         android:id="@+id/typeImage"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
