@@ -44,18 +44,6 @@
         android:onClick="onClick"
         android:theme="@style/AppTheme" />
 
-    /**ImageButton
-        *android:background="@drawable/btn_taxi"
-        *android:layout_width="350dp"
-        *android:layout_height="60dp"
-        *android:layout_gravity="center_horizontal"
-        *android:layout_marginBottom="10dp"
-        *android:text="@string/Taxies"
-        *android:id="@+id/btnTaxies"
-        *android:onClick="onClick"
-        *android:theme="@style/AppTheme"
-        **/
-
     <ImageButton
         android:background="@drawable/btn_shops"
         android:layout_width="500dp"
@@ -91,5 +79,13 @@
         android:onClick="onClick"
         android:theme="@style/AppTheme"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kontakt"
+        android:onClick="onClick"
+        android:id="@+id/btnContact"
+        android:layout_gravity="right" />
 
 </LinearLayout>

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.parse.Parse;
@@ -48,6 +49,7 @@ public class StartingPage extends Activity {
             setContentView(R.layout.activity_starting_page);
             Toast.makeText(this, "Nincs internetkapcsolat. Adatbázis elavult lehet!", Toast.LENGTH_LONG)
                     .show();
+
         } else {
             UpdateDataBase updateDataBase = new UpdateDataBase();
             updateDataBase.execute();
@@ -83,6 +85,13 @@ public class StartingPage extends Activity {
             case R.id.btnShops:
                 i.setClass(this, ShopBrowser.class);
                 startActivity(i);
+                break;
+            case R.id.btnContact:
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "szeged.night@gmail.com" });
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Helyadat változtatás");
+                startActivity(Intent.createChooser(intent, ""));
                 break;
             default:
                 break;
@@ -167,13 +176,6 @@ public class StartingPage extends Activity {
                 Toast.makeText(StartingPage.this, "GPS pozíció megtalálva!", Toast.LENGTH_LONG)
                         .show();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.menu_starting_page, menu);
-        return true;
     }
 
     @Override
