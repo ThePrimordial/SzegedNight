@@ -1,7 +1,6 @@
 package fagagy.szeged.hu.szegednight.atmResources;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +61,7 @@ public class AtmAdapter extends BaseAdapter {
                 break;
             case "erste":logo.setImageResource(R.drawable.erste_logo_w);
                 break;
-            case "cib":logo.setImageResource(R.drawable.cib_logo_w);
+            case "cib":logo.setImageResource(R.drawable.cib_logo);
                 break;
             case "kh":logo.setImageResource(R.drawable.kah_logo_w);
                 break;
