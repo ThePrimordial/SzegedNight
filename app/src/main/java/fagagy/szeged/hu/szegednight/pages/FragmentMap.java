@@ -111,21 +111,20 @@ public class FragmentMap extends Fragment {
             Double latitude = serverList.get(i).getDouble("Latitude");
 
             MarkerOptions marker = new MarkerOptions().position(
-                    new LatLng(latitude, longitude)).title(name);
-            googleMap.addMarker(marker);
+                    new LatLng(latitude, longitude));
+            googleMap.addMarker(marker).setTitle(name);
 
         }
 
         LocationManager mng = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         MyCurrentLocationListener listener = new MyCurrentLocationListener();
         Location location = getLocation(mng, listener);
-        Log.d("lokáció", String.valueOf(location.getLatitude()) + "" + String.valueOf(location.getLongitude()));
         double myLat = location.getLatitude();
         double myLong = location.getLongitude();
 
         MarkerOptions marker = new MarkerOptions().position(
                 new LatLng(myLat, myLong)).title("Saját Pozíció");
-        googleMap.addMarker(marker);
+        googleMap.addMarker(marker).showInfoWindow();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLong), 15);
         googleMap.animateCamera(cameraUpdate);
     }

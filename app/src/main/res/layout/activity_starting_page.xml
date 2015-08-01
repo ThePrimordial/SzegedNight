@@ -50,19 +50,6 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"/>
 
-    /**ImageButton
-        *android:background="@drawable/btn_taxi"
-        *android:layout_marginLeft="15dp"
-        *android:layout_marginRight="15dp"
-        *android:layout_width="wrap_content"
-        *android:layout_height="60dp"
-        *android:text="@string/Taxies"
-        *android:id="@+id/btnTaxies"
-        *android:layout_gravity="center_horizontal"
-        *android:onClick="onClick"
-        *android:theme="@style/AppTheme"
-        **/
-
     <ImageButton
         android:background="@drawable/btn_shops"
         android:layout_width="wrap_content"
