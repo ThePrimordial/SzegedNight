@@ -89,8 +89,15 @@ public class StartingPage extends Activity {
             case R.id.btnContact:
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("plain/text");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "szeged.night@gmail.com" });
+
+                StringBuilder sb = new StringBuilder();
+                sb.append("Hely neve, címe: ");
+                sb.append('\n');
+                sb.append("Javítandó adat:");
+
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"szeged.night@gmail.com"});
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Helyadat változtatás");
+                intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
                 startActivity(Intent.createChooser(intent, ""));
                 break;
             default:
