@@ -1,4 +1,4 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,45 +13,53 @@
 
     <ImageButton
         android:background="@drawable/btn_pub"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/Pubs"
         android:id="@+id/btnPubs"
-        android:onClick="onClick"
-        android:layout_above="@+id/btnParties"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" />
+        android:onClick="onClick" />
 
     <ImageButton
         android:background="@drawable/btn_party"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/Parties"
         android:id="@+id/btnParties"
         android:onClick="onClick"
-        android:theme="@style/AppTheme"
-        android:layout_above="@+id/btnRestaurants"
-        android:layout_alignLeft="@+id/btnRestaurants"
-        android:layout_alignStart="@+id/btnRestaurants"
-        android:layout_alignRight="@+id/btnPubs"
-        android:layout_alignEnd="@+id/btnPubs" />
+        android:theme="@style/AppTheme" />
 
     <ImageButton
         android:background="@drawable/btn_restau"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/Restaurants"
         android:id="@+id/btnRestaurants"
         android:onClick="onClick"
-        android:theme="@style/AppTheme"
-        android:layout_above="@+id/btnShops"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"/>
+        android:theme="@style/AppTheme" />
+
+    /**ImageButton
+    *android:background="@drawable/btn_taxi"
+    *android:layout_marginLeft="15dp"
+    *android:layout_marginRight="15dp"
+    *android:layout_width="wrap_content"
+    *android:layout_height="60dp"
+    *android:text="@string/Taxies"
+    *android:id="@+id/btnTaxies"
+    *android:layout_gravity="center_horizontal"
+    *android:onClick="onClick"
+    *android:theme="@style/AppTheme"
+    **/
 
     <ImageButton
         android:background="@drawable/btn_shops"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/Shops"
@@ -59,13 +67,12 @@
         android:layout_gravity="center_horizontal"
         android:onClick="onClick"
         android:theme="@style/AppTheme"
-        android:layout_above="@+id/btnATM"
-        android:layout_marginRight="15dp"
-        android:layout_alignLeft="@+id/btnATM"
-        android:layout_alignStart="@+id/btnATM" />
+        />
 
     <ImageButton
         android:background="@drawable/btn_atm"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/ATM_Finder"
@@ -73,13 +80,12 @@
         android:layout_gravity="center_horizontal"
         android:onClick="onClick"
         android:theme="@style/AppTheme"
-        android:layout_above="@+id/btnTobaccoShops"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"/>
+        />
 
     <ImageButton
         android:background="@drawable/btn_trafik"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:text="@string/TobaccoShops"
@@ -87,32 +93,37 @@
         android:layout_gravity="center_horizontal"
         android:onClick="onClick"
         android:theme="@style/AppTheme"
-        android:layout_above="@+id/btnContact"
-        android:layout_alignLeft="@+id/btnATM"
-        android:layout_alignStart="@+id/btnATM"
-        android:layout_alignRight="@+id/btnATM"
-        android:layout_alignEnd="@+id/btnATM" />
+        />
 
-    <ImageButton
-        android:background="@drawable/btn_kontakt"
-        android:layout_width="165dp"
-        android:layout_height="60dp"
-        android:text="Kontakt"
-        android:onClick="onClick"
-        android:id="@+id/btnContact"
-        android:layout_gravity="right"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btnTobaccoShops"
-        android:layout_alignEnd="@+id/btnTobaccoShops" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="40dp">
 
-    <ImageButton
-        android:background="@drawable/btn_info"
-        android:layout_width="165dp"
-        android:layout_height="60dp"
-        android:id="@id/info"
-        android:text="Info"
-        android:onClick="onClick"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/btnTobaccoShops"
-        android:layout_alignStart="@+id/btnTobaccoShops" />
-</RelativeLayout>
+        <ImageButton
+            android:background="@drawable/btn_kontakt"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:text="Kontakt"
+            android:onClick="onClick"
+            android:id="@+id/btnContact"
+            android:layout_gravity="right"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="2dp" />
+
+        <ImageButton
+            android:background="@drawable/btn_info"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:id="@+id/btnInfo"
+            android:text="Info"
+            android:onClick="onClick"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="2dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
