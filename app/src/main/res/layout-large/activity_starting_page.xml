@@ -105,7 +105,7 @@
         android:background="@drawable/btn_info"
         android:layout_width="245dp"
         android:layout_height="90dp"
-        android:id="@id/info"
+        android:id="@+id/btnInfo"
         android:text="Info"
         android:onClick="onClick"
         android:layout_alignParentBottom="true"

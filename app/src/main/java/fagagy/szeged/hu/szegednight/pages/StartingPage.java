@@ -9,13 +9,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -91,14 +90,82 @@ public class StartingPage extends Activity {
                 intent.setType("plain/text");
 
                 StringBuilder sb = new StringBuilder();
-                sb.append("Hely neve, címe: ");
+                sb.append("Hely neve:");
+                sb.append('\n');
+                sb.append("Címe:");
                 sb.append('\n');
                 sb.append("Javítandó adat:");
 
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"szeged.night@gmail.com"});
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"szeged.nights@gmail.com"});
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Helyadat változtatás");
                 intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
                 startActivity(Intent.createChooser(intent, ""));
+                break;
+            case R.id.btnInfo:
+                View infoView = View.inflate(this, R.layout.info_view, null);
+                TextView infoText = (TextView) infoView.findViewById(R.id.infoText);
+                infoText.setText(Html.fromHtml("<ul>\n" +
+                        "    <li>\n" +
+                        "        <p align=\"left\">\n" +
+                        "            Az alkalmazás a jelenlegi pozíciódtól való távolság sorrendjében kilistázza a választott helyeket, valamint mutatja ha az adott hely épp nyitva van\n" +
+                        "            (és meddig).\n" +
+                        "        </p>\n" +
+                        "    </li>\n" +
+                        "</ul>\n" +
+                        "<ul>\n" +
+                        "    <li>\n" +
+                        "        <p align=\"left\">\n" +
+                        "            GPS vagy internet használata javasolt. Ha mindkettő be van kapcsolva az alkalmazás a GPS pozíciót részesíti előnyben, mivel az jóval pontosabb\n" +
+                        "            eredményt ad vissza, internetes helymeghatározásnál akár 500 méteres eltérések is lehetnek.\n" +
+                        "        </p>\n" +
+                        "    </li>\n" +
+                        "</ul>\n" +
+                        "<ul>\n" +
+                        "    <li>\n" +
+                        "        <p align=\"left\">\n" +
+                        "            Minden indításkor automatikusan frissül az adatbázis. Ha épp nincs internetkapcsolatod akkor is láthatod az egyes helyeket, eseményeket de ilyenkor\n" +
+                        "            a távolság meghatározása nem pontos.\n" +
+                        "        </p>\n" +
+                        "    </li>\n" +
+                        "</ul>\n" +
+                        "<ul>\n" +
+                        "    <li>\n" +
+                        "        <p align=\"left\">\n" +
+                        "            Listanézeten a kiválasztott elemre kattintva az alkalmazás oda tud vezeti Google Maps használatával. Ehhez GPS vagy internet kapcsolat szükséges.\n" +
+                        "        </p>\n" +
+                        "    </li>\n" +
+                        "</ul>\n" +
+                        "<ul>\n" +
+                        "    <li>\n" +
+                        "        <p align=\"left\">\n" +
+                        "            Ha esetleg nincs internet vagy GPS kapcsolatod akkor ha Térkép nézetre váltasz láthatod az összes listázott helyet előre bejelölve térképen, ami\n" +
+                        "            teljesen offline módban is nagyban megkönnyíti az odatalálást.\n" +
+                        "        </p>\n" +
+                        "    </li>\n" +
+                        "</ul>\n" +
+                        "<ul>\n" +
+                        "    <li>\n" +
+                        "        <p align=\"left\">\n" +
+                        "            <strong>FONTOS: </strong>\n" +
+                        "            A fejlesztő nem vállal felelősséget az adatok pontosságáért. Különösen a kocsmák, dohányboltok esetében gyakran változik a nyitvatartás, helyek\n" +
+                        "            zárnak be, újak nyitnak ki. Ezért hogy minél pontosabb adatokkal tudjunk szolgálni a Te segítségedre is szükség van!\n" +
+                        "            <br/>\n" +
+                        "        </p>\n" +
+                        "        <p align=\"left\">\n" +
+                        "Bármilyen helyet találsz ami nem szerepel, vagy olyat ami szerepel de rossz adatokkal, esetleg már nem létezik, kérjük a <strong>“Javítás kérése” </strong>menüpont alatt jelentsd nekünk.\n" +
+                        "        </p>\n" +
+                        "        <p align=\"left\">\n" +
+                        "            Itt kizárólag egy előre formázott emailt kell kitöltened három adattal, egy hely névvel-címmel, illetve mi az amit változtassunk rajta. Ez nagyon\n" +
+                        "            nagy segítség nekünk, hogy naprakész adatokat tudjunk Neked is nyújtani.\n" +
+                        "        </p>\n" +
+                        "    </li>\n" +
+                        "</ul>"));
+                infoText.setTextSize(14);
+                new AlertDialog.Builder(this)
+                        .setTitle("Info")
+                        .setView(infoView)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 break;
             default:
                 break;
