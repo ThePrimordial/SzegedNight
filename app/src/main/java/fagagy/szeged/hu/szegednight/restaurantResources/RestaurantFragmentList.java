@@ -187,6 +187,10 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
             e.printStackTrace();
         }
 
+        if(openHour == closeHour){
+            return false;
+        }
+
         if (openHour <= currHour && currHour < closeHour) {
             return true;
         } else if (closeHour < 7) {

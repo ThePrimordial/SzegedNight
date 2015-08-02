@@ -197,7 +197,11 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        ;
+
+        if(openHour == closeHour){
+            return false;
+        }
+
         if (openHour <= currHour && currHour < closeHour) {
             return true;
         } else if (closeHour < 7) {

@@ -199,7 +199,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         return "Database error";
     }
 
-    private Boolean checkOpen(List<ParseObject> serverList, String day, int currHour, int position) {
+    private boolean checkOpen(List<ParseObject> serverList, String day, int currHour, int position) {
 
         int openHour = 0;
         int closeHour = 0;
@@ -211,6 +211,9 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
             e.printStackTrace();
         }
 
+        if(openHour == closeHour){
+            return false;
+        }
 
         if (openHour <= currHour && currHour < closeHour) {
             return true;
