@@ -80,6 +80,10 @@ public class PubAdapter extends BaseAdapter {
             pubView.setBackgroundResource(R.drawable.border_ui2);
         }
 
+        if(pub.isSubscribed()){
+            pubView.setBackgroundResource(R.drawable.subscribed_border);
+        }
+
         return pubView;
     }
 }

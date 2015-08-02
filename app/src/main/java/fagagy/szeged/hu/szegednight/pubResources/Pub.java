@@ -8,19 +8,34 @@ public class Pub {
     private double latitude;
     private double longitude;
     private String openUntil;
+    private boolean subscribed;
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    private String objectId;
+
+    public boolean isSubscribed() {
+        return subscribed;
+    }
 
     public String getOpenUntil() {
         return openUntil;
     }
 
 
-    public Pub(String name, boolean open, double distance) {
+    public Pub(String name, boolean subscribed, boolean open, double distance, String objectId) {
+        this.objectId = objectId;
+        this.subscribed = subscribed;
         this.name = name;
         this.open = open;
         this.distance = distance;
     }
 
-    public Pub(String name, boolean open, double distance, String openUntil) {
+    public Pub(String name, boolean subscribed, boolean open, double distance, String openUntil,String objectId ) {
+        this.objectId = objectId;
+        this.subscribed = subscribed;
         this.name = name;
         this.open = open;
         this.distance = distance;

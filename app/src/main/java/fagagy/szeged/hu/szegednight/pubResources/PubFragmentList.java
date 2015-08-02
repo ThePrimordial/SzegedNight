@@ -22,6 +22,7 @@ import com.parse.ParseQuery;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,6 +31,7 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
+import fagagy.szeged.hu.szegednight.pages.SubscribedPage;
 
 /**
  * Created by TheSorrow on 15/07/20.
@@ -114,8 +116,10 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
-                Boolean open = checkOpen(serverList, day, currHour, i);
-                Pub p1 = new Pub(name, open, distance);
+                boolean open = checkOpen(serverList, day, currHour, i);
+                boolean subscribed = serverList.get(i).getBoolean("Subscribed");
+                String objectId = serverList.get(i).getObjectId();
+                Pub p1 = new Pub(name, subscribed, open, distance, objectId);
                 pubList.add(p1);
             }
         } else if (gpsLoc != null) {
@@ -127,15 +131,17 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
                 double distance = gpsLoc.distanceTo(targetLocation) / 1000;
-                Boolean open = checkOpen(serverList, day, currHour, i);
+                boolean open = checkOpen(serverList, day, currHour, i);
+                boolean subscribed = serverList.get(i).getBoolean("Subscribed");
                 String openUntil = getOpenUntil(serverList, day, currHour, i);
+                String objectId = serverList.get(i).getObjectId();
                 if (!open) {
-                    Pub p1 = new Pub(name, open, distance);
+                    Pub p1 = new Pub(name, subscribed, open, distance, objectId);
                     p1.setLatitude(latitude);
                     p1.setLongitude(longitude);
                     pubList.add(p1);
                 } else {
-                    Pub p1 = new Pub(name, open, distance, openUntil);
+                    Pub p1 = new Pub(name, subscribed, open, distance, openUntil, objectId);
                     p1.setLatitude(latitude);
                     p1.setLongitude(longitude);
                     pubList.add(p1);
@@ -150,20 +156,26 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
                 double distance = networkLoc.distanceTo(targetLocation) / 1000;
-                Boolean open = checkOpen(serverList, day, currHour, i);
+                boolean open = checkOpen(serverList, day, currHour, i);
+                boolean subscribed = serverList.get(i).getBoolean("Subscribed");
                 String openUntil = getOpenUntil(serverList, day, currHour, i);
+                String objectId = serverList.get(i).getObjectId();
                 if (!open) {
-                    Pub p1 = new Pub(name, open, distance);
+                    Pub p1 = new Pub(name, subscribed, open, distance, objectId);
                     p1.setLatitude(latitude);
                     p1.setLongitude(longitude);
                     pubList.add(p1);
                 } else {
-                    Pub p1 = new Pub(name, open, distance, openUntil);
+                    Pub p1 = new Pub(name, subscribed, open, distance, openUntil, objectId);
                     p1.setLatitude(latitude);
                     p1.setLongitude(longitude);
                     pubList.add(p1);
                 }
             }
+
+        for(Pub pub : pubList){
+            Log.d("listaelemek", String.valueOf(pub.isSubscribed()));
+        }
 
         Collections.sort(pubList, new Comparator<Pub>() {
             @Override
@@ -212,23 +224,29 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         return false;
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         String uri = null;
-        if (gpsLoc == null && networkLoc == null) {
-            Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
-        } else if (gpsLoc != null) {
-            uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
-                    "&daddr=" + pubList.get(position).getLatitude() + "," + pubList.get(position).getLongitude();
+        if (!pubList.get(position).isSubscribed()) {
+            if (gpsLoc == null && networkLoc == null) {
+                Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
+            } else if (gpsLoc != null) {
+                uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+                        "&daddr=" + pubList.get(position).getLatitude() + "," + pubList.get(position).getLongitude();
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(i);
+            } else if (networkLoc != null)
+                uri = "http://maps.google.com/maps?saddr=" + networkLoc.getLatitude() + "," + networkLoc.getLongitude() +
+                        "&daddr=" + pubList.get(position).getLatitude() + "," + pubList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
-        } else if (networkLoc != null)
-            uri = "http://maps.google.com/maps?saddr=" + networkLoc.getLatitude() + "," + networkLoc.getLongitude() +
-                    "&daddr=" + pubList.get(position).getLatitude() + "," + pubList.get(position).getLongitude();
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        startActivity(i);
+        } else {
+            Intent i = new Intent();
+            i.setClass(getActivity(), SubscribedPage.class);
+            i.putExtra("objectId", pubList.get(position).getObjectId());
+            startActivity(i);
+        }
     }
 
     @Override

@@ -160,7 +160,7 @@ public class StartingPage extends Activity {
                         "        </p>\n" +
                         "    </li>\n" +
                         "</ul>"));
-                infoText.setTextSize(14);
+                infoText.setTextSize(18);
                 new AlertDialog.Builder(this)
                         .setTitle("Info")
                         .setView(infoView)

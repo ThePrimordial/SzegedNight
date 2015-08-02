@@ -28,5 +28,6 @@
     <string name="title_activity_map_to_display">Map</string>
     <string name="title_activity_draw_route_map">Map</string>
     <string name="title_activity_draw_route">Map</string>
+    <string name="title_activity_subscribed_page">SubscribedPage</string>
 
 </resources>
