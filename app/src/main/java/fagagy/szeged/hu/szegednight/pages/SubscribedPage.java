@@ -16,13 +16,7 @@ public class SubscribedPage extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscribed_page);
-
-        String identifier;
-        TextView viewObjectId = (TextView) findViewById(R.id.objectId);
-        Intent i = getIntent();
-        Bundle b = i.getExtras();
-        identifier = (String) b.get("objectId");
-        viewObjectId.setText(identifier);
+        
     }
 
 
