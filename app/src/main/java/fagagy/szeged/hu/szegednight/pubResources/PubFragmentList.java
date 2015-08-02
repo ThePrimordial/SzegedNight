@@ -105,7 +105,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
 
     private void generateRows(String day, int currHour) {
         List<ParseObject> serverList = null;
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Pub");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Pub").fromLocalDatastore();
         try {
             serverList = query.fromPin("Pub").find();
         } catch (ParseException e1) {

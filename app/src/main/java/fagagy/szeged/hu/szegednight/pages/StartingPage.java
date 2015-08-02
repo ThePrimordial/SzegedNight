@@ -184,7 +184,7 @@ public class StartingPage extends Activity {
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(getApplicationContext(), "Adatbázis frissítése folyamatban...", Toast.LENGTH_LONG).show();
+            Toast.makeText(StartingPage.this, "Adatbázis frissítése folyamatban...", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -199,6 +199,7 @@ public class StartingPage extends Activity {
                 whatToRefresh.add("Tobacco");
                 whatToRefresh.add("Party");
                 whatToRefresh.add("Shop");
+                whatToRefresh.add("Subscribed");
                 for (int i = 0; i < whatToRefresh.size(); i++) {
                     ParseQuery<ParseObject> query = ParseQuery.getQuery(whatToRefresh.get(i));
                     ParseQuery<ParseObject> queryDelete = ParseQuery.getQuery(whatToRefresh.get(i)).fromLocalDatastore();
@@ -214,7 +215,7 @@ public class StartingPage extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getApplicationContext(), "Adatbázis frissítése megtörtént", Toast.LENGTH_LONG).show();
+            Toast.makeText(StartingPage.this, "Adatbázis frissítése megtörtént", Toast.LENGTH_LONG).show();
         }
     }
 

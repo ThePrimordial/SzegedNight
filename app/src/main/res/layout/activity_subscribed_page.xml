@@ -22,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="40sp"
-        android:id="@+id/pub_name"
         android:text="pub_name"
+        android:id="@+id/pub_name"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/imageView4"
         android:layout_toEndOf="@+id/imageView4" />
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/openClose"
-                android:text="nyitvatartas"/>
+                android:text="nyitvatartás"/>
     </LinearLayout>
 
     <LinearLayout
@@ -59,8 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/offers"
-            android:text="akciok"
-            />
+            android:text="akcók" />
     </LinearLayout>
 
     <!-- navigate to button -->
@@ -86,15 +85,15 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/btnNavigate"
+        android:layout_below="@+id/adssda"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/description"
-            android:text="leiras"/>
+            android:text="leiras"
+            android:id="@+id/description"/>
     </LinearLayout>
 
 </RelativeLayout>
