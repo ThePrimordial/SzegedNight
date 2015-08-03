@@ -40,7 +40,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/btnNavigate"
         android:layout_alignEnd="@+id/btnNavigate"
-        android:background="@drawable/subscribed_border">
+        android:background="@drawable/subscribed_border"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -105,7 +107,8 @@
         android:layout_below="@+id/btnNavigate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@drawable/subscribed_border">
+        android:background="@drawable/subscribed_border"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
