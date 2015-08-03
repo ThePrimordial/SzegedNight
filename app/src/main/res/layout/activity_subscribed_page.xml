@@ -2,6 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background02"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -23,24 +24,30 @@
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:text="pub_name"
+        android:textColor="@color/white"
+        android:textAlignment="center"
         android:id="@+id/pub_name"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView4"
-        android:layout_toEndOf="@+id/imageView4" />
+        android:layout_toRightOf="@+id/btnNavigate"
+        android:layout_above="@+id/linearLayout"
+        android:layout_toLeftOf="@+id/btnFacebook"
+        android:layout_toStartOf="@+id/btnFacebook" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="165dp"
         android:layout_height="220dp"
         android:id="@+id/linearLayout"
-        android:layout_below="@+id/imageView4"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/linearLayout2"
+        android:layout_above="@+id/btnNavigate">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/openClose"
+                android:textColor="@color/white"
                 android:text="nyitvatartás"
                 android:textSize="15sp"
                 />
@@ -53,14 +60,15 @@
         android:layout_alignTop="@+id/linearLayout"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/linearLayout"
-        android:layout_toEndOf="@+id/linearLayout"
-        android:id="@+id/linearLayout2" >
+        android:layout_toEndOf="@+id/pub_name"
+        android:id="@+id/linearLayout2"
+        android:layout_alignBottom="@+id/linearLayout">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/offers"
+            android:textColor="@color/white"
             android:text="akcók"
             android:textSize="15sp"
             android:textAlignment="center"
@@ -72,35 +80,38 @@
         android:layout_width="160dp"
         android:layout_height="60dp"
         android:id="@+id/btnNavigate"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:background="@drawable/btn_navigate_to"
-        />
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <!-- facebook/web button -->
     <ImageButton
         android:layout_width="160dp"
         android:layout_height="60dp"
         android:id="@+id/btnFacebook"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:background="@drawable/btn_facebook"
-        />
+        android:layout_alignTop="@+id/btnNavigate"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="165dp"
+        android:layout_height="220dp"
+        android:id="@+id/linearLayout3"
         android:layout_below="@+id/btnNavigate"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="65dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="leiras"
+            android:textColor="@color/white"
             android:id="@+id/description"
             android:textSize="20sp"
             android:textAlignment="center"
