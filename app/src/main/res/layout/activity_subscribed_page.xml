@@ -40,16 +40,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/openClose"
-            android:textSize="15sp"
-            android:text="nyitvatartás"
+            android:text="leiras"
+            android:textSize="16sp"
+            android:id="@+id/description"
             android:textColor="@color/White"
-            />
+            android:textAlignment="gravity"/>
 
     </LinearLayout>
 
@@ -61,7 +62,7 @@
         android:layout_alignTop="@+id/linearLayout"
         android:layout_alignRight="@+id/btnFacebook"
         android:layout_alignEnd="@+id/btnFacebook"
-        >
+        android:gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +70,8 @@
             android:id="@+id/offers"
             android:text="akcók"
             android:textSize="15sp"
-            android:textColor="@color/White"/>
+            android:textColor="@color/White"
+            android:textAlignment="gravity"/>
     </LinearLayout>
 
     <!-- navigate to button -->
@@ -101,15 +103,21 @@
         android:layout_below="@+id/btnNavigate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="leiras"
-            android:textSize="16sp"
-            android:id="@+id/description"
-            android:textColor="@color/White"/>
+            android:id="@+id/openClose"
+            android:textSize="20sp"
+            android:text="nyitvatartás"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:layout_gravity="center"
+            />
     </LinearLayout>
 
 </RelativeLayout>

@@ -47,9 +47,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/openClose"
-            android:text="nyitvatartás"
-            android:textSize="20sp"
+            android:text="leiras"
+            android:id="@+id/description"
+            android:textSize="24sp"
+            android:textAlignment="center"
             android:textColor="@color/White"
             />
     </LinearLayout>
@@ -111,10 +112,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="leiras"
-            android:id="@+id/description"
-            android:textSize="24sp"
-            android:textAlignment="center"
+            android:id="@+id/openClose"
+            android:text="nyitvatartás"
+            android:textSize="25sp"
             android:textColor="@color/White"
             />
     </LinearLayout>
