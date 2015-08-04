@@ -12,6 +12,35 @@ public class Party {
     private double distance;
     private double latitude;
     private double longitude;
+    private String from;
+    private String to;
+    private int day;
+
+    public int getDay() {
+        return day;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public Party(String place, String event,int day, String from, String to){
+        this.place = place;
+        this.event = event;
+        this.day = day;
+        this.from = from;
+        this.to = to;
+    }
+
+    public Party(String place, String event, Date date) {
+        this.place = place;
+        this.event = event;
+        this.date = date;
+    }
 
     public Party(String place, String event, double distance, Date date) {
         this.place = place;

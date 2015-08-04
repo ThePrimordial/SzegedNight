@@ -1,4 +1,4 @@
-package fagagy.szeged.hu.szegednight.pages;
+package fagagy.szeged.hu.szegednight.partyResources;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,19 +6,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-import fagagy.szeged.hu.szegednight.pubResources.PubFragmentList;
-
-public class FragmentAdapter extends FragmentPagerAdapter {
+/**
+ * Created by TheSorrow on 15/08/04.
+ */
+public class PartyFragmentAdapter extends FragmentPagerAdapter {
 
     private ArrayList<Fragment> fragments;
 
-    public FragmentAdapter(FragmentManager fm, Fragment specificFragmentRow, String type) {
+    public PartyFragmentAdapter(FragmentManager fm, Fragment... specificFragmentRow) {
         super(fm);
         fragments = new ArrayList<>();
-        fragments.add(specificFragmentRow);
-        fragments.add(new FragmentMap().newInstance(type));
-
+        for(Fragment fragment : specificFragmentRow){
+            fragments.add(fragment);
+        }
     }
+
 
     @Override
     public Fragment getItem(int position) {
@@ -33,9 +35,11 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){
-            case 0: return PubFragmentList.TAG;
-            case 1: return FragmentMap.TAG;
+            case 0: return PartyFragmentList.TAG;
+            case 1: return SZINFragmentList.TAG;
+            case 2: return GolyaTaborFragmentList.TAG;
             default: return "unknown";
         }
     }
 }
+

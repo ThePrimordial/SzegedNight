@@ -6,7 +6,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,7 +37,7 @@ import fagagy.szeged.hu.szegednight.pubResources.PubBrowser;
  */
 public class PartyFragmentList extends ListFragment implements AdapterView.OnItemClickListener  {
 
-    public static final String TAG = "ListaNézet";
+    public static final String TAG = "Események";
     private ArrayList<Party> partyList = new ArrayList<>();
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
@@ -73,7 +76,7 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
 
     private void generateRows() {
         List<ParseObject> serverList = null;
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Party");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Party").fromLocalDatastore();
         try {
             serverList = query.fromPin("Party").find();
         } catch (ParseException e1) {
@@ -122,6 +125,7 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
             @Override
             public int compare(Party p1, Party p2) {
                 return p1.getDate().compareTo(p2.getDate());
+
             }
         });
     }
@@ -145,6 +149,11 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
         startActivity(i);
     }
 
+    public String getTAG(){
+        return TAG;
+    }
+
+
     @Override
     public void onPause() {
         super.onPause();
@@ -152,6 +161,4 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
             lm.removeUpdates(locListener);
         }
     }
-
-
 }

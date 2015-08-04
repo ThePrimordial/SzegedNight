@@ -59,12 +59,18 @@ public class PubAdapter extends BaseAdapter {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         if (pub.isOpen()){
-            pubListOpenText.setText("Nyitva! " + pub.getOpenUntil() + ".00-ig");
-            pubListOpenText.setTextColor(Color.GREEN);
-        }else if(!pub.isOpen()) {
+            if((pub.getOpenUntil()).equals("0")){
+                pubListOpenText.setText("Nyitva! Éjfélig");
+                pubListOpenText.setTextColor(Color.GREEN);
+            }else {
+                pubListOpenText.setText("Nyitva! " + pub.getOpenUntil() + ".00-ig");
+                pubListOpenText.setTextColor(Color.GREEN);
+            }
+        }else{
             pubListOpenText.setText("Zarva! :( ");
             pubListOpenText.setTextColor(Color.RED);
         }
+
         if(pub.getDistance() > 1){
             pubListDistanceText.setText(numberFormat.format(pub.getDistance()) + " km");
         }else{

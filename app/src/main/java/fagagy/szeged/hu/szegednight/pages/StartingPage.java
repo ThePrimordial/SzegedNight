@@ -78,6 +78,7 @@ public class StartingPage extends Activity {
                 startActivity(i);
                 break;
             case R.id.btnParties:
+                Toast.makeText(this, "Oldalra húzva megtekintheted a SZIN és az Összegyetemi Gólyatábor eseményeit!", Toast.LENGTH_SHORT).show();
                 i.setClass(this, PartyBrowser.class);
                 startActivity(i);
                 break;
@@ -200,6 +201,8 @@ public class StartingPage extends Activity {
                 whatToRefresh.add("Party");
                 whatToRefresh.add("Shop");
                 whatToRefresh.add("Subscribed");
+                whatToRefresh.add("Golyatabor");
+                whatToRefresh.add("SZIN");
                 for (int i = 0; i < whatToRefresh.size(); i++) {
                     ParseQuery<ParseObject> query = ParseQuery.getQuery(whatToRefresh.get(i));
                     ParseQuery<ParseObject> queryDelete = ParseQuery.getQuery(whatToRefresh.get(i)).fromLocalDatastore();

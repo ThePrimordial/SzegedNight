@@ -92,7 +92,7 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
 
     private void generateRows(String day, int currHour) {
         List<ParseObject> serverList = null;
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Restaurant");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Restaurant").fromLocalDatastore();
         try {
             serverList = query.fromPin("Restaurant").find();
         } catch (ParseException e1) {
