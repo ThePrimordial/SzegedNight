@@ -50,7 +50,9 @@
             android:text="leiras"
             android:id="@+id/description"
             android:textSize="24sp"
-            android:textAlignment="center"
+            android:textAlignment="gravity"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textColor="@color/White"
             />
     </LinearLayout>
@@ -73,7 +75,9 @@
             android:id="@+id/offers"
             android:text="akcók"
             android:textSize="22sp"
-            android:textAlignment="center"
+            android:textAlignment="gravity"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textColor="@color/White"
             />
     </LinearLayout>
@@ -116,6 +120,9 @@
             android:text="nyitvatartás"
             android:textSize="25sp"
             android:textColor="@color/White"
+            android:textAlignment="gravity"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center"
             />
     </LinearLayout>
 
