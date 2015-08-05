@@ -78,7 +78,7 @@ public class StartingPage extends Activity {
                 startActivity(i);
                 break;
             case R.id.btnParties:
-                Toast.makeText(this, "Oldalra húzva megtekintheted a SZIN és az Összegyetemi Gólyatábor eseményeit!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Oldalraa húzva megtekintheted a SZIN és az Összegyetemi Gólyatábor eseményeit!", Toast.LENGTH_SHORT).show();
                 i.setClass(this, PartyBrowser.class);
                 startActivity(i);
                 break;
