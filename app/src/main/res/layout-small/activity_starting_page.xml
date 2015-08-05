@@ -1,3 +1,7 @@
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -108,10 +112,11 @@
             android:id="@+id/btnInfo"
             android:text="Info"
             android:onClick="onClick"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            />
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
 </LinearLayout>
+</ScrollView>

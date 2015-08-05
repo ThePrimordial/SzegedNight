@@ -43,7 +43,6 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
     private Location gpsLoc;
-    private Location networkLoc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,13 +51,9 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
         lm.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 20000, 50,
-                locListener);
-        lm.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 20000, 50,
                 locListener);
         gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        networkLoc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -111,16 +106,22 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         } catch (ParseException e1) {
         }
 
-        if (gpsLoc == null && networkLoc == null) {
+        if (gpsLoc == null) {
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
                 boolean open = checkOpen(serverList, day, currHour, i);
                 boolean subscribed = serverList.get(i).getBoolean("Subscribed");
+                String openUntil = getOpenUntil(serverList, day, currHour, i);
                 String objectId = serverList.get(i).getObjectId();
-                Pub p1 = new Pub(name, subscribed, open, distance, objectId);
-                pubList.add(p1);
+                if (!open) {
+                    Pub p1 = new Pub(name, subscribed, false, distance, objectId);
+                    pubList.add(p1);
+                } else {
+                    Pub p1 = new Pub(name, subscribed, true, distance, openUntil, objectId);
+                    pubList.add(p1);
+                }
             }
         } else if (gpsLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
@@ -136,44 +137,20 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
                 String openUntil = getOpenUntil(serverList, day, currHour, i);
                 String objectId = serverList.get(i).getObjectId();
                 if (!open) {
-                    Pub p1 = new Pub(name, subscribed, open, distance, objectId);
+                    Pub p1 = new Pub(name, subscribed, false, distance, objectId);
                     p1.setLatitude(latitude);
                     p1.setLongitude(longitude);
                     pubList.add(p1);
                 } else {
-                    Pub p1 = new Pub(name, subscribed, open, distance, openUntil, objectId);
+                    Pub p1 = new Pub(name, subscribed, true, distance, openUntil, objectId);
                     p1.setLatitude(latitude);
                     p1.setLongitude(longitude);
                     pubList.add(p1);
                 }
             }
-        } else
-            for (int i = 0; i < serverList.size(); i++) {
-                String name = serverList.get(i).getString("Name");
-                Location targetLocation = new Location("");
-                double longitude = serverList.get(i).getDouble("Longitude");
-                double latitude = serverList.get(i).getDouble("Latitude");
-                targetLocation.setLongitude(longitude);
-                targetLocation.setLatitude(latitude);
-                double distance = networkLoc.distanceTo(targetLocation) / 1000;
-                boolean open = checkOpen(serverList, day, currHour, i);
-                boolean subscribed = serverList.get(i).getBoolean("Subscribed");
-                String openUntil = getOpenUntil(serverList, day, currHour, i);
-                String objectId = serverList.get(i).getObjectId();
-                if (!open) {
-                    Pub p1 = new Pub(name, subscribed, open, distance, objectId);
-                    p1.setLatitude(latitude);
-                    p1.setLongitude(longitude);
-                    pubList.add(p1);
-                } else {
-                    Pub p1 = new Pub(name, subscribed, open, distance, openUntil, objectId);
-                    p1.setLatitude(latitude);
-                    p1.setLongitude(longitude);
-                    pubList.add(p1);
-                }
-            }
+        }
 
-        for(Pub pub : pubList){
+        for (Pub pub : pubList) {
             Log.d("listaelemek", String.valueOf(pub.isSubscribed()));
         }
 
@@ -211,7 +188,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
             e.printStackTrace();
         }
 
-        if(openHour == closeHour){
+        if (openHour == closeHour) {
             return false;
         }
 
@@ -230,20 +207,15 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        String uri = null;
         if (!pubList.get(position).isSubscribed()) {
-            if (gpsLoc == null && networkLoc == null) {
-                Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
+            if (gpsLoc == null) {
+                Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
             } else if (gpsLoc != null) {
-                uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+                String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
                         "&daddr=" + pubList.get(position).getLatitude() + "," + pubList.get(position).getLongitude();
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(i);
-            } else if (networkLoc != null)
-                uri = "http://maps.google.com/maps?saddr=" + networkLoc.getLatitude() + "," + networkLoc.getLongitude() +
-                        "&daddr=" + pubList.get(position).getLatitude() + "," + pubList.get(position).getLongitude();
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            startActivity(i);
+            }
         } else {
             Intent i = new Intent();
             i.setClass(getActivity(), SubscribedPage.class);

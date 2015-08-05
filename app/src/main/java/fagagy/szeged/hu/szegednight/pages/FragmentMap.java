@@ -104,29 +104,37 @@ public class FragmentMap extends Fragment {
         } catch (ParseException e1) {
         }
 
-        for (int i = 0; i < serverList.size(); i++) {
+        if (googleMap != null) {
+            for (int i = 0; i < serverList.size(); i++) {
 
-            String name = serverList.get(i).getString("Name");
-            Double longitude = serverList.get(i).getDouble("Longitude");
-            Double latitude = serverList.get(i).getDouble("Latitude");
+                String name = serverList.get(i).getString("Name");
+                Double longitude = serverList.get(i).getDouble("Longitude");
+                Double latitude = serverList.get(i).getDouble("Latitude");
 
-            MarkerOptions marker = new MarkerOptions().position(
-                    new LatLng(latitude, longitude));
-            googleMap.addMarker(marker).setTitle(name);
-
+                MarkerOptions marker = new MarkerOptions().position(
+                        new LatLng(latitude, longitude));
+                googleMap.addMarker(marker).setTitle(name);
+            }
         }
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(46.253010, 20.141425), 14);
+        googleMap.animateCamera(cameraUpdate);
 
         LocationManager mng = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         MyCurrentLocationListener listener = new MyCurrentLocationListener();
         Location location = getLocation(mng, listener);
-        double myLat = location.getLatitude();
-        double myLong = location.getLongitude();
 
-        MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(myLat, myLong)).title("Saját Pozíció");
-        googleMap.addMarker(marker).showInfoWindow();
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLong), 15);
-        googleMap.animateCamera(cameraUpdate);
+        if (location != null) {
+            double myLat = location.getLatitude();
+            double myLong = location.getLongitude();
+            MarkerOptions marker = new MarkerOptions().position(
+                    new LatLng(myLat, myLong)).title("Saját Pozíció");
+            googleMap.addMarker(marker).showInfoWindow();
+
+
+            cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLong), 15);
+            googleMap.animateCamera(cameraUpdate);
+        }
     }
 
     private Location getLocation(LocationManager locationManager, MyCurrentLocationListener listener) {
@@ -137,32 +145,19 @@ public class FragmentMap extends Fragment {
 
             boolean isGPSEnabled = locationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
-            boolean isNetworkEnabled = locationManager
-                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            if (!isGPSEnabled && !isNetworkEnabled) {
-                Toast.makeText(getActivity(), "Nincs internet vagy GPS pozíció", Toast.LENGTH_LONG).show();
-            } else {
-                if (isNetworkEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 20000, 50, listener);
-                    if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        Log.d("lokáció", "network pz megtalálva");
-                    }
-                } else
-                    if (location == null) {
-                        locationManager.requestLocationUpdates(
-                                LocationManager.GPS_PROVIDER, 20000, 50, listener);
-                        if (locationManager != null) {
-                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            Log.d("lokáció", "gps pz megtalálva");
-                        }
-                    }
-                }
 
+            if (!isGPSEnabled) {
+                Toast.makeText(getActivity(), "Nincs internet vagy GPS pozíció", Toast.LENGTH_LONG).show();
+            } else if (location == null) {
+                locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER, 20000, 50, listener);
+                if (locationManager != null) {
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return location;
     }
-    }
+}

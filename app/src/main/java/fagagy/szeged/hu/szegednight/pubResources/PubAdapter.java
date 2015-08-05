@@ -3,6 +3,7 @@ package fagagy.szeged.hu.szegednight.pubResources;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +21,13 @@ import fagagy.szeged.hu.szegednight.R;
  */
 public class PubAdapter extends BaseAdapter {
 
-    final List <Pub> pubList;
+    final List<Pub> pubList;
 
-    public PubAdapter(final Context context, final ArrayList<Pub> pubList){
+    public PubAdapter(final Context context, final ArrayList<Pub> pubList) {
         this.pubList = pubList;
     }
 
-    public void addPub(Pub pub){
+    public void addPub(Pub pub) {
         pubList.add(pub);
     }
 
@@ -58,35 +59,37 @@ public class PubAdapter extends BaseAdapter {
         TextView pubListNameText = (TextView) pubView.findViewById(R.id.PubName);
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
-        if (pub.isOpen()){
-            if((pub.getOpenUntil()).equals("0")){
+        if (pub.isOpen()) {
+            if ((pub.getOpenUntil()).equals("0")) {
                 pubListOpenText.setText("Nyitva! Éjfélig");
                 pubListOpenText.setTextColor(Color.GREEN);
-            }else {
+            } else {
                 pubListOpenText.setText("Nyitva! " + pub.getOpenUntil() + ".00-ig");
                 pubListOpenText.setTextColor(Color.GREEN);
             }
-        }else{
+        } else {
             pubListOpenText.setText("Zarva! :( ");
             pubListOpenText.setTextColor(Color.RED);
         }
 
-        if(pub.getDistance() > 1){
+        if (pub.getDistance() == 0) {
+            pubListDistanceText.setText("ismeretlen");
+        } else if (pub.getDistance() > 1) {
             pubListDistanceText.setText(numberFormat.format(pub.getDistance()) + " km");
-        }else{
-            double dist = pub.getDistance()*1000;
+        } else {
+            double dist = pub.getDistance() * 1000;
             int intDistance = (int) dist;
             pubListDistanceText.setText(intDistance + " m");
         }
         pubListNameText.setText(pub.getName());
 
-        if(position % 2 == 0){
+        if (position % 2 == 0) {
             pubView.setBackgroundResource(R.drawable.border_ui1);
-        }else {
+        } else {
             pubView.setBackgroundResource(R.drawable.border_ui2);
         }
 
-        if(pub.isSubscribed()){
+        if (pub.isSubscribed()) {
             pubView.setBackgroundResource(R.drawable.subscribed_border_row);
         }
 

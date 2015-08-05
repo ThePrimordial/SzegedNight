@@ -40,7 +40,6 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
     private Location gpsLoc;
-    private Location networkLoc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,13 +48,9 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
         lm.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 20000, 50,
-                locListener);
-        lm.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 20000, 50,
                 locListener);
         gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        networkLoc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -108,14 +103,20 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
         } catch (ParseException e1) {
         }
 
-        if (gpsLoc == null && networkLoc == null) {
+        if (gpsLoc == null) {
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
                 Boolean open = checkOpen(serverList, day, currHour, i);
-                Tobacco t1 = new Tobacco(name, open, distance);
-                tobaccoList.add(t1);
+                String openUntil = getOpenUntil(serverList, day, currHour, i);
+                if (!open) {
+                    Tobacco t1 = new Tobacco(name, false, distance);
+                    tobaccoList.add(t1);
+                } else {
+                    Tobacco t1 = new Tobacco(name, true, distance, openUntil);
+                    tobaccoList.add(t1);
+                }
             }
         } else if (gpsLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
@@ -140,28 +141,6 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
                     tobaccoList.add(t1);
                 }
             }
-        } else
-            for (int i = 0; i < serverList.size(); i++) {
-                String name = serverList.get(i).getString("Name");
-                Location targetLocation = new Location("");
-                double longitude = serverList.get(i).getDouble("Longitude");
-                double latitude = serverList.get(i).getDouble("Latitude");
-                targetLocation.setLongitude(longitude);
-                targetLocation.setLatitude(latitude);
-                double distance = networkLoc.distanceTo(targetLocation) / 1000;
-                Boolean open = checkOpen(serverList, day, currHour, i);
-                String openUntil = getOpenUntil(serverList, day, currHour, i);
-                if (!open) {
-                    Tobacco t1 = new Tobacco(name, false, distance);
-                    t1.setLatitude(latitude);
-                    t1.setLongitude(longitude);
-                    tobaccoList.add(t1);
-                } else {
-                    Tobacco t1 = new Tobacco(name, true, distance, openUntil);
-                    t1.setLatitude(latitude);
-                    t1.setLongitude(longitude);
-                    tobaccoList.add(t1);
-                }
             }
 
         Collections.sort(tobaccoList, new Comparator<Tobacco>() {
@@ -217,19 +196,14 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        String uri = null;
-        if (gpsLoc == null && networkLoc == null) {
-            Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
+        if (gpsLoc == null) {
+            Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
         } else if (gpsLoc != null) {
-            uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+            String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
                     "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
-        } else if (gpsLoc == null && networkLoc != null)
-            uri = "http://maps.google.com/maps?saddr=" + networkLoc.getLatitude() + "," + networkLoc.getLongitude() +
-                    "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        startActivity(i);
+        }
     }
 
     @Override

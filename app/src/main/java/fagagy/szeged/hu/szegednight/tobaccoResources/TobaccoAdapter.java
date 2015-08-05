@@ -22,11 +22,11 @@ public class TobaccoAdapter extends BaseAdapter {
 
     final List<Tobacco> tobaccoList;
 
-    public TobaccoAdapter(final Context context, final ArrayList<Tobacco> tobaccoList){
+    public TobaccoAdapter(final Context context, final ArrayList<Tobacco> tobaccoList) {
         this.tobaccoList = tobaccoList;
     }
 
-    public void addTobacco(Tobacco tobacco){
+    public void addTobacco(Tobacco tobacco) {
         tobaccoList.add(tobacco);
     }
 
@@ -58,24 +58,27 @@ public class TobaccoAdapter extends BaseAdapter {
         TextView tobaccoListNameText = (TextView) tobaccoView.findViewById(R.id.TobaccoName);
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
-        if (tobacco.isOpen()){
+        if (tobacco.isOpen()) {
             tobaccoListOpenText.setText("Nyitva! " + tobacco.getOpenUntil() + ".00-ig");
             tobaccoListOpenText.setTextColor(Color.GREEN);
-        }else if(!tobacco.isOpen()) {
+        } else {
             tobaccoListOpenText.setText("Zarva! :( ");
             tobaccoListOpenText.setTextColor(Color.RED);
         }
-        if(tobacco.getDistance() > 1){
+
+        if (tobacco.getDistance() == 0) {
+            tobaccoListDistanceText.setText("ismeretlen");
+        } else if (tobacco.getDistance() > 1) {
             tobaccoListDistanceText.setText(numberFormat.format(tobacco.getDistance()) + " km");
-        }else{
-            double dist = tobacco.getDistance()*1000;
+        } else {
+            double dist = tobacco.getDistance() * 1000;
             int intDistance = (int) dist;
             tobaccoListDistanceText.setText(intDistance + " m");
         }
         tobaccoListNameText.setText(tobacco.getName());
-        if(position % 2 == 0){
+        if (position % 2 == 0) {
             tobaccoView.setBackgroundResource(R.drawable.border_ui1);
-        }else {
+        } else {
             tobaccoView.setBackgroundResource(R.drawable.border_ui2);
         }
 

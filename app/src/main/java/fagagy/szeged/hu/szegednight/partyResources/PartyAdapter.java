@@ -72,6 +72,10 @@ public class PartyAdapter extends BaseAdapter {
             String formattedDate = df2.format(party.getDate());
             partyDateText.setText(formattedDate);
 
+            if(party.getDistance() == 0){
+                partyDistaceText.setText("ismeretlen");
+            }
+
             if (party.getDistance() > 1) {
                 partyDistaceText.setText(numberFormat.format(party.getDistance()) + " km");
             } else if (party.getDistance() == 0 && party.getDate() == null) {

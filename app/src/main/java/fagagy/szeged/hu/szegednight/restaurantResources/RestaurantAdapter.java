@@ -22,11 +22,11 @@ public class RestaurantAdapter extends BaseAdapter {
 
     final List<Restaurant> restaurantsList;
 
-    public RestaurantAdapter(final Context context, final ArrayList<Restaurant> restaurantsList){
+    public RestaurantAdapter(final Context context, final ArrayList<Restaurant> restaurantsList) {
         this.restaurantsList = restaurantsList;
     }
 
-    public void addRestaurant(Restaurant restaurant){
+    public void addRestaurant(Restaurant restaurant) {
         restaurantsList.add(restaurant);
     }
 
@@ -57,24 +57,27 @@ public class RestaurantAdapter extends BaseAdapter {
         TextView resListNameText = (TextView) resView.findViewById(R.id.RestaurantName);
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
-        if (restaurant.isOpen()){
+        if (restaurant.isOpen()) {
             resListOpenText.setText("Nyitva! " + restaurant.getOpenUntil() + ".00-ig");
             resListOpenText.setTextColor(Color.GREEN);
-        }else if(!restaurant.isOpen()) {
+        } else {
             resListOpenText.setText("Zarva! :( ");
             resListOpenText.setTextColor(Color.RED);
         }
-        if(restaurant.getDistance() > 1){
+
+        if (restaurant.getDistance() == 0) {
+            resListDistanceText.setText("ismeretlen");
+        } else if (restaurant.getDistance() > 1) {
             resListDistanceText.setText(numberFormat.format(restaurant.getDistance()) + " km");
-        }else{
-            double dist = restaurant.getDistance()*1000;
+        } else {
+            double dist = restaurant.getDistance() * 1000;
             int intDistance = (int) dist;
-        resListDistanceText.setText(intDistance + " m");
+            resListDistanceText.setText(intDistance + " m");
         }
         resListNameText.setText(restaurant.getName());
-        if(position % 2 == 0){
+        if (position % 2 == 0) {
             resView.setBackgroundResource(R.drawable.border_ui1);
-        }else {
+        } else {
             resView.setBackgroundResource(R.drawable.border_ui2);
         }
 

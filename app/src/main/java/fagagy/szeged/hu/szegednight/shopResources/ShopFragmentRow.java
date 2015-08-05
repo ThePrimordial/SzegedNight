@@ -40,7 +40,6 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
     private Location gpsLoc;
-    private Location networkLoc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,13 +48,9 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
         lm.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 20000, 50,
-                locListener);
-        lm.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 20000, 50,
                 locListener);
         gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        networkLoc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -101,16 +96,22 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
         } catch (ParseException e1) {
         }
 
-        if (gpsLoc == null && networkLoc == null) {
+        if (gpsLoc == null) {
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance  = 0.00;
                 Boolean open = checkOpen(serverList,  day, currHour, i);
-                Shop s1 = new Shop(name, open, distance);
-                shopList.add(s1);
+                String openUntil = getOpenUntil(serverList, day, currHour, i);
+                if(!open) {
+                    Shop s1 = new Shop(name, false, distance);
+                    shopList.add(s1);
+                }else{
+                    Shop s1 = new Shop(name, true, distance, openUntil);
+                    shopList.add(s1);
+                }
             }
-        } else if(gpsLoc != null) {
+        } else {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
@@ -133,28 +134,6 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
                     shopList.add(s1);
                 }
             }
-        } else
-            for (int i = 0; i < serverList.size(); i++) {
-                String name = serverList.get(i).getString("Name");
-                Location targetLocation = new Location("");
-                double longitude = serverList.get(i).getDouble("Longitude");
-                double latitude = serverList.get(i).getDouble("Latitude");
-                targetLocation.setLongitude(longitude);
-                targetLocation.setLatitude(latitude);
-                double distance = networkLoc.distanceTo(targetLocation) / 1000;
-                Boolean open = checkOpen(serverList, day, currHour, i);
-                String openUntil = getOpenUntil(serverList, day, currHour, i);
-                if(!open) {
-                    Shop s1 = new Shop(name, false, distance);
-                    s1.setLatitude(latitude);
-                    s1.setLongitude(longitude);
-                    shopList.add(s1);
-                }else{
-                    Shop s1 = new Shop(name, true, distance, openUntil);
-                    s1.setLatitude(latitude);
-                    s1.setLongitude(longitude);
-                    shopList.add(s1);
-                }
             }
 
         Collections.sort(shopList, new Comparator<Shop>() {
@@ -210,19 +189,14 @@ public class ShopFragmentRow extends ListFragment implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        String uri =null;
-        if (gpsLoc == null && networkLoc == null) {
-            Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
-        } else if (gpsLoc != null) {
-            uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
-                    "&daddr="+shopList.get(position).getLatitude()+","+shopList.get(position).getLongitude();
+        if (gpsLoc == null) {
+            Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
+        } else {
+            String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+                    "&daddr=" + shopList.get(position).getLatitude() + "," + shopList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
-        } else
-            uri = "http://maps.google.com/maps?saddr="+networkLoc.getLatitude()+","+networkLoc.getLongitude()+
-                    "&daddr="+shopList.get(position).getLatitude()+","+shopList.get(position).getLongitude();
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        startActivity(i);
+        }
     }
 
     @Override

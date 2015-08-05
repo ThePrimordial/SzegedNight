@@ -37,7 +37,6 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
     private Location gpsLoc;
-    private Location networkLoc;
 
 
     @Override
@@ -47,13 +46,9 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
         lm.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 20000, 50,
-                locListener);
-        lm.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 20000, 50,
                 locListener);
         gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        networkLoc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -78,14 +73,21 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
     }
 
     private String getDay(int day) {
-        switch (day){
-            case 1:return "Sunday";
-            case 2:return "Monday";
-            case 3:return "Tuesday";
-            case 4:return "Wednesday";
-            case 5:return "Thursday";
-            case 6:return "Friday";
-            case 7:return "Saturday";
+        switch (day) {
+            case 1:
+                return "Sunday";
+            case 2:
+                return "Monday";
+            case 3:
+                return "Tuesday";
+            case 4:
+                return "Wednesday";
+            case 5:
+                return "Thursday";
+            case 6:
+                return "Friday";
+            case 7:
+                return "Saturday";
         }
         return null;
     }
@@ -98,16 +100,22 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
         } catch (ParseException e1) {
         }
 
-        if (gpsLoc == null && networkLoc == null) {
+        if (gpsLoc == null) {
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
-                double distance  = 0.00;
+                double distance = 0.00;
                 Boolean open = checkOpen(serverList, day, currHour, i);
-                Restaurant r1 = new Restaurant(name, open, distance);
-                resList.add(r1);
+                String openUntil = getOpenUntil(serverList, day, currHour, i);
+                if (!open) {
+                    Restaurant r1 = new Restaurant(name, false, distance);
+                    resList.add(r1);
+                } else {
+                    Restaurant r1 = new Restaurant(name, true, distance, openUntil);
+                    resList.add(r1);
+                }
             }
-        } else if(gpsLoc != null) {
+        } else if (gpsLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
@@ -118,41 +126,19 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
                 double distance = gpsLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = checkOpen(serverList, day, currHour, i);
                 String openUntil = getOpenUntil(serverList, day, currHour, i);
-                if(!open) {
-                    Restaurant r1 = new Restaurant(name, open, distance);
-                    r1.setLatitude(latitude);
-                    r1.setLongitude(longitude);
-                    resList.add(r1);
-                }else{
-                    Restaurant r1 = new Restaurant(name, open, distance, openUntil);
-                    r1.setLatitude(latitude);
-                    r1.setLongitude(longitude);
-                    resList.add(r1);
-                }
-            }
-        } else
-            for (int i = 0; i < serverList.size(); i++) {
-                String name = serverList.get(i).getString("Name");
-                Location targetLocation = new Location("");
-                double longitude = serverList.get(i).getDouble("Longitude");
-                double latitude = serverList.get(i).getDouble("Latitude");
-                targetLocation.setLongitude(longitude);
-                targetLocation.setLatitude(latitude);
-                double distance = networkLoc.distanceTo(targetLocation) / 1000;
-                Boolean open = checkOpen(serverList, day, currHour, i);
-                String openUntil = getOpenUntil(serverList, day, currHour, i);
                 if (!open) {
-                    Restaurant r1 = new Restaurant(name, open, distance);
+                    Restaurant r1 = new Restaurant(name, false, distance);
                     r1.setLatitude(latitude);
                     r1.setLongitude(longitude);
                     resList.add(r1);
                 } else {
-                    Restaurant r1 = new Restaurant(name, open, distance, openUntil);
+                    Restaurant r1 = new Restaurant(name, true, distance, openUntil);
                     r1.setLatitude(latitude);
                     r1.setLongitude(longitude);
                     resList.add(r1);
                 }
             }
+        }
         Collections.sort(resList, new Comparator<Restaurant>() {
             @Override
             public int compare(Restaurant p1, Restaurant p2) {
@@ -164,9 +150,9 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
     private String getOpenUntil(List<ParseObject> serverList, String day, int currHour, int position) {
 
         try {
-            if (String.valueOf(serverList.get(position).getJSONArray(day).get(1)).equals("24")){
+            if (String.valueOf(serverList.get(position).getJSONArray(day).get(1)).equals("24")) {
                 return "0";
-            }else {
+            } else {
                 return String.valueOf(serverList.get(position).getJSONArray(day).get(1));
             }
         } catch (JSONException e) {
@@ -187,7 +173,7 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
             e.printStackTrace();
         }
 
-        if(openHour == closeHour){
+        if (openHour == closeHour) {
             return false;
         }
 
@@ -207,18 +193,13 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        String uri =null;
-        if (gpsLoc == null && networkLoc == null) {
-            Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
+        if (gpsLoc == null) {
+            Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
         } else if (gpsLoc != null) {
-            uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
-                    "&daddr="+resList.get(position).getLatitude()+","+resList.get(position).getLongitude();
+           String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+                    "&daddr=" + resList.get(position).getLatitude() + "," + resList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
-        } else if(networkLoc != null)
-            uri = "http://maps.google.com/maps?saddr="+networkLoc.getLatitude()+","+networkLoc.getLongitude()+
-                    "&daddr="+resList.get(position).getLatitude()+","+resList.get(position).getLongitude();
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        startActivity(i);
+        }
     }
 }

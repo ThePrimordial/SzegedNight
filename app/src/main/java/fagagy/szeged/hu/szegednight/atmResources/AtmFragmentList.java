@@ -38,9 +38,6 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
     private Location gpsLoc;
-    private Location networkLoc;
-    private MapView mMapView;
-    private GoogleMap googleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,13 +46,9 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
         lm.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 20000, 50,
-                locListener);
-        lm.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 20000, 50,
                 locListener);
         gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        networkLoc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -80,7 +73,7 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
         } catch (ParseException e1) {
         }
 
-        if (gpsLoc == null && networkLoc == null) {
+        if (gpsLoc == null) {
             Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
@@ -89,7 +82,7 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
                 Atm a1 = new Atm(name, type, distance);
                 atmList.add(a1);
             }
-        } else if (gpsLoc != null) {
+        } else {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
@@ -105,22 +98,7 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
                 Log.d("atmtype", a1.getType());
                 atmList.add(a1);
             }
-        } else
-            for (int i = 0; i < serverList.size(); i++) {
-                String name = serverList.get(i).getString("Name");
-                Location targetLocation = new Location("");
-                double longitude = serverList.get(i).getDouble("Longitude");
-                double latitude = serverList.get(i).getDouble("Latitude");
-                targetLocation.setLongitude(longitude);
-                targetLocation.setLatitude(latitude);
-                double distance = networkLoc.distanceTo(targetLocation) / 1000;
-                String type = serverList.get(i).getString("Type");
-                Atm a1 = new Atm(name, type, distance);
-                a1.setLatitude(latitude);
-                a1.setLongitude(longitude);
-                Log.d("atmtype", a1.getType());
-                atmList.add(a1);
-            }
+        }
 
         Collections.sort(atmList, new Comparator<Atm>() {
             @Override
@@ -133,19 +111,14 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        String uri =null;
-        if (gpsLoc == null && networkLoc == null) {
-            Toast.makeText(getActivity(), "GPS koordináta vagy Internet kapcsolat nem elérhető", Toast.LENGTH_LONG).show();
+        if (gpsLoc == null) {
+            Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
         } else if (gpsLoc != null) {
-            uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
-                    "&daddr="+atmList.get(position).getLatitude()+","+atmList.get(position).getLongitude();
+            String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+                    "&daddr=" + atmList.get(position).getLatitude() + "," + atmList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
-        } else if(networkLoc != null)
-            uri = "http://maps.google.com/maps?saddr="+networkLoc.getLatitude()+","+networkLoc.getLongitude()+
-                    "&daddr="+atmList.get(position).getLatitude()+","+atmList.get(position).getLongitude();
-        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        startActivity(i);
+        }
     }
 
     @Override

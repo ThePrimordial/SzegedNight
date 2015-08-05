@@ -21,11 +21,11 @@ import fagagy.szeged.hu.szegednight.R;
 public class ShopAdapter extends BaseAdapter {
     final List<Shop> shopList;
 
-    public ShopAdapter(final Context context, final ArrayList<Shop> shopList){
+    public ShopAdapter(final Context context, final ArrayList<Shop> shopList) {
         this.shopList = shopList;
     }
 
-    public void addShop(Shop shop){
+    public void addShop(Shop shop) {
         shopList.add(shop);
     }
 
@@ -57,25 +57,28 @@ public class ShopAdapter extends BaseAdapter {
         TextView shopListNameText = (TextView) shopView.findViewById(R.id.ShopName);
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
-        if (shop.isOpen()){
+        if (shop.isOpen()) {
             shopListOpenText.setText("Éjjel-Nappal nyitva");
             shopListOpenText.setTextColor(Color.GREEN);
-        }else if(!shop.isOpen()) {
+        } else {
             shopListOpenText.setText("Zarva! :( ");
             shopListOpenText.setTextColor(Color.RED);
         }
-        if(shop.getDistance() > 1){
+
+        if (shop.getDistance() == 0) {
+            shopListDistanceText.setText("ismeretlen");
+        } else if (shop.getDistance() > 1) {
             shopListDistanceText.setText(numberFormat.format(shop.getDistance()) + " km");
-        }else{
-            double dist = shop.getDistance()*1000;
+        } else {
+            double dist = shop.getDistance() * 1000;
             int intDistance = (int) dist;
             shopListDistanceText.setText(intDistance + " m");
         }
         shopListNameText.setText(shop.getName());
 
-        if(position % 2 == 0){
+        if (position % 2 == 0) {
             shopView.setBackgroundResource(R.drawable.border_ui1);
-        }else {
+        } else {
             shopView.setBackgroundResource(R.drawable.border_ui2);
         }
 

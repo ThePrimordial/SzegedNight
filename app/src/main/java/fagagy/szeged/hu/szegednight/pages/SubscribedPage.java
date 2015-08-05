@@ -58,7 +58,7 @@ public class SubscribedPage extends Activity {
 
         LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
-        location = lm.getLastKnownLocation(lm.getBestProvider(criteria, true));
+        location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         getPubRowNumber(pubServerList);
         getSubscribedRowNumber(subscribedServerList);
@@ -107,9 +107,17 @@ public class SubscribedPage extends Activity {
         TextView offers = (TextView) findViewById(R.id.offers);
         StringBuilder sb = new StringBuilder();
         sb.append("Akciók: ");
-        sb.append('\n');
-        sb.append(subscribedServerList.get(subscribedRowNumber).getString("Offers"));
+        for(int i = 0; i < subscribedServerList.get(subscribedRowNumber).getJSONArray("Offers").length(); i++){
+            sb.append('\n');
+            try {
+                sb.append(subscribedServerList.get(subscribedRowNumber).getJSONArray("Offers").get(i).toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         offers.setText(sb.toString());
+        offers.setTextSize(21);
+        offers.setTextColor(getResources().getColor(R.color.Wheat));
     }
 
     private void generateDescription(List<ParseObject> subscribedServerList) {

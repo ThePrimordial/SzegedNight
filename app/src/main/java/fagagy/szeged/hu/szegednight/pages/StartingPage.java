@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +37,6 @@ public class StartingPage extends Activity {
 
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class StartingPage extends Activity {
                 startActivity(i);
                 break;
             case R.id.btnParties:
-                Toast.makeText(this, "Oldalraa húzva megtekintheted a SZIN és az Összegyetemi Gólyatábor eseményeit!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Oldalra húzva megtekintheted a SZIN eseményeit! (feltöltés alatt)", Toast.LENGTH_SHORT).show();
                 i.setClass(this, PartyBrowser.class);
                 startActivity(i);
                 break;
@@ -108,7 +108,8 @@ public class StartingPage extends Activity {
                 infoText.setText(Html.fromHtml("<ul>\n" +
                         "    <li>\n" +
                         "        <p align=\"left\">\n" +
-                        "            Az alkalmazás a jelenlegi pozíciódtól való távolság sorrendjében kilistázza a választott helyeket, valamint mutatja ha az adott hely épp nyitva van\n" +
+                        "            Az alkalmazás a jelenlegi pozíciódtól való távolság sorrendjében kilistázza a választott helyeket, " +
+                        "               valamint mutatja ha az adott hely épp nyitva van\n" +
                         "            (és meddig).\n" +
                         "        </p>\n" +
                         "    </li>\n" +
@@ -116,8 +117,9 @@ public class StartingPage extends Activity {
                         "<ul>\n" +
                         "    <li>\n" +
                         "        <p align=\"left\">\n" +
-                        "            GPS vagy internet használata javasolt. Ha mindkettő be van kapcsolva az alkalmazás a GPS pozíciót részesíti előnyben, mivel az jóval pontosabb\n" +
-                        "            eredményt ad vissza, internetes helymeghatározásnál akár 500 méteres eltérések is lehetnek.\n" +
+                        "            GPS használata szükséges. Ha nincs bekapcsolva csak a nyitvatartást láthatod a távolságot nem, valamint " +
+                        "ha megérintesz egy helyet, nem fog tudni odavezetni." +
+                        "\n" +
                         "        </p>\n" +
                         "    </li>\n" +
                         "</ul>\n" +
@@ -125,22 +127,14 @@ public class StartingPage extends Activity {
                         "    <li>\n" +
                         "        <p align=\"left\">\n" +
                         "            Minden indításkor automatikusan frissül az adatbázis. Ha épp nincs internetkapcsolatod akkor is láthatod az egyes helyeket, eseményeket de ilyenkor\n" +
-                        "            a távolság meghatározása nem pontos.\n" +
+                        "            az adatok elavultak lehetnek.\n" +
                         "        </p>\n" +
                         "    </li>\n" +
                         "</ul>\n" +
                         "<ul>\n" +
                         "    <li>\n" +
                         "        <p align=\"left\">\n" +
-                        "            Listanézeten a kiválasztott elemre kattintva az alkalmazás oda tud vezeti Google Maps használatával. Ehhez GPS vagy internet kapcsolat szükséges.\n" +
-                        "        </p>\n" +
-                        "    </li>\n" +
-                        "</ul>\n" +
-                        "<ul>\n" +
-                        "    <li>\n" +
-                        "        <p align=\"left\">\n" +
-                        "            Ha esetleg nincs internet vagy GPS kapcsolatod akkor ha Térkép nézetre váltasz láthatod az összes listázott helyet előre bejelölve térképen, ami\n" +
-                        "            teljesen offline módban is nagyban megkönnyíti az odatalálást.\n" +
+                        "            Térkép nézeten láthatod előre bejelölve az összes helyet, abban a témában amit kiválasztottál.\n" +
                         "        </p>\n" +
                         "    </li>\n" +
                         "</ul>\n" +
@@ -223,7 +217,6 @@ public class StartingPage extends Activity {
         }
     }
 
-
     public class FetchCordinates extends AsyncTask<String, Integer, String> {
 
         Location myLoc;
@@ -249,7 +242,7 @@ public class StartingPage extends Activity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if (myLoc == null) {
-                Toast.makeText(StartingPage.this, "Nem érhető el GPS pozíció", Toast.LENGTH_LONG)
+                Toast.makeText(StartingPage.this, "Nem érhető el GPS pozíció, távolság ismeretlen lesz!", Toast.LENGTH_LONG)
                         .show();
             } else
                 Toast.makeText(StartingPage.this, "GPS pozíció megtalálva!", Toast.LENGTH_LONG)
