@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by TheSorrow on 15/08/04.
@@ -16,9 +17,7 @@ public class PartyFragmentAdapter extends FragmentPagerAdapter {
     public PartyFragmentAdapter(FragmentManager fm, Fragment... specificFragmentRow) {
         super(fm);
         fragments = new ArrayList<>();
-        for(Fragment fragment : specificFragmentRow){
-            fragments.add(fragment);
-        }
+        Collections.addAll(fragments, specificFragmentRow);
     }
 
 

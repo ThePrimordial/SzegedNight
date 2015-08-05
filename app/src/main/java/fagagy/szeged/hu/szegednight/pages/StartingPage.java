@@ -194,6 +194,7 @@ public class StartingPage extends Activity {
                 List<ParseObject> serverList;
                 List<ParseObject> deleteList;
                 ArrayList<String> whatToRefresh = new ArrayList<>();
+
                 whatToRefresh.add("Pub");
                 whatToRefresh.add("Restaurant");
                 whatToRefresh.add("ATM");

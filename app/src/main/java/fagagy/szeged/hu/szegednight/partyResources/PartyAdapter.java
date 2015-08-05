@@ -26,9 +26,11 @@ import fagagy.szeged.hu.szegednight.R;
 public class PartyAdapter extends BaseAdapter {
 
     final List<Party> partyList;
+    private final Context context;
 
     public PartyAdapter(final Context context, final ArrayList<Party> partyList) {
         this.partyList = partyList;
+        this.context = context;
     }
 
     public void addParty(Party party) {
@@ -122,6 +124,7 @@ public class PartyAdapter extends BaseAdapter {
 
             partyPlaceText.setText(party.getPlace());
             partyEventText.setText(party.getEvent());
+            eventColorSetter(party.getEvent(), partyEventText);
 
             if (position % 2 == 0) {
                 partyView.setBackgroundResource(R.drawable.border_ui1);
@@ -130,6 +133,17 @@ public class PartyAdapter extends BaseAdapter {
             }
 
             return partyView;
+        }
+    }
+
+    private void eventColorSetter(String event, TextView eventView) {
+
+        switch (event){
+            case "SZIN Nagyszínpad": eventView.setTextColor(context.getResources().getColor(R.color.fuchsia));break;
+            case "Live Arena": eventView.setTextColor(context.getResources().getColor(R.color.Tomato));break;
+            case "Mizo Színpad": eventView.setTextColor(context.getResources().getColor(R.color.Turquoise));break;
+            case "WakeUpSzeged PartyAréna": eventView.setTextColor(context.getResources().getColor(R.color.LightSteelBlue));break;
+            default:break;
         }
     }
 }

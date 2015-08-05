@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import fagagy.szeged.hu.szegednight.R;
 
@@ -20,13 +19,13 @@ public class PartyBrowser extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browsing_with_swipe);
-        Fragment partyFragmentList = new PartyFragmentList();
         fragmentManager = getSupportFragmentManager();
-        Fragment szinList = new SZINFragmentList();
-        Fragment golyataborList = new GolyaTaborFragmentList();
-        PartyFragmentAdapter adapter = new PartyFragmentAdapter(fragmentManager,partyFragmentList,szinList,golyataborList);
+        Fragment partyFragmentList = new PartyFragmentList();
+        Fragment szinfragment = new SZINFragmentList();
+        PartyFragmentAdapter adapter = new PartyFragmentAdapter(fragmentManager,partyFragmentList,szinfragment);
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(adapter);
     }

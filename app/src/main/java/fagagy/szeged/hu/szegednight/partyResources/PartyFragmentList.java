@@ -149,11 +149,6 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
         startActivity(i);
     }
 
-    public String getTAG(){
-        return TAG;
-    }
-
-
     @Override
     public void onPause() {
         super.onPause();
