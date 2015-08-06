@@ -91,7 +91,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="35dp">
 
         <ImageButton
             android:background="@drawable/btn_kontakt"
@@ -102,7 +102,8 @@
             android:id="@+id/btnContact"
             android:layout_gravity="right"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="2dp" />
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="35dp" />
 
         <ImageButton
             android:background="@drawable/btn_info"
