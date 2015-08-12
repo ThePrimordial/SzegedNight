@@ -118,7 +118,7 @@ public class StartingPage extends Activity {
                         "    <li>\n" +
                         "        <p align=\"left\">\n" +
                         "            GPS használata szükséges. Ha nincs bekapcsolva csak a nyitvatartást láthatod a távolságot nem, valamint " +
-                        "ha megérintesz egy helyet, nem fog tudni odavezetni." +
+                        "ha megérintesz egy helyet nem fog tudni odavezetni." +
                         "\n" +
                         "        </p>\n" +
                         "    </li>\n" +

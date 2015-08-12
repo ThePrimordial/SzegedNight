@@ -3,6 +3,7 @@ package fagagy.szeged.hu.szegednight.tobaccoResources;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,12 +58,14 @@ public class TobaccoAdapter extends BaseAdapter {
         TextView tobaccoListDistanceText = (TextView) tobaccoView.findViewById(R.id.TobaccoDistance);
         TextView tobaccoListNameText = (TextView) tobaccoView.findViewById(R.id.TobaccoName);
         DecimalFormat numberFormat = new DecimalFormat("#.00");
+        Log.d("miafasz", "mikor nyit" + tobacco.getOpeningTime());
+        Log.d("miafasz", "mikro zár" + tobacco.getOpenUntil());
 
         if (tobacco.isOpen()) {
             tobaccoListOpenText.setText("Nyitva! " + tobacco.getOpenUntil() + ".00-ig");
             tobaccoListOpenText.setTextColor(Color.GREEN);
         } else {
-            tobaccoListOpenText.setText("Zarva! :( ");
+            tobaccoListOpenText.setText("Zarva! (Nyitás:" + tobacco.getOpeningTime() + "0-kor)");
             tobaccoListOpenText.setTextColor(Color.RED);
         }
 

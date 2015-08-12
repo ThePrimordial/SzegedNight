@@ -33,8 +33,7 @@
         android:layout_height="60dp"
         android:text="@string/Parties"
         android:id="@+id/btnParties"
-        android:onClick="onClick"
-        android:theme="@style/AppTheme" />
+        android:onClick="onClick" />
 
     <ImageButton
         android:background="@drawable/btn_restau"
@@ -44,8 +43,7 @@
         android:layout_height="60dp"
         android:text="@string/Restaurants"
         android:id="@+id/btnRestaurants"
-        android:onClick="onClick"
-        android:theme="@style/AppTheme" />
+        android:onClick="onClick" />
 
     <ImageButton
         android:background="@drawable/btn_shops"
@@ -57,7 +55,6 @@
         android:id="@+id/btnShops"
         android:layout_gravity="center_horizontal"
         android:onClick="onClick"
-        android:theme="@style/AppTheme"
         />
 
     <ImageButton
@@ -70,7 +67,6 @@
         android:id="@+id/btnATM"
         android:layout_gravity="center_horizontal"
         android:onClick="onClick"
-        android:theme="@style/AppTheme"
         />
 
     <ImageButton
@@ -83,7 +79,6 @@
         android:id="@+id/btnTobaccoShops"
         android:layout_gravity="center_horizontal"
         android:onClick="onClick"
-        android:theme="@style/AppTheme"
         />
 
     <RelativeLayout

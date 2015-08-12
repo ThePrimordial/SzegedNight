@@ -109,13 +109,18 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
                 Boolean open = checkOpen(serverList, day, currHour, i);
-                String openUntil = getOpenUntil(serverList, day, currHour, i);
-                if (!open) {
-                    Tobacco t1 = new Tobacco(name, false, distance);
-                    tobaccoList.add(t1);
-                } else {
-                    Tobacco t1 = new Tobacco(name, true, distance, openUntil);
-                    tobaccoList.add(t1);
+                try {
+                    int openingtime = Integer.parseInt(String.valueOf(serverList.get(i).getJSONArray(day).get(0)));
+                    String openUntil = getOpenUntil(serverList, day, currHour, i);
+                    if (!open) {
+                        Tobacco t1 = new Tobacco(name, false, distance, openingtime);
+                        tobaccoList.add(t1);
+                    } else {
+                        Tobacco t1 = new Tobacco(name,true,  distance, openUntil);
+                        tobaccoList.add(t1);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         } else if (gpsLoc != null) {
@@ -128,20 +133,22 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
                 targetLocation.setLatitude(latitude);
                 double distance = gpsLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = checkOpen(serverList, day, currHour, i);
-                String openUntil = getOpenUntil(serverList, day, currHour, i);
-                if (!open) {
-                    Tobacco t1 = new Tobacco(name, false, distance);
-                    t1.setLatitude(latitude);
-                    t1.setLongitude(longitude);
-                    tobaccoList.add(t1);
-                } else {
-                    Tobacco t1 = new Tobacco(name, true, distance, openUntil);
-                    t1.setLatitude(latitude);
-                    t1.setLongitude(longitude);
-                    tobaccoList.add(t1);
+                try {
+                    int openingtime = Integer.parseInt(String.valueOf(serverList.get(i).getJSONArray(day).get(0)));
+                    String openUntil = getOpenUntil(serverList, day, currHour, i);
+                    if (!open) {
+                        Tobacco t1 = new Tobacco(name, false, distance, openingtime);
+                        tobaccoList.add(t1);
+                    } else {
+                        Tobacco t1 = new Tobacco(name, true,  distance, openUntil);
+                        tobaccoList.add(t1);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
             }
-            }
+        }
 
         Collections.sort(tobaccoList, new Comparator<Tobacco>() {
             @Override
@@ -177,7 +184,7 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
             e.printStackTrace();
         }
 
-        if(openHour == closeHour){
+        if (openHour == closeHour) {
             return false;
         }
 

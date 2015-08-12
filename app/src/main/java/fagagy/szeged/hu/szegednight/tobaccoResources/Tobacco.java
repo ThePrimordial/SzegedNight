@@ -11,19 +11,27 @@ public class Tobacco {
     private double latitude;
     private double longitude;
     private String openUntil;
+    private int openingTime;
+
+    public double getOpeningTime() {
+        return openingTime;
+    }
 
     public String getOpenUntil() {
         return openUntil;
     }
 
 
-    public Tobacco(String name, boolean open, double distance) {
+    public Tobacco(String name, boolean open,  double distance,  int openingTime) {
         this.name = name;
         this.open = open;
         this.distance = distance;
+        this.openingTime = openingTime;
+
     }
 
     public Tobacco(String name, boolean open, double distance, String openUntil) {
+
         this.name = name;
         this.open = open;
         this.distance = distance;
