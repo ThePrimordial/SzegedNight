@@ -16,9 +16,9 @@
         android:icon="@mipmap/icon3"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:theme="@style/no_title" >
+        android:theme="@style/MyMaterialTheme" >
         <activity
-            android:name=".pages.StartingPage"
+            android:name=".startingPageRescources.StartingPage"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -37,50 +37,50 @@
         <activity
             android:name=".pubResources.PubBrowser"
             android:label="Kocsmák"
-            android:parentActivityName=".pages.StartingPage" >
+            android:parentActivityName=".startingPageRescources.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
+                android:value=".startingPageRescources.StartingPage" />
         </activity>
         <activity
             android:name=".restaurantResources.RestaurantBrowser"
             android:label="Gyorséttermek"
-            android:parentActivityName=".pages.StartingPage" >
+            android:parentActivityName=".startingPageRescources.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
+                android:value=".startingPageRescources.StartingPage" />
         </activity>
         <activity
             android:name=".atmResources.AtmBrowser"
             android:label="Bankautomaták"
-            android:parentActivityName=".pages.StartingPage" >
+            android:parentActivityName=".startingPageRescources.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
+                android:value=".startingPageRescources.StartingPage" />
         </activity>
         <activity
             android:name=".tobaccoResources.TobaccoBrowser"
             android:label="Dohányboltok"
-            android:parentActivityName=".pages.StartingPage" >
+            android:parentActivityName=".startingPageRescources.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
+                android:value=".startingPageRescources.StartingPage" />
         </activity>
         <activity
             android:name=".partyResources.PartyBrowser"
             android:label="Parties"
-            android:parentActivityName=".pages.StartingPage" >
+            android:parentActivityName=".startingPageRescources.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
+                android:value=".startingPageRescources.StartingPage" />
         </activity>
         <activity
             android:name=".shopResources.ShopBrowser"
             android:label="Shops"
-            android:parentActivityName=".pages.StartingPage" >
+            android:parentActivityName=".startingPageRescources.StartingPage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="fagagy.szeged.hu.szegednight.pages.StartingPage" />
+                android:value=".startingPageRescources.StartingPage" />
         </activity>
         <activity
             android:name=".pages.SubscribedPage"

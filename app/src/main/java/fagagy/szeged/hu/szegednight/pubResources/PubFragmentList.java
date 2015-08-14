@@ -1,5 +1,6 @@
 package fagagy.szeged.hu.szegednight.pubResources;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -230,6 +231,16 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         if (lm != null) {
             lm.removeUpdates(locListener);
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 
 }

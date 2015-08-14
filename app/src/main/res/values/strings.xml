@@ -1,10 +1,30 @@
 <resources xmlns:http="http://schemas.android.com/apk/res-auto">
+    <string name="action_search">Search</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <string name="nav_item_home">Home</string>
+    <string name="nav_item_friends">Friends</string>
+    <string name="nav_item_notifications">Messages</string>
+
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/Pubs</item>
+        <item>@string/Parties</item>
+        <item>@string/Restaurants</item>
+        <item>@string/Shops</item>
+        <item>@string/ATM_Finder</item>
+        <item>@string/TobaccoShops</item>
+    </string-array>
+
+    <string name="title_messages">Messages</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_home">Home</string>
     <string name="app_name">SzegedNights</string>
     <string name="Szeged_Nights">SzegedNights</string>
     <string name="Pubs">Kocsmák</string>
     <string name="Parties">Szórakozóhelyek</string>
-    <string name="Restaurants">Kajáldák</string>
-    <string name="Taxies">Taxik</string>
+    <string name="Restaurants">Étkezdék</string>
     <string name="Shops">Éjjel-Nappalik</string>
     <string name="ATM_Finder">ATM-Kereső</string>
     <string name="TobaccoShops">Dohányboltok</string>
@@ -28,5 +48,8 @@
     <string name="title_activity_draw_route">Map</string>
     <string name="title_activity_subscribed_page">SubscribedPage</string>
     <string name="action_settings">settingz</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

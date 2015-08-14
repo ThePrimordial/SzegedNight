@@ -1,6 +1,5 @@
-package fagagy.szeged.hu.szegednight.pages;
+package fagagy.szeged.hu.szegednight.startingPageRescources;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -9,12 +8,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -25,6 +28,7 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.atmResources.AtmBrowser;
+import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
 import fagagy.szeged.hu.szegednight.partyResources.PartyBrowser;
 import fagagy.szeged.hu.szegednight.pubResources.PubBrowser;
 import fagagy.szeged.hu.szegednight.restaurantResources.RestaurantBrowser;
@@ -32,11 +36,12 @@ import fagagy.szeged.hu.szegednight.shopResources.ShopBrowser;
 import fagagy.szeged.hu.szegednight.tobaccoResources.TobaccoBrowser;
 
 
-public class StartingPage extends Activity {
+public class StartingPage extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
 
-
+    private Toolbar mToolbar;
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
+    private FragmentDrawer drawerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,7 @@ public class StartingPage extends Activity {
         fetchCordinates.execute();
         if (!isNetworkAvailable()) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_starting_page);
+            setContentView(R.layout.activity_starting_page_material);
             Toast.makeText(this, "Nincs internetkapcsolat. Adatbázis elavult lehet!", Toast.LENGTH_LONG)
                     .show();
 
@@ -53,40 +58,71 @@ public class StartingPage extends Activity {
             UpdateDataBase updateDataBase = new UpdateDataBase();
             updateDataBase.execute();
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_starting_page);
+            setContentView(R.layout.activity_starting_page_material);
         }
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        drawerFragment = (FragmentDrawer)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+        drawerFragment.setDrawerListener(this);
+
     }
 
-    public void onClick(View v) {
-        int id = v.getId();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_starting_page, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDrawerItemSelected(View view, int position) {
+        onClick(position);
+    }
+
+
+    public void onClick(int position) {
         Intent i = new Intent();
-        switch (id) {
-            case R.id.btnPubs:
+        switch (position) {
+            case 0:
                 i.setClass(this, PubBrowser.class);
                 startActivity(i);
                 break;
-            case R.id.btnRestaurants:
-                i.setClass(this, RestaurantBrowser.class);
-                startActivity(i);
-                break;
-            case R.id.btnATM:
-                i.setClass(this, AtmBrowser.class);
-                startActivity(i);
-                break;
-            case R.id.btnTobaccoShops:
-                i.setClass(this, TobaccoBrowser.class);
-                startActivity(i);
-                break;
-            case R.id.btnParties:
-                Toast.makeText(this, "Oldalra húzva megtekintheted a SZIN eseményeit! (feltöltés alatt)", Toast.LENGTH_SHORT).show();
+            case 1:
                 i.setClass(this, PartyBrowser.class);
                 startActivity(i);
                 break;
-            case R.id.btnShops:
+            case 2:
+                i.setClass(this, RestaurantBrowser.class);
+                startActivity(i);
+                break;
+            case 3:
                 i.setClass(this, ShopBrowser.class);
                 startActivity(i);
                 break;
-            case R.id.btnContact:
+            case 4:
+                i.setClass(this, AtmBrowser.class);
+                startActivity(i);
+                break;
+            case 5:
+                i.setClass(this, TobaccoBrowser.class);
+                startActivity(i);
+                break;
+            case 6:
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("plain/text");
 
@@ -102,7 +138,7 @@ public class StartingPage extends Activity {
                 intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
                 startActivity(Intent.createChooser(intent, ""));
                 break;
-            case R.id.btnInfo:
+            case 7:
                 View infoView = View.inflate(this, R.layout.info_view, null);
                 TextView infoText = (TextView) infoView.findViewById(R.id.infoText);
                 infoText.setText(Html.fromHtml("<ul>\n" +
@@ -228,8 +264,6 @@ public class StartingPage extends Activity {
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(StartingPage.this, "Jelenlegi pozíció keresése", Toast.LENGTH_LONG)
-                    .show();
             lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locListener = new MyCurrentLocationListener();
             lm.requestLocationUpdates(
