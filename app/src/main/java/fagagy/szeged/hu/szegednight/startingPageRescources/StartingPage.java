@@ -215,7 +215,6 @@ public class StartingPage extends AppCompatActivity implements FragmentDrawer.Fr
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(StartingPage.this, "Adatbázis frissítése folyamatban...", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -249,7 +248,6 @@ public class StartingPage extends AppCompatActivity implements FragmentDrawer.Fr
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(StartingPage.this, "Adatbázis frissítése megtörtént", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -275,11 +273,8 @@ public class StartingPage extends AppCompatActivity implements FragmentDrawer.Fr
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if (myLoc == null) {
+            if (myLoc == null)
                 Toast.makeText(StartingPage.this, "Nem érhető el GPS pozíció, távolság ismeretlen lesz!", Toast.LENGTH_LONG)
-                        .show();
-            } else
-                Toast.makeText(StartingPage.this, "GPS pozíció megtalálva!", Toast.LENGTH_LONG)
                         .show();
         }
     }

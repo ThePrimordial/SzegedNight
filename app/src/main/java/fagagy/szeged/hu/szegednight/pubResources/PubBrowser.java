@@ -1,5 +1,6 @@
 package fagagy.szeged.hu.szegednight.pubResources;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,8 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import fagagy.szeged.hu.szegednight.R;
+import fagagy.szeged.hu.szegednight.atmResources.AtmBrowser;
 import fagagy.szeged.hu.szegednight.pages.FragmentAdapter;
+import fagagy.szeged.hu.szegednight.partyResources.PartyBrowser;
+import fagagy.szeged.hu.szegednight.restaurantResources.RestaurantBrowser;
+import fagagy.szeged.hu.szegednight.shopResources.ShopBrowser;
 import fagagy.szeged.hu.szegednight.startingPageRescources.FragmentDrawer;
+import fagagy.szeged.hu.szegednight.tobaccoResources.TobaccoBrowser;
 
 public class PubBrowser extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener{
 
@@ -63,6 +69,39 @@ public class PubBrowser extends AppCompatActivity implements FragmentDrawer.Frag
 
     @Override
     public void onDrawerItemSelected(View view, int position) {
+        onClick(position);
+    }
 
+
+    public void onClick(int position) {
+        Intent i = new Intent();
+        switch (position) {
+            case 0:
+                i.setClass(this, PubBrowser.class);
+                startActivity(i);
+                break;
+            case 1:
+                i.setClass(this, PartyBrowser.class);
+                startActivity(i);
+                break;
+            case 2:
+                i.setClass(this, RestaurantBrowser.class);
+                startActivity(i);
+                break;
+            case 3:
+                i.setClass(this, ShopBrowser.class);
+                startActivity(i);
+                break;
+            case 4:
+                i.setClass(this, AtmBrowser.class);
+                startActivity(i);
+                break;
+            case 5:
+                i.setClass(this, TobaccoBrowser.class);
+                startActivity(i);
+                break;
+            default:
+                break;
+        }
     }
 }
