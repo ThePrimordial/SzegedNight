@@ -62,14 +62,14 @@ public class PubAdapter extends BaseAdapter {
         if (pub.isOpen()) {
             if ((pub.getOpenUntil()).equals("0")) {
                 pubListOpenText.setText("Nyitva! Éjfélig");
-                pubListOpenText.setTextColor(Color.GREEN);
+                pubListOpenText.setTextColor(Color.WHITE);
             } else {
                 pubListOpenText.setText("Nyitva! " + pub.getOpenUntil() + ".00-ig");
-                pubListOpenText.setTextColor(Color.GREEN);
+                pubListOpenText.setTextColor(Color.WHITE);
             }
         } else {
             pubListOpenText.setText("Zarva! :( ");
-            pubListOpenText.setTextColor(Color.RED);
+            pubListOpenText.setTextColor(Color.WHITE);
         }
 
         if (pub.getDistance() == 0) {
