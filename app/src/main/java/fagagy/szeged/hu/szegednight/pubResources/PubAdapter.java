@@ -62,14 +62,14 @@ public class PubAdapter extends BaseAdapter {
         if (pub.isOpen()) {
             if ((pub.getOpenUntil()).equals("0")) {
                 pubListOpenText.setText("Nyitva! Éjfélig");
-                pubListOpenText.setTextColor(Color.WHITE);
+                pubListOpenText.setTextColor(pubView.getResources().getColor(R.color.ForestGreen));
             } else {
                 pubListOpenText.setText("Nyitva! " + pub.getOpenUntil() + ".00-ig");
-                pubListOpenText.setTextColor(Color.WHITE);
+                pubListOpenText.setTextColor(pubView.getResources().getColor(R.color.ForestGreen));
             }
         } else {
-            pubListOpenText.setText("Zarva! :( ");
-            pubListOpenText.setTextColor(Color.WHITE);
+            pubListOpenText.setText("Zárva! :( ");
+            pubListOpenText.setTextColor(Color.RED);
         }
 
         if (pub.getDistance() == 0) {
@@ -82,12 +82,6 @@ public class PubAdapter extends BaseAdapter {
             pubListDistanceText.setText(intDistance + " m");
         }
         pubListNameText.setText(pub.getName());
-
-        if (position % 2 == 0) {
-            pubView.setBackgroundResource(R.drawable.border_ui1);
-        } else {
-            pubView.setBackgroundResource(R.drawable.border_ui2);
-        }
 
         if (pub.isSubscribed()) {
             pubView.setBackgroundResource(R.drawable.subscribed_border_row);
