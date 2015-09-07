@@ -1,22 +1,10 @@
 <resources xmlns:http="http://schemas.android.com/apk/res-auto">
     <string name="action_search">Search</string>
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
-
     <string name="nav_item_home">Home</string>
     <string name="nav_item_friends">Friends</string>
     <string name="nav_item_notifications">Messages</string>
-
-    <!-- navigation drawer item labels  -->
-    <string-array name="nav_drawer_labels">
-        <item>@string/Pubs</item>
-        <item>@string/Parties</item>
-        <item>@string/Restaurants</item>
-        <item>@string/Shops</item>
-        <item>@string/ATM_Finder</item>
-        <item>@string/TobaccoShops</item>
-    </string-array>
-
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
     <string name="title_messages">Messages</string>
     <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>

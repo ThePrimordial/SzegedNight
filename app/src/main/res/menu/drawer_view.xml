@@ -1,0 +1,41 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<group android:checkableBehavior="single">
+    <item
+        android:id="@+id/nav_pub_fragment"
+        android:icon="@drawable/ic_menu"
+        android:title="Kocsmák" />
+    <item
+        android:id="@+id/nav_party_fragment"
+        android:icon="@drawable/ic_menu"
+        android:title="Szórakozóhelyek" />
+    <item
+        android:id="@+id/nav_restaurant_fragment"
+        android:icon="@drawable/ic_menu"
+        android:title="Kajáldák" />
+    <item
+        android:id="@+id/nav_tobacco_fragment"
+        android:icon="@drawable/ic_menu"
+        android:title="Dohányboltok" />
+    <item
+        android:id="@+id/nav_atm_fragment"
+        android:icon="@drawable/ic_menu"
+        android:title="Bankautomaták" />
+    <item
+        android:id="@+id/nav_shop_fragment"
+        android:icon="@drawable/ic_menu"
+        android:title="Éjjel-Nappalik" />
+    <item android:title="Egyéb">
+        <menu>
+            <item
+                android:id="@+id/nav_connection"
+                android:icon="@drawable/ic_menu"
+                android:title="Kapcsolat" />
+            <item
+                android:id="@+id/nav_info"
+                android:icon="@drawable/ic_menu"
+                android:title="Info" />
+        </menu>
+    </item>
+</group>
+    </menu>

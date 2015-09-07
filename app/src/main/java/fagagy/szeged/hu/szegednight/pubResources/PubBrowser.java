@@ -2,11 +2,12 @@ package fagagy.szeged.hu.szegednight.pubResources;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,14 +23,13 @@ import fagagy.szeged.hu.szegednight.pages.FragmentAdapter;
 import fagagy.szeged.hu.szegednight.partyResources.PartyBrowser;
 import fagagy.szeged.hu.szegednight.restaurantResources.RestaurantBrowser;
 import fagagy.szeged.hu.szegednight.shopResources.ShopBrowser;
-import fagagy.szeged.hu.szegednight.startingPageRescources.FragmentDrawer;
 import fagagy.szeged.hu.szegednight.tobaccoResources.TobaccoBrowser;
 
-public class PubBrowser extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener{
+public class PubBrowser extends AppCompatActivity{
 
     public static FragmentManager fragmentManager;
-    private FragmentDrawer drawerFragment;
-    private Toolbar mToolbar;
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,15 +42,59 @@ public class PubBrowser extends AppCompatActivity implements FragmentDrawer.Frag
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(adapter);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        // Set a Toolbar to replace the ActionBar.
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        drawerFragment = (FragmentDrawer)
-                fragmentManager.findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
-        drawerFragment.setDrawerListener(this);
+        // Find our drawer view
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        // Set the menu icon instead of the launcher icon.
+        final ActionBar ab = getSupportActionBar();
+        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ab.setDisplayHomeAsUpEnabled(true);
+
+        NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        setupDrawerContent(nvDrawer);
+
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+
+        Intent i = new Intent();
+        switch (menuItem.getItemId()) {
+            case R.id.nav_pub_fragment:
+                i.setClass(this, PubBrowser.class);
+                startActivity(i);
+                break;
+            case R.id.nav_party_fragment:
+                i.setClass(this, PartyBrowser.class);
+                startActivity(i);
+                break;
+            case R.id.nav_restaurant_fragment:
+                i.setClass(this, RestaurantBrowser.class);
+                startActivity(i);
+                break;
+            default:
+                i.setClass(this, ShopBrowser.class);
+                startActivity(i);
+        }
+
+        // Highlight the selected item, update the title, and close the drawer
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        mDrawer.closeDrawers();
     }
 
     @Override
@@ -139,43 +183,5 @@ public class PubBrowser extends AppCompatActivity implements FragmentDrawer.Frag
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_starting_page, menu);
         return true;
-    }
-
-    @Override
-    public void onDrawerItemSelected(View view, int position) {
-        onClick(position);
-    }
-
-
-    public void onClick(int position) {
-        Intent i = new Intent();
-        switch (position) {
-            case 0:
-                i.setClass(this, PubBrowser.class);
-                startActivity(i);
-                break;
-            case 1:
-                i.setClass(this, PartyBrowser.class);
-                startActivity(i);
-                break;
-            case 2:
-                i.setClass(this, RestaurantBrowser.class);
-                startActivity(i);
-                break;
-            case 3:
-                i.setClass(this, ShopBrowser.class);
-                startActivity(i);
-                break;
-            case 4:
-                i.setClass(this, AtmBrowser.class);
-                startActivity(i);
-                break;
-            case 5:
-                i.setClass(this, TobaccoBrowser.class);
-                startActivity(i);
-                break;
-            default:
-                break;
-        }
     }
 }

@@ -35,8 +35,6 @@ public class PartyFragmentAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position){
             case 0: return PartyFragmentList.TAG;
-            case 1: return SZINFragmentList.TAG;
-            case 2: return GolyaTaborFragmentList.TAG;
             default: return "unknown";
         }
     }

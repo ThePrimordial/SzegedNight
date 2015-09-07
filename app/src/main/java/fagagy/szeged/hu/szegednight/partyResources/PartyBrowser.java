@@ -24,8 +24,7 @@ public class PartyBrowser extends FragmentActivity {
         setContentView(R.layout.activity_browsing_with_swipe);
         fragmentManager = getSupportFragmentManager();
         Fragment partyFragmentList = new PartyFragmentList();
-        Fragment szinfragment = new SZINFragmentList();
-        PartyFragmentAdapter adapter = new PartyFragmentAdapter(fragmentManager,partyFragmentList,szinfragment);
+        PartyFragmentAdapter adapter = new PartyFragmentAdapter(fragmentManager,partyFragmentList);
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(adapter);
     }
