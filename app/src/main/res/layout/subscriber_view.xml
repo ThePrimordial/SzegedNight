@@ -1,11 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingBottom="12dp"
+    android:background="#EEEEEE"
+    >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="210dp"
+        android:src="@drawable/coolclub"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Kecskék"/>
+        android:layout_height="wrap_content"
+        android:text="Bemutatkozás:"
+        android:textSize="26sp"
+        android:id="@+id/subscriber_description_name"
+        android:paddingBottom="15dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Ide fog kerülni a teljes leírás, mert ez így nekünk nagyon jó lesz, és mert én úgy érzem, hogy bármit ide lehet írni :D    Ádám = ultragay vampire"
+        android:id="@+id/subscriber_description"
+        android:paddingBottom="15dp"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="55dp"
+            android:id="@id/btnFacebook"
+            android:text="Facebook"
+            android:drawableLeft="@drawable/fb_icon_btn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/btnNavigate"
+            android:layout_toStartOf="@id/btnNavigate" />
+
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="55dp"
+            android:id="@id/btnNavigate"
+            android:text="Vezess oda"
+            android:drawableLeft="@drawable/navi_icon_btn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="5dp"/>
+    </RelativeLayout>
 
 </LinearLayout>
