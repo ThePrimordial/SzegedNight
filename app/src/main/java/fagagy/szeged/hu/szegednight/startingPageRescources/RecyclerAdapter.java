@@ -1,6 +1,7 @@
 package fagagy.szeged.hu.szegednight.startingPageRescources;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,9 +42,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.textView.setText(dataSource[position]);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(v.getContext(), PubBrowser.class);
-                v.getContext().startActivity(i);
+                View infoView = View.inflate(v.getContext(), R.layout.subscriber_view, null);
+                new AlertDialog.Builder(v.getContext())
+                        .setTitle("Lali egy szatír")
+                        .setView(infoView)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         });
     }
