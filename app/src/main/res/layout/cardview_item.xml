@@ -13,16 +13,34 @@
     android:id="@+id/card_view"
     android:layout_gravity="top|center_horizontal"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
-    card_view:cardBackgroundColor="#AA66CC"
+    card_view:cardBackgroundColor="#31a8e6"
     card_view:cardElevation="10dp"
     android:layout_marginBottom="12dp">
 
-    <TextView
-        android:id="@+id/list_item"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
+
+        <ImageView
+            android:id="@+id/cardview_pic"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/coolclub"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:id="@+id/list_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            android:layout_below="@+id/cardview_pic" />
+    </RelativeLayout>
+
+
 </android.support.v7.widget.CardView>
 
 

@@ -179,4 +179,12 @@
     <color name="material_indigo700">#303f9f</color>
     <color name="material_indigo800">#283593</color>
     <color name="material_indigo900">#1a237e</color>
+    <color name="material_orange100">#ffe0b2</color>
+    <color name="material_orange200">#ffcc80</color>
+    <color name="material_orange300">#ffb74d</color>
+    <color name="material_orange400">#ffa726</color>
+    <color name="material_orange500">#ff9800</color>
+    <color name="material_orange600">#fb8c00</color>
+    <color name="material_orange700">#f57c00</color>
+
 </resources>

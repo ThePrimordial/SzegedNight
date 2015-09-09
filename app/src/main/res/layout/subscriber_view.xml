@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="Ide fog kerülni a teljes leírás, mert ez így nekünk nagyon jó lesz, és mert én úgy érzem, hogy bármit ide lehet írni :D    Ádám = ultragay vampire"
+        android:text="Szeged ÚJ, kellemes és olcsó szórakozóhelye a Cool Club, az Árkáddal szemben. Kezd itt az alapozást az esti bulik előtt a legjobb árakon."
         android:id="@+id/subscriber_description"
         android:paddingBottom="15dp"
         />
@@ -36,7 +36,7 @@
 
         <Button
             android:layout_width="140dp"
-            android:layout_height="55dp"
+            android:layout_height="50dp"
             android:id="@id/btnFacebook"
             android:text="Facebook"
             android:drawableLeft="@drawable/fb_icon_btn"
@@ -47,7 +47,7 @@
 
         <Button
             android:layout_width="140dp"
-            android:layout_height="55dp"
+            android:layout_height="50dp"
             android:id="@id/btnNavigate"
             android:text="Vezess oda"
             android:drawableLeft="@drawable/navi_icon_btn"
