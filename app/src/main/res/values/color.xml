@@ -186,5 +186,6 @@
     <color name="material_orange500">#ff9800</color>
     <color name="material_orange600">#fb8c00</color>
     <color name="material_orange700">#f57c00</color>
+    <color name="my_cool_blue">#F5F5F5</color>
 
 </resources>

@@ -44,9 +44,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             public void onClick(View v) {
                 View infoView = View.inflate(v.getContext(), R.layout.subscriber_view, null);
                 new AlertDialog.Builder(v.getContext())
-                        .setTitle("Lali egy szatír")
+                        .setTitle("Ádám egy vámpír!")
                         .setView(infoView)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setIcon(android.R.drawable.ic_dialog_info)
                         .show();
             }
         });

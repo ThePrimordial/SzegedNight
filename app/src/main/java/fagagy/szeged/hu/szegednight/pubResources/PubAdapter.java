@@ -61,7 +61,7 @@ public class PubAdapter extends BaseAdapter {
 
         if (pub.isOpen()) {
             if ((pub.getOpenUntil()).equals("0")) {
-                pubListOpenText.setText("Nyitva! Éjfélig");
+                pubListOpenText.setText("Nyitva Éjfélig");
                 pubListOpenText.setTextColor(pubView.getResources().getColor(R.color.ForestGreen));
             } else {
                 pubListOpenText.setText("Nyitva! " + pub.getOpenUntil() + ".00-ig");

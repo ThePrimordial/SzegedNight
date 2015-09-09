@@ -19,6 +19,7 @@
         card_view:cardBackgroundColor="@color/material_orange700"
         card_view:cardElevation="10dp"
         android:layout_marginBottom="10dp"
+        android:foreground="@drawable/card_foreground"
         >
 
         <TextView
