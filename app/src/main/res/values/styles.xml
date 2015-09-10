@@ -3,12 +3,12 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/material_orange700</item>
-        <item name="android:background">@color/material_gray500</item>
+        <item name="android:textColor">@color/material_gray500</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <style name="MyMaterialTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#673AB7</item>
+        <item name="colorPrimary">#31a8e6</item>
         <item name="colorPrimaryDark">#512DA8</item>
         <item name="colorAccent">#FF4081</item>
     </style>

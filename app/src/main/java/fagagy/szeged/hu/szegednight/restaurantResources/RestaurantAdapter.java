@@ -75,11 +75,6 @@ public class RestaurantAdapter extends BaseAdapter {
             resListDistanceText.setText(intDistance + " m");
         }
         resListNameText.setText(restaurant.getName());
-        if (position % 2 == 0) {
-            resView.setBackgroundResource(R.drawable.border_ui1);
-        } else {
-            resView.setBackgroundResource(R.drawable.border_ui2);
-        }
 
         return resView;
     }

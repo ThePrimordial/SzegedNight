@@ -76,11 +76,6 @@ public class ShopAdapter extends BaseAdapter {
         }
         shopListNameText.setText(shop.getName());
 
-        if (position % 2 == 0) {
-            shopView.setBackgroundResource(R.drawable.border_ui1);
-        } else {
-            shopView.setBackgroundResource(R.drawable.border_ui2);
-        }
 
         return shopView;
     }

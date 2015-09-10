@@ -88,12 +88,6 @@ public class PartyAdapter extends BaseAdapter {
             partyPlaceText.setText(party.getPlace());
             partyEventText.setText(party.getEvent());
 
-            if (position % 2 == 0) {
-                partyView.setBackgroundResource(R.drawable.border_ui1);
-            } else {
-                partyView.setBackgroundResource(R.drawable.border_ui2);
-            }
-
             if(now.after(party.getDate())){
                 partyDateText.setTextColor(Color.RED);
             }else{
@@ -129,12 +123,6 @@ public class PartyAdapter extends BaseAdapter {
             partyPlaceText.setText(party.getPlace());
             partyEventText.setText(party.getEvent());
             eventColorSetter(party.getEvent(), partyEventText);
-
-            if (position % 2 == 0) {
-                partyView.setBackgroundResource(R.drawable.border_ui1);
-            } else {
-                partyView.setBackgroundResource(R.drawable.border_ui2);
-            }
 
             return partyView;
         }

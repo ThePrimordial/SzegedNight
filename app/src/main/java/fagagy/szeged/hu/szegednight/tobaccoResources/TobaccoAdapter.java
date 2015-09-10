@@ -79,11 +79,7 @@ public class TobaccoAdapter extends BaseAdapter {
             tobaccoListDistanceText.setText(intDistance + " m");
         }
         tobaccoListNameText.setText(tobacco.getName());
-        if (position % 2 == 0) {
-            tobaccoView.setBackgroundResource(R.drawable.border_ui1);
-        } else {
-            tobaccoView.setBackgroundResource(R.drawable.border_ui2);
-        }
+
 
         return tobaccoView;
     }
