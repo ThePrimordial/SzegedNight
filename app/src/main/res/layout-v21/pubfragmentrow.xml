@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp"
+    android:background="@color/material_gray300">
+    <!-- A CardView that contains a TextView -->
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardBackgroundColor="@color/colorPrimary"
+        card_view:cardElevation="10dp"
+        android:foreground="@drawable/card_foreground"
+        >
+
+        <TextView
+            android:id="@+id/PubName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:paddingBottom ="10dp"
+            android:text="Név"
+            android:textColor="@color/material_gray800"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
+
+
+        <TextView
+            android:id="@+id/PubDistance"
+            android:text="@string/Distance"
+            android:textColor="@color/material_gray700"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textAlignment="gravity"
+            android:paddingLeft="2dp"
+            android:paddingTop="8dp"
+            android:paddingRight="5dp" />
+        <TextView
+            android:id="@+id/PubOpen"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="open"
+            android:textColor="@color/material_gray700"
+            android:textStyle="bold"
+            android:paddingTop="35dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="2dp" />
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+</LinearLayout>
