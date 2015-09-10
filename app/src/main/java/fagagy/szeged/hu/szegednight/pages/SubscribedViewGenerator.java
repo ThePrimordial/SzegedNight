@@ -25,55 +25,14 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 
-public class SubscribedViewGenerator extends Activity {
+public class SubscribedViewGenerator{
 
-    private String identifier;
-    private int pubRowNumber = 0;
-    private int subscribedRowNumber = 0;
+
     private Location location;
-    private List<ParseObject> pubServerList = null;
-    private List<ParseObject> subscribedServerList = null;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subscribed_page);
-
-        Intent i = getIntent();
-        Bundle b = i.getExtras();
-        identifier = (String) b.get("objectId");
-        Log.d("identifier1", "Identifier onCreate: " + identifier);
-
-        ParseQuery<ParseObject> pubQuery = ParseQuery.getQuery("Pub").fromLocalDatastore();
-        try {
-            pubServerList = pubQuery.fromPin("Pub").find();
-        } catch (ParseException ignored) {
-        }
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Subscribed").fromLocalDatastore();
-        try {
-            subscribedServerList = query.fromPin("Subscribed").find();
-        } catch (ParseException ignored) {
-        }
-
-        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        getPubRowNumber(pubServerList);
-        getSubscribedRowNumber(subscribedServerList);
-
-        generateOpeningHours(pubServerList);
-        generateName(pubServerList);
-        generateOffers(subscribedServerList);
-        generateButtonActions(pubServerList, subscribedServerList);
-        generateDescription(subscribedServerList);
-    }
-
-    private void generateButtonActions(final List<ParseObject> pubServerList, final List<ParseObject> subscribedServerList) {
-
-        ImageButton facebookButton = (ImageButton) findViewById(R.id.btnFacebook);
-        ImageButton navigateButton = (ImageButton) findViewById(R.id.btnNavigate);
+    public void generateButtonActions(final List<ParseObject> pubServerList, final List<ParseObject> subscribedServerList,
+                                      final ImageButton facebookButton, final ImageButton navigateButton,
+                                      final int pubRowNumber, final int subscribedRowNumber) {
 
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +41,6 @@ public class SubscribedViewGenerator extends Activity {
                         + pubServerList.get(pubRowNumber).getNumber("Latitude") + ","
                         + pubServerList.get(pubRowNumber).getNumber("Latitude");
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                startActivity(i);
             }
         });
 
@@ -91,20 +49,16 @@ public class SubscribedViewGenerator extends Activity {
             public void onClick(View v) {
                 String link = subscribedServerList.get(subscribedRowNumber).getString("FacebookLink");
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                startActivity(i);
             }
         });
     }
 
-    private void generateName(List<ParseObject> pubServerList) {
+    public String generateName(List<ParseObject> pubServerList, final int pubRowNumber) {
 
-        TextView pubName = (TextView) findViewById(R.id.pub_name);
-        pubName.setText(pubServerList.get(pubRowNumber).getString("Name"));
+        return pubServerList.get(pubRowNumber).getString("Name");
     }
 
-    private void generateOffers(List<ParseObject> subscribedServerList) {
-
-        TextView offers = (TextView) findViewById(R.id.offers);
+    public StringBuilder generateOffers(List<ParseObject> subscribedServerList, final int subscribedRowNumber) {
         StringBuilder sb = new StringBuilder();
         sb.append("Akciók: ");
         for(int i = 0; i < subscribedServerList.get(subscribedRowNumber).getJSONArray("Offers").length(); i++){
@@ -115,19 +69,17 @@ public class SubscribedViewGenerator extends Activity {
                 e.printStackTrace();
             }
         }
-        offers.setText(sb.toString());
-        offers.setTextSize(21);
+
+        return sb;
     }
 
-    private void generateDescription(List<ParseObject> subscribedServerList) {
+    public String generateDescription(List<ParseObject> subscribedServerList, final int subscribedRowNumber) {
 
-        TextView description = (TextView) findViewById(R.id.description);
-        description.setText(subscribedServerList.get(subscribedRowNumber).getString("Description"));
+        return subscribedServerList.get(subscribedRowNumber).getString("Description");
     }
 
-    private void generateOpeningHours(List<ParseObject> pubServerList) {
+    public StringBuilder generateOpeningHours(List<ParseObject> pubServerList, final int pubRowNumber) {
 
-        TextView openingHours = (TextView) findViewById(R.id.openClose);
         StringBuilder sb = new StringBuilder();
 
         try {
@@ -188,10 +140,11 @@ public class SubscribedViewGenerator extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        openingHours.setText(sb.toString());
+        return sb;
     }
 
-    private void getPubRowNumber(List<ParseObject> pubServerList) {
+    public int getPubRowNumber(List<ParseObject> pubServerList, final String identifier) {
+        int pubRowNumber = 0;
         for (ParseObject object : pubServerList) {
             if (object.getObjectId().equals(identifier)) {
                 break;
@@ -199,9 +152,12 @@ public class SubscribedViewGenerator extends Activity {
                 pubRowNumber++;
             }
         }
+
+        return pubRowNumber;
     }
 
-    private void getSubscribedRowNumber(List<ParseObject> subscribedServerList) {
+    public int getSubscribedRowNumber(List<ParseObject> subscribedServerList, final String identifier) {
+        int subscribedRowNumber = 0;
         for (ParseObject object : subscribedServerList) {
             if (object.getString("Identifier").equals(identifier))
                 break;
@@ -209,5 +165,6 @@ public class SubscribedViewGenerator extends Activity {
                 subscribedRowNumber++;
             }
         }
+        return subscribedRowNumber;
     }
 }
