@@ -80,7 +80,7 @@ public class StartingPage extends AppCompatActivity {
 
 
         List <String> identifiers = new ArrayList<>();
-        identifiers.add("zHdznIS8JK");
+        identifiers.add("Cool Club");
         try {
             subscribedServerList = query.fromPin("Subscribed").find();
         } catch (ParseException ignored) {
@@ -91,8 +91,7 @@ public class StartingPage extends AppCompatActivity {
         if(subscribedServerList.size() != 0) {
             identifiers.clear();
             for (int i = 0; i < subscribedServerList.size(); i++) {
-                identifiers.add(subscribedServerList.get(i).getString("Identifier"));
-                Log.d("Identifier", subscribedServerList.get(i).getString("Identifier"));
+                identifiers.add(subscribedServerList.get(i).getString("Name"));
             }
         }
 

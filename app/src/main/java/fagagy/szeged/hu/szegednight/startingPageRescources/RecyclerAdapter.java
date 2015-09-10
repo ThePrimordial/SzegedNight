@@ -30,10 +30,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private final List <String> identifiers;
     private AdapterView.OnItemClickListener listener;
-
-    private String identifier;
-    private int pubRowNumber = 0;
-    private int subscribedRowNumber = 0;
     private Location location;
     private List<ParseObject> pubServerList = null;
     private List<ParseObject> subscribedServerList = null;
@@ -72,10 +68,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        SubscribedViewGenerator generator = new SubscribedViewGenerator();
+        final SubscribedViewGenerator generator = new SubscribedViewGenerator();
         holder.textView.setText(identifiers.get(position));
+        final int pubRowNumber = generator.getPubRowNumber(pubServerList, identifiers.get(position));
+        final int subscriberRowNumber = generator.getSubscribedRowNumber(pubServerList, identifiers.get(position));
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 View infoView = View.inflate(v.getContext(), R.layout.subscriber_view, null);
@@ -86,8 +86,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 ImageButton facebook = (ImageButton) infoView.findViewById(R.id.btnFacebook);
                 ImageButton navigate = (ImageButton) infoView.findViewById(R.id.btnNavigate);
 
+                description.setText(generator.generateDescription(subscribedServerList, subscriberRowNumber));
+                actions.setText(generator.generateOffers(subscribedServerList, subscriberRowNumber));
+                openingHours.setText(generator.generateOpeningHours(pubServerList, pubRowNumber));
+                generator.generateButtonActions(pubServerList,subscribedServerList, facebook, navigate, pubRowNumber, subscriberRowNumber);
+
                 new AlertDialog.Builder(v.getContext())
-                        .setTitle("Ádám egy vámpír!")
+                        .setTitle(identifiers.get(position))
                         .setView(infoView)
                         .show();
             }
