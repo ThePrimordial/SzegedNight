@@ -1,27 +1,44 @@
 package fagagy.szeged.hu.szegednight.startingPageRescources;
 
-import android.content.Intent;
+import android.content.Context;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import fagagy.szeged.hu.szegednight.R;
-import fagagy.szeged.hu.szegednight.pages.SubscribedPage;
-import fagagy.szeged.hu.szegednight.pubResources.PubBrowser;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
-/**
- * Created by rajat on 2/8/2015.
- */
+import org.w3c.dom.Text;
+
+import java.util.List;
+
+import fagagy.szeged.hu.szegednight.R;
+import fagagy.szeged.hu.szegednight.pages.SubscribedViewGenerator;
+
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    private String[] dataSource;
+
+    private final List <String> identifiers;
     private AdapterView.OnItemClickListener listener;
 
-    public RecyclerAdapter(String[] dataArgs) {
-        dataSource = dataArgs;
+    private String identifier;
+    private int pubRowNumber = 0;
+    private int subscribedRowNumber = 0;
+    private Location location;
+    private List<ParseObject> pubServerList = null;
+    private List<ParseObject> subscribedServerList = null;
+    public RecyclerAdapter(List <String> identifiers) {
+        this.identifiers = identifiers;
 
     }
 
@@ -31,6 +48,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cardview_item, parent, false);
 
+        ParseQuery<ParseObject> pubQuery = ParseQuery.getQuery("Pub").fromLocalDatastore();
+        try {
+            pubServerList = pubQuery.fromPin("Pub").find();
+        } catch (ParseException ignored) {
+        }
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Subscribed").fromLocalDatastore();
+        try {
+            subscribedServerList = query.fromPin("Subscribed").find();
+        } catch (ParseException ignored) {
+        }
+
+        LocationManager lm = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
 
@@ -39,14 +73,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.textView.setText(dataSource[position]);
+
+        SubscribedViewGenerator generator = new SubscribedViewGenerator();
+        holder.textView.setText(identifiers.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 View infoView = View.inflate(v.getContext(), R.layout.subscriber_view, null);
+                ImageView logo = (ImageView) infoView.findViewById(R.id.subscriber_logo);
+                TextView description = (TextView) infoView.findViewById(R.id.subscriber_description);
+                TextView actions = (TextView) infoView.findViewById(R.id.subscriber_actions);
+                TextView openingHours = (TextView) infoView.findViewById(R.id.subscriber_openinghours);
+                ImageButton facebook = (ImageButton) infoView.findViewById(R.id.btnFacebook);
+                ImageButton navigate = (ImageButton) infoView.findViewById(R.id.btnNavigate);
+
                 new AlertDialog.Builder(v.getContext())
                         .setTitle("Ádám egy vámpír!")
                         .setView(infoView)
-                        .setIcon(android.R.drawable.ic_dialog_info)
                         .show();
             }
         });
@@ -54,7 +96,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return dataSource.length;
+        return identifiers.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

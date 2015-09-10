@@ -83,7 +83,7 @@
                 android:value=".startingPageRescources.StartingPage" />
         </activity>
         <activity
-            android:name=".pages.SubscribedPage"
+            android:name=".pages.SubscribedViewGenerator"
             android:screenOrientation="portrait" >>
         </activity>
     </application>

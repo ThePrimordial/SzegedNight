@@ -15,7 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
-    card_view:cardBackgroundColor="#31a8e6"
+    card_view:cardBackgroundColor="@color/colorPrimary"
     card_view:cardElevation="10dp"
     android:foreground="@drawable/card_foreground"
     >

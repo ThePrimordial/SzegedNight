@@ -25,7 +25,7 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 
-public class SubscribedPage extends Activity {
+public class SubscribedViewGenerator extends Activity {
 
     private String identifier;
     private int pubRowNumber = 0;
@@ -117,7 +117,6 @@ public class SubscribedPage extends Activity {
         }
         offers.setText(sb.toString());
         offers.setTextSize(21);
-        offers.setTextColor(getResources().getColor(R.color.Wheat));
     }
 
     private void generateDescription(List<ParseObject> subscribedServerList) {

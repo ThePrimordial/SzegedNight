@@ -23,7 +23,6 @@ import com.parse.ParseQuery;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,7 +31,7 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
-import fagagy.szeged.hu.szegednight.pages.SubscribedPage;
+import fagagy.szeged.hu.szegednight.pages.SubscribedViewGenerator;
 
 /**
  * Created by TheSorrow on 15/07/20.
@@ -219,7 +218,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
             }
         } else {
             Intent i = new Intent();
-            i.setClass(getActivity(), SubscribedPage.class);
+            i.setClass(getActivity(), SubscribedViewGenerator.class);
             i.putExtra("objectId", pubList.get(position).getObjectId());
             startActivity(i);
         }
@@ -231,11 +230,6 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         if (lm != null) {
             lm.removeUpdates(locListener);
         }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
     }
 
     @Override

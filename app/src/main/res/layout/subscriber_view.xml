@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
     android:paddingBottom="12dp"
-    android:background="#EEEEEE"
+    android:background="@color/white"
     >
 
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="210dp"
+        android:id="@+id/subscriber_logo"
         android:src="@drawable/coolclub"/>
 
     <TextView
@@ -18,7 +23,6 @@
         android:layout_height="wrap_content"
         android:text="Bemutatkozás:"
         android:textSize="26sp"
-        android:id="@+id/subscriber_description_name"
         android:paddingBottom="15dp"
         />
 
@@ -26,8 +30,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="Szeged ÚJ, kellemes és olcsó szórakozóhelye a Cool Club, az Árkáddal szemben. Kezd itt az alapozást az esti bulik előtt a legjobb árakon."
         android:id="@+id/subscriber_description"
+        android:paddingBottom="15dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Akciók:"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:paddingBottom="15dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/subscriber_actions"
+        android:textSize="18sp"
+        android:text="300 ászok 400 pina"
         android:paddingBottom="15dp"
         />
     <RelativeLayout
@@ -43,7 +64,8 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/btnNavigate"
-            android:layout_toStartOf="@id/btnNavigate" />
+            android:layout_toStartOf="@id/btnNavigate"
+            android:paddingBottom="15dp"/>
 
         <Button
             android:layout_width="140dp"
@@ -55,7 +77,18 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:paddingBottom="15dp"/>
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/subscriber_openinghours"
+        android:textSize="18sp"
+        android:text="Négerek"
+        android:paddingBottom="15dp"
+        />
+
 </LinearLayout>
+</ScrollView>

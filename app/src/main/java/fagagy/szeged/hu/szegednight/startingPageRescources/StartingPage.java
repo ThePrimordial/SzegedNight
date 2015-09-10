@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +34,11 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.atmResources.AtmBrowser;
@@ -50,7 +56,7 @@ public class StartingPage extends AppCompatActivity {
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
     private DrawerLayout mDrawer;
-    String[] dataArray = new String[]{"Laller","Buzi","Kutyaszar","Kecskeember","Demróbz"};
+    private List<ParseObject> subscribedServerList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +76,26 @@ public class StartingPage extends AppCompatActivity {
             setContentView(R.layout.activity_starting_page_material);
         }
 
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Subscribed").fromLocalDatastore();
+
+
+        List <String> identifiers = new ArrayList<>();
+        identifiers.add("zHdznIS8JK");
+        try {
+            subscribedServerList = query.fromPin("Subscribed").find();
+        } catch (ParseException ignored) {
+        }
+
+        Log.d("identif", String.valueOf(subscribedServerList.size()));
+
+        if(subscribedServerList.size() != 0) {
+            identifiers.clear();
+            for (int i = 0; i < subscribedServerList.size(); i++) {
+                identifiers.add(subscribedServerList.get(i).getString("Identifier"));
+                Log.d("Identifier", subscribedServerList.get(i).getString("Identifier"));
+            }
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -84,12 +110,11 @@ public class StartingPage extends AppCompatActivity {
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
-
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerView.Adapter adapter = new RecyclerAdapter(dataArray);
+        RecyclerView.Adapter adapter = new RecyclerAdapter(identifiers);
         recyclerView.setAdapter(adapter);
 
     }
@@ -210,7 +235,8 @@ public class StartingPage extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
                 startActivity(Intent.createChooser(intent, ""));
                 break;
-            default:break;
+            default:
+                break;
         }
 
         // Highlight the selected item, update the title, and close the drawer
@@ -349,8 +375,6 @@ public class StartingPage extends AppCompatActivity {
                 whatToRefresh.add("Party");
                 whatToRefresh.add("Shop");
                 whatToRefresh.add("Subscribed");
-                whatToRefresh.add("Golyatabor");
-                whatToRefresh.add("SZIN");
                 for (int i = 0; i < whatToRefresh.size(); i++) {
                     ParseQuery<ParseObject> query = ParseQuery.getQuery(whatToRefresh.get(i));
                     ParseQuery<ParseObject> queryDelete = ParseQuery.getQuery(whatToRefresh.get(i)).fromLocalDatastore();
@@ -366,6 +390,7 @@ public class StartingPage extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+            Toast.makeText(getApplicationContext(), "Adatbázis frissítése megtörtént", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -404,7 +429,6 @@ public class StartingPage extends AppCompatActivity {
         super.onPause();
         if (lm != null) {
             lm.removeUpdates(locListener);
-            return;
         }
     }
 }
