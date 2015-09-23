@@ -52,25 +52,13 @@
         android:paddingBottom="15dp"
         />
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <Button
+        <ImageButton
             android:layout_width="140dp"
             android:layout_height="50dp"
-            android:id="@id/btnFacebook"
-            android:text="Facebook"
-            android:drawableLeft="@drawable/fb_icon_btn"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/btnNavigate"
-            android:layout_toStartOf="@id/btnNavigate"
-            android:paddingBottom="15dp"/>
-
-        <Button
-            android:layout_width="140dp"
-            android:layout_height="50dp"
-            android:id="@id/btnNavigate"
+            android:id="@+id/btnNavigate"
             android:text="Vezess oda"
             android:drawableLeft="@drawable/navi_icon_btn"
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -79,6 +67,19 @@
             android:layout_alignParentEnd="true"
             android:layout_marginLeft="5dp"
             android:paddingBottom="15dp"/>
+
+        <ImageButton
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnFacebook"
+            android:text="Facebook"
+            android:drawableLeft="@drawable/fb_icon_btn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/btnNavigate"
+            android:layout_toStartOf="@id/btnNavigate"
+            android:paddingBottom="15dp"/>
+
     </RelativeLayout>
 
     <TextView

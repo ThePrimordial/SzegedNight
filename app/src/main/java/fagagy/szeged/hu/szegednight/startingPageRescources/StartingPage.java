@@ -1,6 +1,5 @@
 package fagagy.szeged.hu.szegednight.startingPageRescources;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -9,10 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -34,11 +30,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.atmResources.AtmBrowser;
@@ -46,7 +38,6 @@ import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
 import fagagy.szeged.hu.szegednight.partyResources.PartyBrowser;
 import fagagy.szeged.hu.szegednight.pubResources.PubBrowser;
 import fagagy.szeged.hu.szegednight.restaurantResources.RestaurantBrowser;
-import fagagy.szeged.hu.szegednight.shopResources.Shop;
 import fagagy.szeged.hu.szegednight.shopResources.ShopBrowser;
 import fagagy.szeged.hu.szegednight.tobaccoResources.TobaccoBrowser;
 
@@ -57,6 +48,7 @@ public class StartingPage extends AppCompatActivity {
     private MyCurrentLocationListener locListener;
     private DrawerLayout mDrawer;
     private List<ParseObject> subscribedServerList = null;
+    //TODO csak indításkor frissüljön az adatb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +77,6 @@ public class StartingPage extends AppCompatActivity {
             subscribedServerList = query.fromPin("Subscribed").find();
         } catch (ParseException ignored) {
         }
-
-        Log.d("identif", String.valueOf(subscribedServerList.size()));
 
         if(subscribedServerList.size() != 0) {
             identifiers.clear();
@@ -257,6 +247,7 @@ public class StartingPage extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -340,8 +331,7 @@ public class StartingPage extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
                 startActivity(Intent.createChooser(intent, ""));
                 break;
-            default:
-                break;
+            default:break;
         }
         return super.onOptionsItemSelected(item);
     }

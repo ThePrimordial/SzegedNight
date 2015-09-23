@@ -3,19 +3,25 @@ package fagagy.szeged.hu.szegednight.pages;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -25,7 +31,7 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 
-public class SubscribedViewGenerator{
+public class SubscribedViewGenerator {
 
 
     private Location location;
@@ -61,7 +67,7 @@ public class SubscribedViewGenerator{
     public StringBuilder generateOffers(List<ParseObject> subscribedServerList, final int subscribedRowNumber) {
         StringBuilder sb = new StringBuilder();
         sb.append("Akciók: ");
-        for(int i = 0; i < subscribedServerList.get(subscribedRowNumber).getJSONArray("Offers").length(); i++){
+        for (int i = 0; i < subscribedServerList.get(subscribedRowNumber).getJSONArray("Offers").length(); i++) {
             sb.append('\n');
             try {
                 sb.append(subscribedServerList.get(subscribedRowNumber).getJSONArray("Offers").get(i).toString());
@@ -143,28 +149,29 @@ public class SubscribedViewGenerator{
         return sb;
     }
 
+
     public int getPubRowNumber(List<ParseObject> pubServerList, final String identifier) {
         int pubRowNumber = 0;
         for (ParseObject object : pubServerList) {
-            if (object.getObjectId().equals(identifier)) {
-                break;
+            if (object.getString("Name").equals(identifier)) {
+                return pubRowNumber;
             } else {
                 pubRowNumber++;
             }
         }
-
-        return pubRowNumber;
+        return 0;
     }
 
     public int getSubscribedRowNumber(List<ParseObject> subscribedServerList, final String identifier) {
         int subscribedRowNumber = 0;
         for (ParseObject object : subscribedServerList) {
-            if (object.getString("Identifier").equals(identifier))
-                break;
+            if (object.getString("Name").equals(identifier))
+                return subscribedRowNumber;
             else {
                 subscribedRowNumber++;
             }
         }
         return subscribedRowNumber;
     }
+
 }

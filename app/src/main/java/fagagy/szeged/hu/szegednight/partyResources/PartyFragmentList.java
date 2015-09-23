@@ -117,6 +117,7 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
                     "&daddr="+partyList.get(position).getLatitude()+","+partyList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
+            //Todo 0.00 0.000 a célkoordináta
         }
     }
 

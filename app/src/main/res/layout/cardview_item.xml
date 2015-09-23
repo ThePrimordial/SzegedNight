@@ -26,14 +26,14 @@
         android:layout_margin="5dp" >
 
         <ImageView
-            android:id="@+id/cardview_pic"
+            android:id="@+id/cardview_background"
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:src="@drawable/coolclub"
             android:layout_alignParentLeft="true"/>
 
         <TextView
-            android:id="@+id/list_item"
+            android:id="@+id/cardview_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/White"
