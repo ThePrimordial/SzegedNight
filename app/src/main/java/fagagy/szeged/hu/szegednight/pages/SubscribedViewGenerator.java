@@ -3,6 +3,7 @@ package fagagy.szeged.hu.szegednight.pages;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Criteria;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -33,36 +35,56 @@ import fagagy.szeged.hu.szegednight.R;
 
 public class SubscribedViewGenerator {
 
-
-    private Location location;
-
     public void generateButtonActions(final List<ParseObject> pubServerList, final List<ParseObject> subscribedServerList,
                                       final ImageButton facebookButton, final ImageButton navigateButton,
-                                      final int pubRowNumber, final int subscribedRowNumber) {
+                                      final int pubRowNumber, final int subscribedRowNumber, final Location location) {
 
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String link = "http://maps.google.com/maps?saddr=" + location.getLatitude() + "," + location.getLongitude() + "&daddr="
-                        + pubServerList.get(pubRowNumber).getNumber("Latitude") + ","
-                        + pubServerList.get(pubRowNumber).getNumber("Latitude");
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                if(location != null) {
+                    String link = "http://maps.google.com/maps?saddr=" + location.getLatitude() + "," + location.getLongitude() + "&daddr="
+                            + pubServerList.get(pubRowNumber).getNumber("Latitude") + ","
+                            + pubServerList.get(pubRowNumber).getNumber("Longitude");
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                    v.getContext().startActivity(i);
+                }else{
+                    Toast.makeText(v.getContext(),"Nincs GPS pozíció", Toast.LENGTH_SHORT);
+                }
             }
         });
 
         facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String link = subscribedServerList.get(subscribedRowNumber).getString("FacebookLink");
-                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                String facebookUrl = "www.facebook.com/" + subscribedServerList.get(subscribedRowNumber).getString("FacebookLink");
+                String facebookID = subscribedServerList.get(subscribedRowNumber).getString("FacebookLink");
+                try {
+                    int versionCode = v.getContext().getPackageManager().getPackageInfo("com.facebook.katana", 0).versionCode;
+
+                    if(!facebookID.isEmpty()) {
+                        // open the Facebook app using facebookID (fb://profile/facebookID or fb://page/facebookID)
+                        Log.d("facebook", "id: " + facebookID + " url : " + facebookUrl);
+                        Uri uri = Uri.parse("fb://profile/" + facebookID);
+                        v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                    } else if (versionCode >= 3002850 && !facebookUrl.isEmpty()) {
+                        // open Facebook app using facebook url
+                        Uri uri = Uri.parse("fb://facewebmodal/f?href=" + facebookUrl);
+                        v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                    } else {
+                        // Facebook is not installed. Open the browser
+                        Uri uri = Uri.parse(facebookUrl);
+                        v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    // Facebook is not installed. Open the browser
+                    Uri uri = Uri.parse(facebookUrl);
+                    v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                }
             }
         });
     }
 
-    public String generateName(List<ParseObject> pubServerList, final int pubRowNumber) {
-
-        return pubServerList.get(pubRowNumber).getString("Name");
-    }
 
     public StringBuilder generateOffers(List<ParseObject> subscribedServerList, final int subscribedRowNumber) {
         StringBuilder sb = new StringBuilder();

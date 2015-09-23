@@ -118,7 +118,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 description.setText(generator.generateDescription(subscribedServerList, subscriberRowNumber));
                 actions.setText(generator.generateOffers(subscribedServerList, subscriberRowNumber));
                 openingHours.setText(generator.generateOpeningHours(pubServerList, pubRowNumber));
-                generator.generateButtonActions(pubServerList, subscribedServerList, facebook, navigate, pubRowNumber, subscriberRowNumber);
+                generator.generateButtonActions(pubServerList, subscribedServerList, facebook, navigate,
+                        pubRowNumber, subscriberRowNumber, location);
 
                 new AlertDialog.Builder(v.getContext())
                         .setTitle(identifiers.get(position))

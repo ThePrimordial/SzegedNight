@@ -60,7 +60,7 @@
             android:layout_height="50dp"
             android:id="@+id/btnNavigate"
             android:text="Vezess oda"
-            android:drawableLeft="@drawable/navi_icon_btn"
+            android:src="@drawable/navi_icon_btn"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -73,12 +73,19 @@
             android:layout_height="50dp"
             android:id="@+id/btnFacebook"
             android:text="Facebook"
-            android:drawableLeft="@drawable/fb_icon_btn"
+            android:src="@drawable/fb_icon_btn"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/btnNavigate"
             android:layout_toStartOf="@id/btnNavigate"
             android:paddingBottom="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5km"
+            android:layout_toLeftOf="@id/btnFacebook"
+            android:paddingRight="15dp"/>
 
     </RelativeLayout>
 
