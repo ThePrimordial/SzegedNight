@@ -44,10 +44,10 @@ import fagagy.szeged.hu.szegednight.tobaccoResources.TobaccoBrowser;
 
 public class StartingPage extends AppCompatActivity {
 
+//TODO all Strings have to be extracted as resource
 
     private DrawerLayout mDrawer;
     private List<ParseObject> subscribedServerList = null;
-    //TODO csak indításkor frissüljön az adatb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

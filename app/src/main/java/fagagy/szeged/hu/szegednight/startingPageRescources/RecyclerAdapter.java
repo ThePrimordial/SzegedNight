@@ -69,24 +69,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
 
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
 
 
     }
+
+    //TODO holder 5.x implementation fail
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         final SubscribedViewGenerator generator = new SubscribedViewGenerator();
         final int subscriberRowNumber = generator.getSubscribedRowNumber(subscribedServerList, identifiers.get(position));
-        holder.name.setText(identifiers.get(position));
+        //holder.name.setText(subscribedServerList.get(position).getString("Name"));
         ParseFile fileObject = (ParseFile) subscribedServerList.get(subscriberRowNumber).get("Logo");
         fileObject.getDataInBackground(new GetDataCallback() {
             public void done(byte[] data, ParseException e) {
                 if (e == null) {
                     Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    holder.logo.setImageBitmap(bmp);
+                    //holder.logo.setImageBitmap(bmp);
                 }
             }
         });

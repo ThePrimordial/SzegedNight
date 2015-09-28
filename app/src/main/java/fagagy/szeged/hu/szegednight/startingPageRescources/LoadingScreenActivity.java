@@ -34,6 +34,8 @@ public class LoadingScreenActivity extends Activity {
     private MyCurrentLocationListener locListener;
     private Location myLoc;
 
+    //TODO GPS, Network enabling option
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,8 +48,15 @@ public class LoadingScreenActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(LoadingScreenActivity.this, "Loading...",
-                    "Loading application View, please wait...", false, false);
+            progressDialog = new ProgressDialog(LoadingScreenActivity.this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setTitle("Töltés...");
+            progressDialog.setMessage("Adatbázis frissítés alatt, kis türelmet...");
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(false);
+            progressDialog.setMax(100);
+            progressDialog.setProgress(0);
+            progressDialog.show();
 
             lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locListener = new MyCurrentLocationListener();
@@ -86,9 +95,22 @@ public class LoadingScreenActivity extends Activity {
 
                 }
             }
-            return null;
-        }
 
+            try {
+                synchronized (this) {
+                    int counter = 0;
+                    while (counter <= 10) {
+                        this.wait(350);
+                        counter++;
+                        publishProgress(counter * 10);
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+
+            }
+                return null;
+        }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
