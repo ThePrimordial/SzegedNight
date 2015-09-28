@@ -99,6 +99,8 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     }
 
     private void generateRows(String day, int currHour) {
+
+        //TODO isSubscribed check implementation
         List<ParseObject> serverList = null;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Pub").fromLocalDatastore();
         try {
@@ -207,7 +209,6 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if (!pubList.get(position).isSubscribed()) {
             if (gpsLoc == null) {
                 Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
             } else if (gpsLoc != null) {
@@ -216,12 +217,6 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(i);
             }
-        } else {
-            Intent i = new Intent();
-            i.setClass(getActivity(), SubscribedViewGenerator.class);
-            i.putExtra("objectId", pubList.get(position).getObjectId());
-            startActivity(i);
-        }
     }
 
     @Override

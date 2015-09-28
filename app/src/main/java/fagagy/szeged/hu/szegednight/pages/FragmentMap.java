@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -61,10 +63,9 @@ public class FragmentMap extends Fragment {
         mMapView = (MapView) v.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
+        MapsInitializer.initialize(getContext());
+        if (MapsInitializer.initialize(getContext()) != ConnectionResult.SUCCESS) {
+            Log.e("map", "bazdmeg");
         }
         setUpMarkers(type);
         return v;
