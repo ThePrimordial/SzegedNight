@@ -38,7 +38,7 @@
             android:layout_height="match_parent"
             android:textColor="@color/White"
             android:textSize="20sp"
-            android:layout_below="@+id/cardview_pic" />
+            android:layout_below="@+id/cardview_background" />
     </RelativeLayout>
 
 
