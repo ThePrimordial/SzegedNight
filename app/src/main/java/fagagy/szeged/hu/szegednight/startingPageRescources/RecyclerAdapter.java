@@ -30,6 +30,8 @@ import fagagy.szeged.hu.szegednight.pages.SubscribedViewGenerator;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CardViewHolder> {
 
+    //Nick: Kas
+
     private final List<String> identifiers;
     private Location location;
     private List<ParseObject> pubServerList = null;
