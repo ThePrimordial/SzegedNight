@@ -3,6 +3,7 @@ package fagagy.szeged.hu.szegednight.pubResources;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,16 +61,15 @@ public class PubAdapter extends BaseAdapter {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         if (pub.isOpen()) {
+            pubListOpenText.setTextColor(Color.parseColor("#43a047"));
             if ((pub.getOpenUntil()).equals("0")) {
                 pubListOpenText.setText("Nyitva Éjfélig");
-                pubListOpenText.setTextColor(pubView.getResources().getColor(R.color.ForestGreen));
             } else {
                 pubListOpenText.setText("Nyitva! " + pub.getOpenUntil() + ".00-ig");
-                pubListOpenText.setTextColor(pubView.getResources().getColor(R.color.ForestGreen));
             }
         } else {
             pubListOpenText.setText("Zárva! :( ");
-            pubListOpenText.setTextColor(Color.RED);
+            pubListOpenText.setTextColor(Color.parseColor("#f44336"));
         }
 
         if (pub.getDistance() == 0) {
@@ -86,6 +86,11 @@ public class PubAdapter extends BaseAdapter {
         if (pub.isSubscribed()) {
             pubView.setBackgroundResource(R.drawable.subscribed_border_row);
         }
+
+       /*if(position % 2 == 0){
+            pubView.setBackgroundResource(R.color.white);
+        }else
+            pubView.setBackgroundResource(R.color.material_gray200);*/
 
         return pubView;
     }
