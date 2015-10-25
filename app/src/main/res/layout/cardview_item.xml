@@ -15,7 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
-    card_view:cardBackgroundColor="@android:color/transparent"
+    card_view:cardBackgroundColor="@android:color/white"
     card_view:cardElevation="10dp"
     android:foreground="@drawable/card_foreground"
     >
@@ -37,8 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/White"
-            android:textSize="20sp"
-            android:layout_below="@+id/cardview_background" />
+            android:textSize="20sp" />
     </RelativeLayout>
 
 
