@@ -76,7 +76,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CardVi
     public void onBindViewHolder(final CardViewHolder holder, final int position) {
 
         final SubscribedViewGenerator generator = new SubscribedViewGenerator();
-        holder.name.setText(subscribedServerList.get(position).getString("Name"));
         ParseFile fileObject = (ParseFile) subscribedServerList.get(position).get("Logo");
         fileObject.getDataInBackground(new GetDataCallback() {
             public void done(byte[] data, ParseException e) {

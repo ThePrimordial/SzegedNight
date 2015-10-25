@@ -88,11 +88,10 @@ public class SubscribedViewGenerator {
 
     public StringBuilder generateOffers(List<ParseObject> subscribedServerList, final int subscribedRowNumber) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Akciók: ");
         for (int i = 0; i < subscribedServerList.get(subscribedRowNumber).getJSONArray("Offers").length(); i++) {
-            sb.append('\n');
             try {
                 sb.append(subscribedServerList.get(subscribedRowNumber).getJSONArray("Offers").get(i).toString());
+                sb.append('\n');
             } catch (JSONException e) {
                 e.printStackTrace();
             }
