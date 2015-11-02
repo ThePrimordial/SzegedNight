@@ -152,9 +152,6 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
             }
         }
 
-        for (Pub pub : pubList) {
-            Log.d("listaelemek", String.valueOf(pub.isSubscribed()));
-        }
 
         Collections.sort(pubList, new Comparator<Pub>() {
             @Override

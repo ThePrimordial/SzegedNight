@@ -1,29 +1,21 @@
 package fagagy.szeged.hu.szegednight.startingPageRescources;
 
-import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -34,11 +26,9 @@ import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.atmResources.AtmBrowser;
-import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
 import fagagy.szeged.hu.szegednight.partyResources.PartyBrowser;
 import fagagy.szeged.hu.szegednight.pubResources.PubBrowser;
 import fagagy.szeged.hu.szegednight.restaurantResources.RestaurantBrowser;
-import fagagy.szeged.hu.szegednight.shopResources.ShopBrowser;
 import fagagy.szeged.hu.szegednight.tobaccoResources.TobaccoBrowser;
 
 
@@ -126,10 +116,6 @@ public class StartingPage extends AppCompatActivity {
                 break;
             case R.id.nav_atm_fragment:
                 i.setClass(this, AtmBrowser.class);
-                startActivity(i);
-                break;
-            case R.id.nav_shop_fragment:
-                i.setClass(this, ShopBrowser.class);
                 startActivity(i);
                 break;
             case R.id.nav_tobacco_fragment:

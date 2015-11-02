@@ -21,10 +21,6 @@
         android:id="@+id/nav_atm_fragment"
         android:icon="@drawable/menu_atm"
         android:title="Bankautomaták" />
-    <item
-        android:id="@+id/nav_shop_fragment"
-        android:icon="@drawable/menu_shop"
-        android:title="Éjjel-Nappalik" />
     <item android:title="Egyéb">
         <menu>
             <item

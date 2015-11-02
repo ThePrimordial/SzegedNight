@@ -18,12 +18,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import fagagy.szeged.hu.szegednight.R;
-import fagagy.szeged.hu.szegednight.atmResources.AtmBrowser;
 import fagagy.szeged.hu.szegednight.pages.FragmentAdapter;
 import fagagy.szeged.hu.szegednight.partyResources.PartyBrowser;
 import fagagy.szeged.hu.szegednight.restaurantResources.RestaurantBrowser;
-import fagagy.szeged.hu.szegednight.shopResources.ShopBrowser;
-import fagagy.szeged.hu.szegednight.tobaccoResources.TobaccoBrowser;
 
 public class PubBrowser extends AppCompatActivity{
 
@@ -87,7 +84,7 @@ public class PubBrowser extends AppCompatActivity{
                 startActivity(i);
                 break;
             default:
-                i.setClass(this, ShopBrowser.class);
+                i.setClass(this, PartyBrowser.class);
                 startActivity(i);
         }
 
