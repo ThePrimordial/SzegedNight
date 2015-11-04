@@ -3,13 +3,13 @@ package fagagy.szeged.hu.szegednight.pubResources;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +32,7 @@ public class PubBrowser extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton fab;
     private PubFragmentList pubFragmentRow;
     private FragmentAdapter adapter;
 
@@ -60,17 +60,17 @@ public class PubBrowser extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
-        swipeRefreshLayout.setColorSchemeColors(R.color.colorPrimary, R.color.white);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
+            public void onClick(View view) {
                 FragmentTransaction trans = fragmentManager.beginTransaction();
                 trans.remove(pubFragmentRow);
                 trans.commit();
                 refreshList();
             }
         });
+
 
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
@@ -84,9 +84,8 @@ public class PubBrowser extends AppCompatActivity {
                 pubFragmentRow = new PubFragmentList();
                 FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), pubFragmentRow, "Pub");
                 viewPager.setAdapter(adapter);
-                swipeRefreshLayout.setRefreshing(false);
             }
-        }, 5000);
+        }, 3000);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
