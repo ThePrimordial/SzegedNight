@@ -4,42 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <include
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:id="@+id/container_toolbar"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:tabMode="fixed"
+            app:tabGravity="fill"/>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    </android.support.design.widget.AppBarLayout>
 
-                <android.support.v4.view.PagerTabStrip
-                    style="@style/viepagertitlestrip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:paddingBottom="25dp"
-                    android:paddingTop="25dp">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
-                </android.support.v4.view.PagerTabStrip>
-
-            </android.support.v4.view.ViewPager>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nvView"
@@ -49,5 +45,4 @@
         android:background="@color/material_gray200"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_view" />
-
 </android.support.v4.widget.DrawerLayout>

@@ -3,6 +3,7 @@ package fagagy.szeged.hu.szegednight.pubResources;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -22,11 +23,15 @@ import fagagy.szeged.hu.szegednight.pages.FragmentAdapter;
 import fagagy.szeged.hu.szegednight.partyResources.PartyBrowser;
 import fagagy.szeged.hu.szegednight.restaurantResources.RestaurantBrowser;
 
-public class PubBrowser extends AppCompatActivity{
+public class PubBrowser extends AppCompatActivity {
 
     public static FragmentManager fragmentManager;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private Fragment pubFragmentRow;
+    private FragmentAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,22 +39,23 @@ public class PubBrowser extends AppCompatActivity{
         setContentView(R.layout.activity_browsing_with_swipe);
 
         fragmentManager = getSupportFragmentManager();
-        Fragment pubFragmentRow = new PubFragmentList();
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), pubFragmentRow, "Pub");
-        ViewPager p = (ViewPager) findViewById(R.id.pager);
-        p.setAdapter(adapter);
+        pubFragmentRow = new PubFragmentList();
+        adapter = new FragmentAdapter(getSupportFragmentManager(), pubFragmentRow, "Pub");
 
-        // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        // Set the menu icon instead of the launcher icon.
         final ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null) {
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(adapter);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
@@ -157,7 +163,7 @@ public class PubBrowser extends AppCompatActivity{
                     .setView(infoView)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-        }else if (id == R.id.help) {
+        } else if (id == R.id.help) {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("plain/text");
 

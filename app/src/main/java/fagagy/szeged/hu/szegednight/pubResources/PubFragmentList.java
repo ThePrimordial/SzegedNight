@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,8 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
     private Location gpsLoc;
+    private Date date;
+    private Calendar calendar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
                 LocationManager.GPS_PROVIDER, 20000, 50,
                 locListener);
         gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -62,15 +66,14 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
 
         super.onActivityCreated(savedInstanceState);
 
-        Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
+        date = new Date();
+        calendar = Calendar.getInstance();
         calendar.setTime(date);
 
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         int currHour = calendar.get(Calendar.HOUR_OF_DAY);
         String sDay = getDay(day);
         generateRows(sDay, currHour);
-
         PubAdapter pubAdapter = new PubAdapter(getActivity(), pubList);
         setListAdapter(pubAdapter);
         registerForContextMenu(getListView());
@@ -105,7 +108,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Pub").fromLocalDatastore();
         try {
             serverList = query.fromPin("Pub").find();
-        } catch (ParseException e1) {
+        } catch (ParseException ignored) {
         }
 
         if (gpsLoc == null) {
