@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.github.jorgecastilloprz.FABProgressCircle;
+
 import fagagy.szeged.hu.szegednight.R;
 import fagagy.szeged.hu.szegednight.pages.FragmentAdapter;
 import fagagy.szeged.hu.szegednight.partyResources.PartyBrowser;
@@ -35,6 +37,7 @@ public class PubBrowser extends AppCompatActivity {
     private FloatingActionButton fab;
     private PubFragmentList pubFragmentRow;
     private FragmentAdapter adapter;
+    private FABProgressCircle fabProgressCircle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,13 +64,18 @@ public class PubBrowser extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fabProgressCircle.show();
+                fab.setClickable(false);
                 FragmentTransaction trans = fragmentManager.beginTransaction();
                 trans.remove(pubFragmentRow);
                 trans.commit();
                 refreshList();
+                fabProgressCircle.beginFinalAnimation();
+                fab.setClickable(true);
             }
         });
 

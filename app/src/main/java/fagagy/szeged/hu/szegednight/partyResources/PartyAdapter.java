@@ -2,8 +2,6 @@ package fagagy.szeged.hu.szegednight.partyResources;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,10 +28,6 @@ public class PartyAdapter extends BaseAdapter {
     public PartyAdapter(final Context context, final ArrayList<Party> partyList) {
         this.partyList = partyList;
         this.context = context;
-    }
-
-    public void addParty(Party party) {
-        partyList.add(party);
     }
 
     @Override
@@ -66,76 +59,34 @@ public class PartyAdapter extends BaseAdapter {
         Date now = new Date(System.currentTimeMillis());
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
-        //Dokk, stb esemény
-        if (party.getDate() != null) {
-            DateFormat df2 = new SimpleDateFormat("MM-dd HH:mm");
-            String formattedDate = df2.format(party.getDate());
-            partyDateText.setText(formattedDate);
+        DateFormat df2 = new SimpleDateFormat("MM-dd HH:mm");
+        String formattedDate = df2.format(party.getDate());
+        partyDateText.setText(formattedDate);
 
-            if(party.getDistance() == 0){
-                partyDistaceText.setText("ismeretlen");
-            }
+        if (party.getDistance() == 0) {
+            partyDistaceText.setText(R.string.Unknown);
+        }
 
-            if (party.getDistance() > 1) {
-                partyDistaceText.setText(numberFormat.format(party.getDistance()) + " km");
-            } else if (party.getDistance() == 0 && party.getDate() == null) {
-                partyDistaceText.setText(null);
-            } else {
-                double dist = party.getDistance() * 1000;
-                int intDistance = (int) dist;
-                partyDistaceText.setText(intDistance + " m");
-            }
-            partyPlaceText.setText(party.getPlace());
-            partyEventText.setText(party.getEvent());
-
-            if(now.after(party.getDate())){
-                partyDateText.setTextColor(Color.RED);
-            }else{
-                partyDateText.setTextColor(Color.GREEN);
-            }
-            return partyView;
-
-            //Koncert esemény
+        if (party.getDistance() > 1) {
+            partyDistaceText.setText(numberFormat.format(party.getDistance()) + " km");
+        } else if (party.getDistance() == 0 && party.getDate() == null) {
+            partyDistaceText.setText(null);
         } else {
-            String eventTime = party.getFrom() + " - " + party.getTo();
-            partyDateText.setText(eventTime);
-            partyDistaceText.setText("Augusztus " + party.getDay()+ ".");
-
-            Date date = new Date();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            int currday = calendar.get(Calendar.DAY_OF_MONTH);
-            int currHour = calendar.get(Calendar.HOUR_OF_DAY);
-
-            if (currday == party.getDay() && currHour < Double.parseDouble(party.getFrom())) {
-                partyDateText.setTextColor(Color.GREEN);
-                partyPlaceText.setTextColor(Color.GREEN);
-            } else if (currday == party.getDay() && currHour > Double.parseDouble(party.getFrom())) {
-                partyDateText.setTextColor(Color.RED);
-                partyPlaceText.setTextColor(Color.RED);
-            }
-
-            if(party.getPlace().length() > 18) {
-                String s = party.getPlace();
-                partyPlaceText.setTextSize(18);
-            }
-
-            partyPlaceText.setText(party.getPlace());
-            partyEventText.setText(party.getEvent());
-            eventColorSetter(party.getEvent(), partyEventText);
-
-            return partyView;
+            double dist = party.getDistance() * 1000;
+            int intDistance = (int) dist;
+            partyDistaceText.setText(intDistance + " m");
         }
-    }
+        partyPlaceText.setText(party.getPlace());
+        partyEventText.setText(party.getEvent());
 
-    private void eventColorSetter(String event, TextView eventView) {
-
-        switch (event){
-            case "SZIN Nagyszínpad": eventView.setTextColor(context.getResources().getColor(R.color.fuchsia));break;
-            case "Live Arena": eventView.setTextColor(context.getResources().getColor(R.color.Tomato));break;
-            case "Mizo Színpad": eventView.setTextColor(context.getResources().getColor(R.color.Turquoise));break;
-            case "WakeUpSzeged PartyAréna": eventView.setTextColor(context.getResources().getColor(R.color.LightSteelBlue));break;
-            default:break;
+        if (now.after(party.getDate())) {
+            partyDateText.setTextColor(Color.RED);
+        } else {
+            partyDateText.setTextColor(Color.GREEN);
         }
+        return partyView;
+
     }
 }
+
+

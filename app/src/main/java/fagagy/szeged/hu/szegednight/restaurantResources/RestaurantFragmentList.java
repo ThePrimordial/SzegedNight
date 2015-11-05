@@ -101,7 +101,6 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
         }
 
         if (gpsLoc == null) {
-            Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
@@ -194,7 +193,7 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         if (gpsLoc == null) {
-            Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.NoGPSpos, Toast.LENGTH_LONG).show();
         } else if (gpsLoc != null) {
            String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
                     "&daddr=" + resList.get(position).getLatitude() + "," + resList.get(position).getLongitude();

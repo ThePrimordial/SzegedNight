@@ -39,7 +39,7 @@ import fagagy.szeged.hu.szegednight.pages.SubscribedViewGenerator;
  */
 public class PubFragmentList extends ListFragment implements OnItemClickListener {
 
-    public static final String TAG = "ListaNézet";
+    public static String TAG = "ListView";
     private ArrayList<Pub> pubList = new ArrayList<>();
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
@@ -51,6 +51,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = View.inflate(getActivity(), R.layout.pubfragmentrow, null);
+        TAG = getContext().getResources().getString(R.string.ListView);
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
         lm.requestLocationUpdates(
@@ -103,7 +104,6 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
 
     private void generateRows(String day, int currHour) {
 
-        //TODO isSubscribed check implementation
         List<ParseObject> serverList = null;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Pub").fromLocalDatastore();
         try {
@@ -112,7 +112,6 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         }
 
         if (gpsLoc == null) {
-            Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
@@ -210,7 +209,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             if (gpsLoc == null) {
-                Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.NoGPSpos, Toast.LENGTH_LONG).show();
             } else if (gpsLoc != null) {
                 String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
                         "&daddr=" + pubList.get(position).getLatitude() + "," + pubList.get(position).getLongitude();

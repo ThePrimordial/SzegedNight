@@ -35,7 +35,6 @@ import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
  */
 public class TobaccoFragmentList extends ListFragment implements AdapterView.OnItemClickListener {
 
-    public static final String TAG = "ListaNézet";
     private ArrayList<Tobacco> tobaccoList = new ArrayList<>();
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
@@ -104,7 +103,6 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
         }
 
         if (gpsLoc == null) {
-            Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
@@ -204,7 +202,7 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         if (gpsLoc == null) {
-            Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.NoGPSpos, Toast.LENGTH_LONG).show();
         } else if (gpsLoc != null) {
             String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
                     "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();

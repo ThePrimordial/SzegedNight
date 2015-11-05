@@ -2,7 +2,6 @@ package fagagy.szeged.hu.szegednight.restaurantResources;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,15 +57,15 @@ public class RestaurantAdapter extends BaseAdapter {
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         if (restaurant.isOpen()) {
-            resListOpenText.setText("Nyitva! " + restaurant.getOpenUntil() + ".00-ig");
+            resListOpenText.setText(R.string.Open + "! " + restaurant.getOpenUntil() + ".00 " + R.string.till);
             resListOpenText.setTextColor(Color.GREEN);
         } else {
-            resListOpenText.setText("Zarva! :( ");
+            resListOpenText.setText(R.string.Closed);
             resListOpenText.setTextColor(Color.RED);
         }
 
         if (restaurant.getDistance() == 0) {
-            resListDistanceText.setText("ismeretlen");
+            resListDistanceText.setText(R.string.Unknown);
         } else if (restaurant.getDistance() > 1) {
             resListDistanceText.setText(numberFormat.format(restaurant.getDistance()) + " km");
         } else {

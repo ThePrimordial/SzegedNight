@@ -31,7 +31,7 @@ import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
  */
 public class PartyFragmentList extends ListFragment implements AdapterView.OnItemClickListener  {
 
-    public static final String TAG = "Események";
+    public static String TAG = "Események";
     private ArrayList<Party> partyList = new ArrayList<>();
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
@@ -40,6 +40,7 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        TAG = getContext().getResources().getString(R.string.ListView);
         View v = View.inflate(getActivity(), R.layout.partyfragmentrow, null);
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
@@ -72,7 +73,6 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
         }
 
         if (gpsLoc == null) {
-            Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String place = serverList.get(i).getString("Place");
                 String event = serverList.get(i).getString("EventName");
@@ -111,7 +111,7 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         if (gpsLoc == null) {
-            Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.NoGPSpos, Toast.LENGTH_LONG).show();
         } else if (gpsLoc != null) {
             String uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
                     "&daddr="+partyList.get(position).getLatitude()+","+partyList.get(position).getLongitude();

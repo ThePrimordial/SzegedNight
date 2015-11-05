@@ -75,7 +75,7 @@ public class AtmAdapter extends BaseAdapter {
                 break;
         }
         if(atm.getDistance() == 0){
-            atmistDistanceText.setText("ismeretlen");
+            atmistDistanceText.setText(R.string.Unknown);
         }else if (atm.getDistance() > 1) {
             atmistDistanceText.setText(numberFormat.format(atm.getDistance()) + " km");
         } else {

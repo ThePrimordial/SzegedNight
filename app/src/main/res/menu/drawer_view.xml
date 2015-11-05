@@ -4,33 +4,33 @@
     <item
         android:id="@+id/nav_pub_fragment"
         android:icon="@drawable/menu_beer"
-        android:title="Kocsmák" />
+        android:title="@string/Pubs" />
     <item
         android:id="@+id/nav_party_fragment"
         android:icon="@drawable/menu_party"
-        android:title="Szórakozóhelyek" />
+        android:title="@string/Events" />
     <item
         android:id="@+id/nav_restaurant_fragment"
         android:icon="@drawable/menu_rest"
-        android:title="Kajáldák" />
+        android:title="@string/Restaurants" />
     <item
         android:id="@+id/nav_tobacco_fragment"
         android:icon="@drawable/menu_tobacco"
-        android:title="Dohányboltok" />
+        android:title="@string/TobaccoShops" />
     <item
         android:id="@+id/nav_atm_fragment"
         android:icon="@drawable/menu_atm"
-        android:title="Bankautomaták" />
-    <item android:title="Egyéb">
+        android:title="@string/CashMachine" />
+    <item android:title="@string/Other">
         <menu>
             <item
                 android:id="@+id/nav_connection"
                 android:icon="@drawable/menu_contact"
-                android:title="Kapcsolat" />
+                android:title="@string/Help" />
             <item
                 android:id="@+id/nav_info"
                 android:icon="@drawable/menu_info"
-                android:title="Info" />
+                android:title="@string/Info" />
         </menu>
     </item>
 </group>

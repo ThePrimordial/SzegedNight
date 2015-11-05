@@ -17,7 +17,7 @@
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:src="@drawable/beer_jar" />
 
         <TextView
@@ -26,9 +26,10 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/PubDistance"
             android:layout_toRightOf="@+id/beerlogo"
-            android:paddingTop="16dp"
+            android:paddingTop="10dp"
             android:textStyle="bold"
-            android:textSize="24sp" />
+            android:text="Unknown"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/PubOpen"
@@ -37,9 +38,10 @@
             android:layout_below="@+id/PubName"
             android:layout_toLeftOf="@id/PubDistance"
             android:layout_toRightOf="@+id/beerlogo"
-            android:paddingBottom="16dp"
+            android:paddingBottom="8dp"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:text="Unknown"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/PubDistance"
@@ -48,8 +50,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:textStyle="bold"
-            android:textSize="22sp"
-            android:layout_margin="20dp"/>
+            android:textSize="11sp"
+            android:layout_margin="10dp"/>
 
     </RelativeLayout>
 

@@ -1,39 +1,26 @@
 package fagagy.szeged.hu.szegednight.pages;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
@@ -42,7 +29,7 @@ public class FragmentMap extends Fragment {
 
     public MapView mMapView;
     public GoogleMap googleMap;
-    public static final String TAG = "Térképnézet";
+    public static String TAG = "Mapview";
 
 
     public static FragmentMap newInstance(String type) {
@@ -64,9 +51,7 @@ public class FragmentMap extends Fragment {
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
         MapsInitializer.initialize(getContext());
-        if (MapsInitializer.initialize(getContext()) != ConnectionResult.SUCCESS) {
-            Log.e("map", "bazdmeg");
-        }
+        TAG = getContext().getResources().getString(R.string.MapView);
         setUpMarkers(type);
         return v;
     }

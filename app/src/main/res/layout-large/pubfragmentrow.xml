@@ -28,6 +28,7 @@
             android:layout_toRightOf="@+id/beerlogo"
             android:paddingTop="16dp"
             android:textStyle="bold"
+            android:text="Unknown"
             android:textSize="24sp" />
 
         <TextView
@@ -39,6 +40,7 @@
             android:layout_toRightOf="@+id/beerlogo"
             android:paddingBottom="16dp"
             android:textStyle="bold"
+            android:text="Unknown"
             android:textSize="18sp" />
 
         <TextView

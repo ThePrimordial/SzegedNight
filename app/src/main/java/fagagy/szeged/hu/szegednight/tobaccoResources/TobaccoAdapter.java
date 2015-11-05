@@ -2,8 +2,6 @@ package fagagy.szeged.hu.szegednight.tobaccoResources;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,19 +56,17 @@ public class TobaccoAdapter extends BaseAdapter {
         TextView tobaccoListDistanceText = (TextView) tobaccoView.findViewById(R.id.TobaccoDistance);
         TextView tobaccoListNameText = (TextView) tobaccoView.findViewById(R.id.TobaccoName);
         DecimalFormat numberFormat = new DecimalFormat("#.00");
-        Log.d("miafasz", "mikor nyit" + tobacco.getOpeningTime());
-        Log.d("miafasz", "mikro zár" + tobacco.getOpenUntil());
 
         if (tobacco.isOpen()) {
-            tobaccoListOpenText.setText("Nyitva! " + tobacco.getOpenUntil() + ".00-ig");
+            tobaccoListOpenText.setText(R.string.Open +"! " + tobacco.getOpenUntil() + ".00 " +R.string.till);
             tobaccoListOpenText.setTextColor(Color.GREEN);
         } else {
-            tobaccoListOpenText.setText("Zarva! (Nyitás:" + tobacco.getOpeningTime() + "0-kor)");
+            tobaccoListOpenText.setText(R.string.Closed+ "( " + R.string.Open + tobacco.getOpeningTime() + ".00)");
             tobaccoListOpenText.setTextColor(Color.RED);
         }
 
         if (tobacco.getDistance() == 0) {
-            tobaccoListDistanceText.setText("ismeretlen");
+            tobaccoListDistanceText.setText(R.string.Unknown);
         } else if (tobacco.getDistance() > 1) {
             tobaccoListDistanceText.setText(numberFormat.format(tobacco.getDistance()) + " km");
         } else {

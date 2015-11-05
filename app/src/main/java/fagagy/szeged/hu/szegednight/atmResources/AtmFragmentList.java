@@ -33,7 +33,7 @@ import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
  */
 public class AtmFragmentList extends ListFragment implements AdapterView.OnItemClickListener {
 
-    public static final String TAG = "ListaNézet";
+    public static String TAG = "Listanézet";
     private ArrayList<Atm> atmList = new ArrayList<>();
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
@@ -42,6 +42,7 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        TAG = getContext().getResources().getString(R.string.ListView);
         View v = View.inflate(getActivity(), R.layout.atmfragmentrow, null);
         lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locListener = new MyCurrentLocationListener();
@@ -74,7 +75,6 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
         }
 
         if (gpsLoc == null) {
-            Toast.makeText(getActivity(), "Nem érhető el a jelenlegi pozíció!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
@@ -95,7 +95,6 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
                 Atm a1 = new Atm(name, type, distance);
                 a1.setLatitude(latitude);
                 a1.setLongitude(longitude);
-                Log.d("atmtype", a1.getType());
                 atmList.add(a1);
             }
         }
@@ -112,7 +111,7 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         if (gpsLoc == null) {
-            Toast.makeText(getActivity(), "GPS koordináta nem elérhető", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.NoGPSpos, Toast.LENGTH_LONG).show();
         } else if (gpsLoc != null) {
             String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
                     "&daddr=" + atmList.get(position).getLatitude() + "," + atmList.get(position).getLongitude();

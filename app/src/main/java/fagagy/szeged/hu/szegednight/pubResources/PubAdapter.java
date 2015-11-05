@@ -60,17 +60,24 @@ public class PubAdapter extends BaseAdapter {
         if (pub.isOpen()) {
             pubListOpenText.setTextColor(Color.parseColor("#43a047"));
             if ((pub.getOpenUntil()).equals("0")) {
-                pubListOpenText.setText("Nyitva Éjfélig");
+                pubListOpenText.setText(R.string.OpenMidnight);
             } else {
-                pubListOpenText.setText("Nyitva! " + pub.getOpenUntil() + ".00-ig");
+                StringBuilder sb = new StringBuilder();
+                sb
+                        .append(pubView.getContext().getResources().getString(R.string.Open))
+                        .append(" ")
+                        .append(pubView.getContext().getResources().getString(R.string.Closing))
+                        .append(" ")
+                        .append(pub.getOpenUntil()).append(".00");
+                pubListOpenText.setText(sb);
             }
         } else {
-            pubListOpenText.setText("Zárva! :( ");
+            pubListOpenText.setText(R.string.Closed);
             pubListOpenText.setTextColor(Color.parseColor("#f44336"));
         }
 
         if (pub.getDistance() == 0) {
-            pubListDistanceText.setText("ismeretlen");
+            pubListDistanceText.setText(R.string.Unknown);
         } else if (pub.getDistance() > 1) {
             pubListDistanceText.setText(numberFormat.format(pub.getDistance()) + " km");
         } else {
@@ -79,16 +86,6 @@ public class PubAdapter extends BaseAdapter {
             pubListDistanceText.setText(intDistance + " m");
         }
         pubListNameText.setText(pub.getName());
-
-        if (pub.isSubscribed()) {
-            pubView.setBackgroundResource(R.drawable.subscribed_border_row);
-        }
-
-       /*if(position % 2 == 0){
-            pubView.setBackgroundResource(R.color.white);
-        }else
-            pubView.setBackgroundResource(R.color.material_gray200);*/
-
         return pubView;
     }
 }
