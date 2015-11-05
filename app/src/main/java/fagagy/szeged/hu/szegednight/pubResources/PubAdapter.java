@@ -80,10 +80,6 @@ public class PubAdapter extends BaseAdapter {
         }
         pubListNameText.setText(pub.getName());
 
-        if (pub.isSubscribed()) {
-            pubView.setBackgroundResource(R.drawable.subscribed_border_row);
-        }
-
        /*if(position % 2 == 0){
             pubView.setBackgroundResource(R.color.white);
         }else

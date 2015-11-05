@@ -14,12 +14,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +30,11 @@ import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
 
 public class LoadingScreenActivity extends Activity {
 
-    private ProgressDialog progressDialog;
     private LocationManager lm;
     private MyCurrentLocationListener locListener;
     private Location myLoc;
+    private Shimmer shimmer;
+    private ShimmerTextView shimmerText;
 
     //TODO GPS, Network enabling option
 
@@ -40,23 +42,17 @@ public class LoadingScreenActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.loading_screen);
+        shimmer = new Shimmer();
+        shimmerText = (ShimmerTextView) findViewById(R.id.shimmer_tv);
+        shimmer.start(shimmerText);
         new LoadViewTask().execute();
-
     }
 
     private class LoadViewTask extends AsyncTask<Void, Integer, Void> {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(LoadingScreenActivity.this);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setTitle("Töltés...");
-            progressDialog.setMessage("Adatbázis frissítés alatt, kis türelmet...");
-            progressDialog.setCancelable(false);
-            progressDialog.setIndeterminate(false);
-            progressDialog.setMax(100);
-            progressDialog.setProgress(0);
-            progressDialog.show();
 
             lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locListener = new MyCurrentLocationListener();
@@ -64,6 +60,7 @@ public class LoadingScreenActivity extends Activity {
                     LocationManager.GPS_PROVIDER, 5000, 50,
                     locListener);
             myLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
 
         }
 
@@ -95,21 +92,7 @@ public class LoadingScreenActivity extends Activity {
 
                 }
             }
-
-            try {
-                synchronized (this) {
-                    int counter = 0;
-                    while (counter <= 10) {
-                        this.wait(350);
-                        counter++;
-                        publishProgress(counter * 10);
-                    }
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-
-            }
-                return null;
+            return null;
         }
 
         @Override
@@ -117,19 +100,18 @@ public class LoadingScreenActivity extends Activity {
             if (!isNetworkAvailable()) {
                 Toast.makeText(LoadingScreenActivity.this, "Nincs Internetkapcsolat, adatbázis elavult lehet!", Toast.LENGTH_SHORT).show();
             }
-            progressDialog.setProgress(values[0]);
         }
 
         @Override
         protected void onPostExecute(Void result) {
-            progressDialog.dismiss();
             if (isNetworkAvailable()) {
                 Toast.makeText(getApplicationContext(), "Adatbázis frissítése megtörtént", Toast.LENGTH_LONG).show();
             }
-
+            shimmer.cancel();
             Intent i = new Intent();
             i.setClass(getApplicationContext(), StartingPage.class);
             startActivity(i);
+
         }
     }
 
@@ -144,10 +126,5 @@ public class LoadingScreenActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (lm != null) {
-            lm.removeUpdates(locListener);
-        }
-        if (progressDialog != null)
-            progressDialog.dismiss();
     }
 }

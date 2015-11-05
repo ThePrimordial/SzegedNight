@@ -21,6 +21,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +31,19 @@ import fagagy.szeged.hu.szegednight.pages.SubscribedViewGenerator;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CardViewHolder> {
 
-    //Nick: Kas
-
     private final List<String> identifiers;
     private Location location;
     private List<ParseObject> pubServerList = null;
     private List<ParseObject> subscribedServerList = null;
+    private ParseFile fileObject;
+    private SubscribedViewGenerator generator;
+    private View infoView;
+    private ImageView logo;
+    private TextView description;
+    private TextView actions;
+    private TextView openingHours;
+    private ImageButton facebook;
+    private ImageButton navigate;
 
     public RecyclerAdapter(List<String> identifiers) {
         this.identifiers = identifiers;
@@ -75,40 +83,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CardVi
     @Override
     public void onBindViewHolder(final CardViewHolder holder, final int position) {
 
-        final SubscribedViewGenerator generator = new SubscribedViewGenerator();
-        ParseFile fileObject = (ParseFile) subscribedServerList.get(position).get("Logo");
-        fileObject.getDataInBackground(new GetDataCallback() {
-            public void done(byte[] data, ParseException e) {
-                if (e == null) {
-                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    holder.logo.setImageBitmap(bmp);
-                    Log.e("bitmap", "done");
-                }
-            }
-        });
+        generator = new SubscribedViewGenerator();
+        fileObject = (ParseFile) subscribedServerList.get(position).get("Logo");
+        Picasso.with(holder.itemView.getContext()).load(fileObject.getUrl()).into(holder.logo);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                View infoView = View.inflate(v.getContext(), R.layout.subscriber_view, null);
-                final ImageView logo = (ImageView) infoView.findViewById(R.id.subscriber_logo);
-                TextView description = (TextView) infoView.findViewById(R.id.subscriber_description);
-                TextView actions = (TextView) infoView.findViewById(R.id.subscriber_actions);
-                TextView openingHours = (TextView) infoView.findViewById(R.id.subscriber_openinghours);
-                ImageButton facebook = (ImageButton) infoView.findViewById(R.id.btnFacebook);
-                ImageButton navigate = (ImageButton) infoView.findViewById(R.id.btnNavigate);
+                infoView = View.inflate(v.getContext(), R.layout.subscriber_view, null);
+                logo = (ImageView) infoView.findViewById(R.id.subscriber_logo);
+                description = (TextView) infoView.findViewById(R.id.subscriber_description);
+                actions = (TextView) infoView.findViewById(R.id.subscriber_actions);
+                openingHours = (TextView) infoView.findViewById(R.id.subscriber_openinghours);
+                facebook = (ImageButton) infoView.findViewById(R.id.btnFacebook);
+                navigate = (ImageButton) infoView.findViewById(R.id.btnNavigate);
 
                 final int pubRowNumber = generator.getPubRowNumber(pubServerList, identifiers.get(position));
                 final int subscriberRowNumber = generator.getSubscribedRowNumber(subscribedServerList, identifiers.get(position));
 
-                ParseFile fileObject = (ParseFile) subscribedServerList.get(position).get("Logo");
-                fileObject.getDataInBackground(new GetDataCallback() {
-                    public void done(byte[] data, ParseException e) {
-                        if (e == null) {
-                            Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                            logo.setImageBitmap(bmp);
-                            Log.e("bitmap", "done");
-                        }
-                    }
-                });
+                fileObject = (ParseFile) subscribedServerList.get(position).get("Logo");
+                Picasso.with(holder.itemView.getContext()).load(fileObject.getUrl()).into(logo);
+
                 description.setText(generator.generateDescription(subscribedServerList, subscriberRowNumber));
                 actions.setText(generator.generateOffers(subscribedServerList, subscriberRowNumber));
                 openingHours.setText(generator.generateOpeningHours(pubServerList, pubRowNumber));

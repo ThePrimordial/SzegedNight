@@ -33,19 +33,31 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
+        <com.github.jorgecastilloprz.FABProgressCircle
+            android:id="@+id/fabProgressCircle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="48dp"
             android:layout_gravity="bottom|end"
+            app:arcColor="@color/colorPrimary"
+            app:reusable="true"
+            app:finalIcon="@drawable/ic_done"
+            >
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:backgroundTint="@color/colorPrimary"
             app:pressedTranslationZ="12dp"
-            app:borderWidth="0dp"
             app:elevation="6dp"
             app:fabSize="normal"
+            app:borderWidth="0dp"
+            app:reusable="true"
             android:clickable="true"
             android:src="@drawable/ic_menu"/>
+
+        </com.github.jorgecastilloprz.FABProgressCircle>
 
     </android.support.design.widget.CoordinatorLayout>
 

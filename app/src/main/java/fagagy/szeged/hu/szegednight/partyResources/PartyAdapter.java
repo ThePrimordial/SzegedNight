@@ -2,8 +2,6 @@ package fagagy.szeged.hu.szegednight.partyResources;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,20 +120,9 @@ public class PartyAdapter extends BaseAdapter {
 
             partyPlaceText.setText(party.getPlace());
             partyEventText.setText(party.getEvent());
-            eventColorSetter(party.getEvent(), partyEventText);
 
             return partyView;
         }
     }
-
-    private void eventColorSetter(String event, TextView eventView) {
-
-        switch (event){
-            case "SZIN Nagyszínpad": eventView.setTextColor(context.getResources().getColor(R.color.fuchsia));break;
-            case "Live Arena": eventView.setTextColor(context.getResources().getColor(R.color.Tomato));break;
-            case "Mizo Színpad": eventView.setTextColor(context.getResources().getColor(R.color.Turquoise));break;
-            case "WakeUpSzeged PartyAréna": eventView.setTextColor(context.getResources().getColor(R.color.LightSteelBlue));break;
-            default:break;
-        }
     }
-}
+
