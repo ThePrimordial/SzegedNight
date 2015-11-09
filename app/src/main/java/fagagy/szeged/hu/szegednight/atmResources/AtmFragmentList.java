@@ -1,21 +1,16 @@
 package fagagy.szeged.hu.szegednight.atmResources;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -26,7 +21,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
-import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
+import fagagy.szeged.hu.szegednight.pages.LocationObserver;
 
 /**
  * Created by TheSorrow on 15/07/23.
@@ -35,21 +30,19 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
 
     public static String TAG = "Listanézet";
     private ArrayList<Atm> atmList = new ArrayList<>();
-    private LocationManager lm;
-    private MyCurrentLocationListener locListener;
-    private Location gpsLoc;
+    private LocationObserver observer;
+    private Location myLoc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         TAG = getContext().getResources().getString(R.string.ListView);
         View v = View.inflate(getActivity(), R.layout.atmfragmentrow, null);
-        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locListener = new MyCurrentLocationListener();
-        lm.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 20000, 50,
-                locListener);
-        gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        observer = new LocationObserver(v.getContext(), 20000, 50, 30000);
+        observer.start();
+        myLoc = observer.getLastKnownLocation();
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -74,7 +67,7 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
         } catch (ParseException e1) {
         }
 
-        if (gpsLoc == null) {
+        if (myLoc == null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
@@ -90,7 +83,7 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
                 double latitude = serverList.get(i).getDouble("Latitude");
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
-                double distance = gpsLoc.distanceTo(targetLocation) / 1000;
+                double distance = myLoc.distanceTo(targetLocation) / 1000;
                 String type = serverList.get(i).getString("Type");
                 Atm a1 = new Atm(name, type, distance);
                 a1.setLatitude(latitude);
@@ -110,10 +103,10 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if (gpsLoc == null) {
-            Toast.makeText(getActivity(), R.string.NoGPSpos, Toast.LENGTH_LONG).show();
-        } else if (gpsLoc != null) {
-            String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+        if (myLoc == null) {
+            Toast.makeText(getActivity(), R.string.NoAvaibleLoc, Toast.LENGTH_LONG).show();
+        } else if (myLoc != null) {
+            String uri = "http://maps.google.com/maps?saddr=" + myLoc.getLatitude() + "," + myLoc.getLongitude() +
                     "&daddr=" + atmList.get(position).getLatitude() + "," + atmList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
@@ -123,9 +116,5 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
     @Override
     public void onPause() {
         super.onPause();
-        if (lm != null) {
-            lm.removeUpdates(locListener);
-        }
     }
-
 }

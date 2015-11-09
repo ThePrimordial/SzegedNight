@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/beerlogo"
+            android:id="@+id/iw_side_picture"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
@@ -21,28 +21,28 @@
             android:src="@drawable/beer_jar" />
 
         <TextView
-            android:id="@+id/PubName"
+            android:id="@+id/tw_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/PubDistance"
-            android:layout_toRightOf="@+id/beerlogo"
+            android:layout_toLeftOf="@+id/tw_Distance"
+            android:layout_toRightOf="@+id/iw_side_picture"
             android:paddingTop="16dp"
             android:textStyle="bold"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/PubOpen"
+            android:id="@+id/tw_Open"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/PubName"
-            android:layout_toLeftOf="@id/PubDistance"
-            android:layout_toRightOf="@+id/beerlogo"
+            android:layout_below="@+id/tw_Name"
+            android:layout_toLeftOf="@id/tw_Distance"
+            android:layout_toRightOf="@+id/iw_side_picture"
             android:paddingBottom="16dp"
             android:textStyle="bold"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/PubDistance"
+            android:id="@+id/tw_Distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

@@ -91,7 +91,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CardVi
                 openingHours = (TextView) infoView.findViewById(R.id.tw_subscriber_openinghours);
                 facebook = (ImageButton) infoView.findViewById(R.id.btnFacebook);
                 navigate = (ImageButton) infoView.findViewById(R.id.btnNavigate);
-                distance = (TextView) infoView.findViewById(R.id.twDistance);
+                distance = (TextView) infoView.findViewById(R.id.tw_subscriber_distance);
 
                 final int pubRowNumber = generator.getPubRowNumber(pubServerList, identifiers.get(position));
                 final int subscriberRowNumber = generator.getSubscribedRowNumber(subscribedServerList, identifiers.get(position));
@@ -101,11 +101,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CardVi
 
                 description.setText(generator.generateDescription(subscribedServerList, subscriberRowNumber));
                 actions.setText(generator.generateOffers(subscribedServerList, subscriberRowNumber));
-                openingHours.setText(generator.generateOpeningHours(pubServerList, pubRowNumber));
+                openingHours.setText(generator.generateOpeningHours(pubServerList, pubRowNumber, holder.itemView.getContext()));
                 generator.generateButtonActions(pubServerList, subscribedServerList, facebook, navigate,
                         pubRowNumber, subscriberRowNumber, location);
-                //TODO fix targetLOC
-                //distance.setText(generator.generateDistance(pubServerList, pubRowNumber, location));
+                distance.setText(generator.generateDistance(pubServerList, pubRowNumber, holder.itemView.getContext()));
 
                 new AlertDialog.Builder(v.getContext())
                         .setTitle(identifiers.get(position))

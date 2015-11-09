@@ -2,13 +2,11 @@ package fagagy.szeged.hu.szegednight.pages;
 
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,9 +25,10 @@ import fagagy.szeged.hu.szegednight.R;
 
 public class FragmentMap extends Fragment {
 
-    public MapView mMapView;
-    public GoogleMap googleMap;
+    private MapView mMapView;
+    private GoogleMap googleMap;
     public static String TAG = "Mapview";
+    private Location location;
 
 
     public static FragmentMap newInstance(String type) {
@@ -52,7 +51,7 @@ public class FragmentMap extends Fragment {
         mMapView.onResume();
         MapsInitializer.initialize(getContext());
         TAG = getContext().getResources().getString(R.string.MapView);
-        setUpMarkers(type);
+        setUpMarkers(type, v.getContext());
         return v;
     }
 
@@ -81,7 +80,7 @@ public class FragmentMap extends Fragment {
     }
 
 
-    private void setUpMarkers(String type) {
+    private void setUpMarkers(String type, Context context) {
         googleMap = mMapView.getMap();
         List<ParseObject> serverList = null;
         ParseQuery<ParseObject> query = ParseQuery.getQuery(type);
@@ -106,9 +105,9 @@ public class FragmentMap extends Fragment {
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(46.253010, 20.141425), 14);
         googleMap.animateCamera(cameraUpdate);
 
-        LocationManager mng = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        MyCurrentLocationListener listener = new MyCurrentLocationListener();
-        Location location = getLocation(mng, listener);
+        LocationObserver observer = new LocationObserver(context, 20000, 50, 30000);
+        observer.start();
+        location = observer.getLastKnownLocation();
 
         if (location != null) {
             double myLat = location.getLatitude();
@@ -117,33 +116,9 @@ public class FragmentMap extends Fragment {
                     new LatLng(myLat, myLong)).title("Saját Pozíció");
             googleMap.addMarker(marker).showInfoWindow();
 
-
             cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLong), 15);
             googleMap.animateCamera(cameraUpdate);
         }
     }
 
-    private Location getLocation(LocationManager locationManager, MyCurrentLocationListener listener) {
-
-        Location location = null;
-
-        try {
-
-            boolean isGPSEnabled = locationManager
-                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-            if (!isGPSEnabled) {
-                Toast.makeText(getActivity(), "Nincs internet vagy GPS pozíció", Toast.LENGTH_LONG).show();
-            } else if (location == null) {
-                locationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER, 20000, 50, listener);
-                if (locationManager != null) {
-                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return location;
-    }
 }

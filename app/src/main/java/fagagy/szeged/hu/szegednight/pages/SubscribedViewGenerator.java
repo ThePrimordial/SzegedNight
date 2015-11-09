@@ -1,5 +1,6 @@
 package fagagy.szeged.hu.szegednight.pages;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -20,6 +21,9 @@ import fagagy.szeged.hu.szegednight.R;
 
 public class SubscribedViewGenerator {
 
+    LocationObserver observer;
+    Location myLoc;
+
     public void generateButtonActions(final List<ParseObject> pubServerList, final List<ParseObject> subscribedServerList,
                                       final ImageButton facebookButton, final ImageButton navigateButton,
                                       final int pubRowNumber, final int subscribedRowNumber, final Location location) {
@@ -34,7 +38,7 @@ public class SubscribedViewGenerator {
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
                     v.getContext().startActivity(i);
                 }else{
-                    Toast.makeText(v.getContext(), R.string.NoGPSpos, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), R.string.NoAvaibleLoc, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -72,7 +76,9 @@ public class SubscribedViewGenerator {
 
 
     public StringBuilder generateOffers(List<ParseObject> subscribedServerList, final int subscribedRowNumber) {
+
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < subscribedServerList.get(subscribedRowNumber).getJSONArray("Offers").length(); i++) {
             try {
                 sb.append(subscribedServerList.get(subscribedRowNumber).getJSONArray("Offers").get(i).toString());
@@ -90,77 +96,78 @@ public class SubscribedViewGenerator {
         return subscribedServerList.get(subscribedRowNumber).getString("Description");
     }
 
-    public String generateDistance(List<ParseObject> pubServerList, final int pubRowNumber, final Location myloc){
-        double distance = 0;
-        Location pubLocation = new Location("");
-        double longitude = pubServerList.get(pubRowNumber).getDouble("longitude");
-        double latitude = pubServerList.get(pubRowNumber).getDouble("latitude");
-        pubLocation.setLatitude(latitude);
-        pubLocation.setLongitude(longitude);
+    public String generateDistance(List<ParseObject> pubServerList, final int pubRowNumber, Context context){
 
-        distance = myloc.distanceTo(pubLocation);
-        String dist = "";
+        double longitude = pubServerList.get(pubRowNumber).getDouble("Longitude");
+        double latitude = pubServerList.get(pubRowNumber).getDouble("Latitude");
+        float[]results = new float[1];
+        String returnedValue;
         DecimalFormat numberFormat = new DecimalFormat("#.00");
-        if(distance >= 1){
-            dist = numberFormat.format(distance) + " km";
-        }else
-            dist = distance * 1000 + " m";
 
-        return dist ;
+        observer = new LocationObserver(context, 20000, 50, 30000);
+        observer.start();
+        myLoc = observer.getLastKnownLocation();
+
+        Location.distanceBetween(latitude, longitude, myLoc.getLatitude(), myLoc.getLongitude(), results);
+
+        if(results[0] >= 1000){
+            returnedValue = numberFormat.format(results[0]/1000) + " km";
+        }else
+            returnedValue = String.format("%d", (long)results[0]) + " m";
+
+        return returnedValue ;
     }
 
-    public StringBuilder generateOpeningHours(List<ParseObject> pubServerList, final int pubRowNumber) {
-
+    public StringBuilder generateOpeningHours(List<ParseObject> pubServerList, final int pubRowNumber, Context context) {
         StringBuilder sb = new StringBuilder();
-
         try {
-            sb.append(R.string.OpeningHours);
+            sb.append(context.getResources().getString(R.string.OpeningHours));
             sb.append('\n');
-            sb.append(R.string.Monday + ": ");
+            sb.append(context.getResources().getString(R.string.Monday) + ": ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Monday").get(0)));
             sb.append(".00");
             sb.append(" - ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Monday").get(1)));
             sb.append(".00");
             sb.append('\n');
-            sb.append(R.string.Tuesday + ": ");
+            sb.append(context.getResources().getString(R.string.Tuesday) + ": ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Tuesday").get(0)));
             sb.append(".00");
             sb.append(" - ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Tuesday").get(1)));
             sb.append(".00");
             sb.append('\n');
-            sb.append(R.string.Wednesday + ": ");
+            sb.append(context.getResources().getString(R.string.Wednesday) + ": ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Wednesday").get(0)));
             sb.append(".00");
             sb.append(" - ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Wednesday").get(1)));
             sb.append(".00");
             sb.append('\n');
-            sb.append(R.string.Thursday + ": ");
+            sb.append(context.getResources().getString(R.string.Thursday) + ": ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Thursday").get(0)));
             sb.append(".00");
             sb.append(" - ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Thursday").get(1)));
             sb.append(".00");
             sb.append('\n');
-            sb.append(R.string.Friday + ": ");
+            sb.append(context.getResources().getString(R.string.Friday) + ": ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Friday").get(0)));
             sb.append(".00");
             sb.append(" - ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Friday").get(1)));
             sb.append(".00");
             sb.append('\n');
-            sb.append(R.string.Saturday + ": ");
+            sb.append(context.getResources().getString(R.string.Saturday) + ": ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Saturday").get(0)));
             sb.append(".00");
             sb.append(" - ");
             sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Saturday").get(1)));
             sb.append(".00");
             sb.append('\n');
-            sb.append(R.string.Sunday + ": ");
+            sb.append(context.getResources().getString(R.string.Sunday) + ": ");
             if ((pubServerList.get(pubRowNumber).getJSONArray("Sunday").get(0)).equals(pubServerList.get(pubRowNumber).getJSONArray("Sunday").get(1)))
-                sb.append(R.string.Closed);
+                sb.append(context.getResources().getString(R.string.Closed));
             else {
                 sb.append(String.valueOf(pubServerList.get(pubRowNumber).getJSONArray("Sunday").get(0)));
                 sb.append(".00");

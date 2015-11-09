@@ -1,15 +1,10 @@
 package fagagy.szeged.hu.szegednight.pubResources;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
-import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
-import fagagy.szeged.hu.szegednight.pages.SubscribedViewGenerator;
+import fagagy.szeged.hu.szegednight.pages.LocationObserver;
 
 /**
  * Created by TheSorrow on 15/07/20.
@@ -41,9 +35,8 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
 
     public static String TAG = "ListView";
     private ArrayList<Pub> pubList = new ArrayList<>();
-    private LocationManager lm;
-    private MyCurrentLocationListener locListener;
-    private Location gpsLoc;
+    private LocationObserver observer;
+    private Location myLoc;
     private Date date;
     private Calendar calendar;
 
@@ -52,13 +45,9 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
 
         View v = View.inflate(getActivity(), R.layout.pubfragmentrow, null);
         TAG = getContext().getResources().getString(R.string.ListView);
-        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locListener = new MyCurrentLocationListener();
-        lm.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 20000, 50,
-                locListener);
-        gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
+        observer = new LocationObserver(v.getContext(), 20000, 50, 30000);
+        observer.start();
+        myLoc = observer.getLastKnownLocation();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -66,7 +55,6 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-
         date = new Date();
         calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -75,6 +63,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         int currHour = calendar.get(Calendar.HOUR_OF_DAY);
         String sDay = getDay(day);
         generateRows(sDay, currHour);
+
         PubAdapter pubAdapter = new PubAdapter(getActivity(), pubList);
         setListAdapter(pubAdapter);
         registerForContextMenu(getListView());
@@ -111,7 +100,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
         } catch (ParseException ignored) {
         }
 
-        if (gpsLoc == null) {
+        if (myLoc == null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
@@ -127,7 +116,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
                     pubList.add(p1);
                 }
             }
-        } else if (gpsLoc != null) {
+        } else if (myLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
@@ -135,7 +124,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
                 double latitude = serverList.get(i).getDouble("Latitude");
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
-                double distance = gpsLoc.distanceTo(targetLocation) / 1000;
+                double distance = myLoc.distanceTo(targetLocation) / 1000;
                 boolean open = checkOpen(serverList, day, currHour, i);
                 boolean subscribed = serverList.get(i).getBoolean("Subscribed");
                 String openUntil = getOpenUntil(serverList, day, currHour, i);
@@ -208,10 +197,10 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            if (gpsLoc == null) {
-                Toast.makeText(getActivity(), R.string.NoGPSpos, Toast.LENGTH_LONG).show();
-            } else if (gpsLoc != null) {
-                String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+            if (myLoc == null) {
+                Toast.makeText(getActivity(), R.string.NoAvaibleLoc, Toast.LENGTH_LONG).show();
+            } else if (myLoc != null) {
+                String uri = "http://maps.google.com/maps?saddr=" + myLoc.getLatitude() + "," + myLoc.getLongitude() +
                         "&daddr=" + pubList.get(position).getLatitude() + "," + pubList.get(position).getLongitude();
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(i);
@@ -221,9 +210,6 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     @Override
     public void onPause() {
         super.onPause();
-        if (lm != null) {
-            lm.removeUpdates(locListener);
-        }
     }
 
     @Override

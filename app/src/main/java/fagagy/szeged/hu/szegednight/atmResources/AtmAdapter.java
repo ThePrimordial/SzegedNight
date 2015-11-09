@@ -1,6 +1,7 @@
 package fagagy.szeged.hu.szegednight.atmResources;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,13 +50,14 @@ public class AtmAdapter extends BaseAdapter {
 
         final Atm atm = atmList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View atmView = inflater.inflate(R.layout.atmfragmentrow, null);
+        CardView cView = (CardView) inflater.inflate(R.layout.pubfragmentrow, parent, false);
 
-        TextView atmListNameText = (TextView) atmView.findViewById(R.id.AtmName);
-        TextView atmistDistanceText = (TextView) atmView.findViewById(R.id.AtmDistance);
+        TextView atmName = (TextView) cView.findViewById(R.id.tw_Name);
+        TextView atmDistance = (TextView) cView.findViewById(R.id.tw_Distance);
+        TextView atmOpen = (TextView) cView.findViewById(R.id.tw_Open);
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
-        ImageView logo = (ImageView) atmView.findViewById(R.id.typeImage);
+        ImageView logo = (ImageView) cView.findViewById(R.id.iw_side_picture);
         switch (atm.getType()) {
             case "bb":logo.setImageResource(R.drawable.bb_logo_w);
                 break;
@@ -75,17 +77,22 @@ public class AtmAdapter extends BaseAdapter {
                 break;
         }
         if(atm.getDistance() == 0){
-            atmistDistanceText.setText(R.string.Unknown);
+            atmDistance.setText(R.string.Unknown);
         }else if (atm.getDistance() > 1) {
-            atmistDistanceText.setText(numberFormat.format(atm.getDistance()) + " km");
+            atmDistance.setText(numberFormat.format(atm.getDistance()) + " km");
         } else {
             double dist = atm.getDistance() * 1000;
             int intDistance = (int) dist;
-            atmistDistanceText.setText(intDistance + " m");
+            atmDistance.setText(intDistance + " m");
         }
-        atmListNameText.setText(atm.getName());
+        String name = atm.getName();
+        int iend= name.indexOf(" ");
+        String subName = name.substring(0, iend);
+        atmName.setText(subName);
 
+        subName = name.substring(iend+3, name.length());
+        atmOpen.setText(subName);
 
-        return atmView;
+        return cView;
     }
 }

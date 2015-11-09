@@ -10,7 +10,7 @@
     <string name="Unknown">Ismeretlen</string>
     <string name="MapView">Térképnézet</string>
     <string name="ListView">Listanézet</string>
-    <string name="NoGPSpos">Nincs elérhető GPS pozíció!</string>
+    <string name="NoAvaibleLoc">Nincs elérhető pozíció!</string>
     <string name="OpeningHours">Nyitvatartás:</string>
     <string name="Monday">Hétfő</string>
     <string name="Tuesday">Kedd</string>
@@ -26,8 +26,10 @@
     <string name="SuccesfulDatabaseUpdate">Adatbázis frissítése megtörtént!</string>
     <string name="Pubs">Kocsmák</string>
     <string name="Restaurants">Kajáldák</string>
+    <string name="Events">Események</string>
     <string name="TobaccoShops">Dohányboltok</string>
     <string name="CashMachine">Bankautomaták</string>
     <string name="Other">Egyéb</string>
+    <string name="Unknown_distance">Ismeretlen távolság</string>
 
 </resources>

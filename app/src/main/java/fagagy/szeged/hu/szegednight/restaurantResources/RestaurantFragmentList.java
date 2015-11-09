@@ -1,13 +1,10 @@
 package fagagy.szeged.hu.szegednight.restaurantResources;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,26 +26,22 @@ import java.util.Date;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
-import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
+import fagagy.szeged.hu.szegednight.pages.LocationObserver;
 
 public class RestaurantFragmentList extends ListFragment implements OnItemClickListener {
 
     ArrayList<Restaurant> resList = new ArrayList<>();
-    private LocationManager lm;
-    private MyCurrentLocationListener locListener;
-    private Location gpsLoc;
+    private LocationObserver observer;
+    private Location myLoc;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = View.inflate(getActivity(), R.layout.restaurantfragmentrow, null);
-        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locListener = new MyCurrentLocationListener();
-        lm.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 20000, 50,
-                locListener);
-        gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        observer = new LocationObserver(v.getContext(), 20000, 50, 30000);
+        observer.start();
+        myLoc = observer.getLastKnownLocation();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -100,7 +93,7 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
         } catch (ParseException e1) {
         }
 
-        if (gpsLoc == null) {
+        if (myLoc == null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
@@ -114,7 +107,7 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
                     resList.add(r1);
                 }
             }
-        } else if (gpsLoc != null) {
+        } else if (myLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
@@ -122,7 +115,7 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
                 double latitude = serverList.get(i).getDouble("Latitude");
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
-                double distance = gpsLoc.distanceTo(targetLocation) / 1000;
+                double distance = myLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = checkOpen(serverList, day, currHour, i);
                 String openUntil = getOpenUntil(serverList, day, currHour, i);
                 if (!open) {
@@ -192,10 +185,10 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if (gpsLoc == null) {
-            Toast.makeText(getActivity(), R.string.NoGPSpos, Toast.LENGTH_LONG).show();
-        } else if (gpsLoc != null) {
-           String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+        if (myLoc == null) {
+            Toast.makeText(getActivity(), R.string.NoAvaibleLoc, Toast.LENGTH_LONG).show();
+        } else {
+           String uri = "http://maps.google.com/maps?saddr=" + myLoc.getLatitude() + "," + myLoc.getLongitude() +
                     "&daddr=" + resList.get(position).getLatitude() + "," + resList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);

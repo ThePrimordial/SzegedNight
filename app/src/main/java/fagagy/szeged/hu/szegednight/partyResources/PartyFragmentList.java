@@ -1,9 +1,7 @@
 package fagagy.szeged.hu.szegednight.partyResources;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -24,30 +22,26 @@ import java.util.Date;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
-import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
+import fagagy.szeged.hu.szegednight.pages.LocationObserver;
 
 /**
  * Created by TheSorrow on 15/07/28.
  */
-public class PartyFragmentList extends ListFragment implements AdapterView.OnItemClickListener  {
+public class PartyFragmentList extends ListFragment implements AdapterView.OnItemClickListener {
 
     public static String TAG = "Események";
     private ArrayList<Party> partyList = new ArrayList<>();
-    private LocationManager lm;
-    private MyCurrentLocationListener locListener;
-    private Location gpsLoc;
+    private LocationObserver observer;
+    private Location myLoc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         TAG = getContext().getResources().getString(R.string.ListView);
         View v = View.inflate(getActivity(), R.layout.partyfragmentrow, null);
-        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locListener = new MyCurrentLocationListener();
-        lm.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 20000, 50,
-                locListener);
-        gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        observer = new LocationObserver(v.getContext(), 20000, 50, 30000);
+        observer.start();
+        myLoc = observer.getLastKnownLocation();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -72,16 +66,16 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
         } catch (ParseException e1) {
         }
 
-        if (gpsLoc == null) {
+        if (myLoc == null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String place = serverList.get(i).getString("Place");
                 String event = serverList.get(i).getString("EventName");
                 Date date = serverList.get(i).getDate("Date");
-                double distance  = 0.00;
+                double distance = 0.00;
                 Party p1 = new Party(place, event, distance, date);
                 partyList.add(p1);
             }
-        } else if(gpsLoc != null) {
+        } else if (myLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String place = serverList.get(i).getString("Place");
                 String event = serverList.get(i).getString("EventName");
@@ -91,7 +85,7 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
                 double latitude = serverList.get(i).getDouble("Latitude");
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
-                double distance = gpsLoc.distanceTo(targetLocation) / 1000;
+                double distance = myLoc.distanceTo(targetLocation) / 1000;
                 Party p1 = new Party(place, event, distance, date);
                 partyList.add(p1);
             }
@@ -110,11 +104,11 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if (gpsLoc == null) {
-            Toast.makeText(getActivity(), R.string.NoGPSpos, Toast.LENGTH_LONG).show();
-        } else if (gpsLoc != null) {
-            String uri = "http://maps.google.com/maps?saddr="+gpsLoc.getLatitude()+","+gpsLoc.getLongitude()+
-                    "&daddr="+partyList.get(position).getLatitude()+","+partyList.get(position).getLongitude();
+        if (myLoc == null) {
+            Toast.makeText(getActivity(), R.string.NoAvaibleLoc, Toast.LENGTH_LONG).show();
+        } else if (myLoc != null) {
+            String uri = "http://maps.google.com/maps?saddr=" + myLoc.getLatitude() + "," + myLoc.getLongitude() +
+                    "&daddr=" + partyList.get(position).getLatitude() + "," + partyList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
             //Todo 0.00 0.000 a célkoordináta
@@ -124,8 +118,5 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
     @Override
     public void onPause() {
         super.onPause();
-        if (lm != null) {
-            lm.removeUpdates(locListener);
-        }
     }
 }

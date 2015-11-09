@@ -5,11 +5,8 @@ package fagagy.szeged.hu.szegednight.startingPageRescources;
  */
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -26,13 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
-import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
 
 public class LoadingScreenActivity extends Activity {
 
-    private LocationManager lm;
-    private MyCurrentLocationListener locListener;
-    private Location myLoc;
     private Shimmer shimmer;
     private ShimmerTextView shimmerText;
 
@@ -53,15 +46,6 @@ public class LoadingScreenActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-
-            lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locListener = new MyCurrentLocationListener();
-            lm.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 5000, 50,
-                    locListener);
-            myLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-
         }
 
         @Override
@@ -77,7 +61,6 @@ public class LoadingScreenActivity extends Activity {
                     whatToRefresh.add("ATM");
                     whatToRefresh.add("Tobacco");
                     whatToRefresh.add("Party");
-                    whatToRefresh.add("Shop");
                     whatToRefresh.add("Subscribed");
                     for (int i = 0; i < whatToRefresh.size(); i++) {
                         ParseQuery<ParseObject> query = ParseQuery.getQuery(whatToRefresh.get(i));

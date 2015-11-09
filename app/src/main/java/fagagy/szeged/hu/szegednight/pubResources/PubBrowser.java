@@ -23,9 +23,11 @@ import android.widget.TextView;
 import com.github.jorgecastilloprz.FABProgressCircle;
 
 import fagagy.szeged.hu.szegednight.R;
+import fagagy.szeged.hu.szegednight.atmResources.AtmBrowser;
 import fagagy.szeged.hu.szegednight.pages.FragmentAdapter;
 import fagagy.szeged.hu.szegednight.partyResources.PartyBrowser;
 import fagagy.szeged.hu.szegednight.restaurantResources.RestaurantBrowser;
+import fagagy.szeged.hu.szegednight.tobaccoResources.TobaccoBrowser;
 
 public class PubBrowser extends AppCompatActivity {
 
@@ -46,7 +48,7 @@ public class PubBrowser extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         pubFragmentRow = new PubFragmentList();
-        adapter = new FragmentAdapter(getSupportFragmentManager(), pubFragmentRow, "Pub");
+        adapter = new FragmentAdapter(fragmentManager, pubFragmentRow, "Pub");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -123,9 +125,15 @@ public class PubBrowser extends AppCompatActivity {
                 i.setClass(this, RestaurantBrowser.class);
                 startActivity(i);
                 break;
-            default:
-                i.setClass(this, PartyBrowser.class);
+            case R.id.nav_tobacco_fragment:
+                i.setClass(this, TobaccoBrowser.class);
                 startActivity(i);
+                break;
+            case R.id.nav_atm_fragment:
+                i.setClass(this, AtmBrowser.class);
+                startActivity(i);
+                break;
+            default:break;
         }
 
         // Highlight the selected item, update the title, and close the drawer

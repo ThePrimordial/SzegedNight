@@ -52,9 +52,9 @@ public class PubAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View pubView = inflater.inflate(R.layout.pubfragmentrow, null);
 
-        TextView pubListOpenText = (TextView) pubView.findViewById(R.id.PubOpen);
-        TextView pubListDistanceText = (TextView) pubView.findViewById(R.id.PubDistance);
-        TextView pubListNameText = (TextView) pubView.findViewById(R.id.PubName);
+        TextView pubListOpenText = (TextView) pubView.findViewById(R.id.tw_Open);
+        TextView pubListDistanceText = (TextView) pubView.findViewById(R.id.tw_Distance);
+        TextView pubListNameText = (TextView) pubView.findViewById(R.id.tw_Name);
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         if (pub.isOpen()) {

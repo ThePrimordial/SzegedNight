@@ -74,10 +74,10 @@
 
 
         <TextView
-            android:id="@+id/twDistance"
+            android:id="@+id/tw_subscriber_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="@string/Unknown_distance"
             android:textStyle="bold"
             android:textSize="26sp"
             android:paddingLeft="5dp"
@@ -101,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tw_subscriber_actions"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:gravity="center"
@@ -113,12 +113,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tw_subscriber_openinghours"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="---------------"
         android:gravity="center"
-        android:textStyle="bold"
         android:paddingBottom="15dp"
         />
 

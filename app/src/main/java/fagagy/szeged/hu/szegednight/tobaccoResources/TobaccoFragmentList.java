@@ -1,13 +1,10 @@
 package fagagy.szeged.hu.szegednight.tobaccoResources;
 
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import fagagy.szeged.hu.szegednight.R;
-import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
+import fagagy.szeged.hu.szegednight.pages.LocationObserver;
 
 /**
  * Created by TheSorrow on 15/07/27.
@@ -36,20 +33,16 @@ import fagagy.szeged.hu.szegednight.pages.MyCurrentLocationListener;
 public class TobaccoFragmentList extends ListFragment implements AdapterView.OnItemClickListener {
 
     private ArrayList<Tobacco> tobaccoList = new ArrayList<>();
-    private LocationManager lm;
-    private MyCurrentLocationListener locListener;
-    private Location gpsLoc;
+    private LocationObserver observer;
+    private Location myLoc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = View.inflate(getActivity(), R.layout.tobaccofragmentrow, null);
-        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locListener = new MyCurrentLocationListener();
-        lm.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 20000, 50,
-                locListener);
-        gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        observer = new LocationObserver(v.getContext(), 20000, 50, 30000);
+        observer.start();
+        myLoc = observer.getLastKnownLocation();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -102,7 +95,7 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
         } catch (ParseException e1) {
         }
 
-        if (gpsLoc == null) {
+        if (myLoc == null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 double distance = 0.00;
@@ -114,14 +107,14 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
                         Tobacco t1 = new Tobacco(name, false, distance, openingtime);
                         tobaccoList.add(t1);
                     } else {
-                        Tobacco t1 = new Tobacco(name,true,  distance, openUntil);
+                        Tobacco t1 = new Tobacco(name, true, distance, openUntil);
                         tobaccoList.add(t1);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        } else if (gpsLoc != null) {
+        } else if (myLoc != null) {
             for (int i = 0; i < serverList.size(); i++) {
                 String name = serverList.get(i).getString("Name");
                 Location targetLocation = new Location("");
@@ -129,7 +122,7 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
                 double latitude = serverList.get(i).getDouble("Latitude");
                 targetLocation.setLongitude(longitude);
                 targetLocation.setLatitude(latitude);
-                double distance = gpsLoc.distanceTo(targetLocation) / 1000;
+                double distance = myLoc.distanceTo(targetLocation) / 1000;
                 Boolean open = checkOpen(serverList, day, currHour, i);
                 try {
                     int openingtime = Integer.parseInt(String.valueOf(serverList.get(i).getJSONArray(day).get(0)));
@@ -138,7 +131,7 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
                         Tobacco t1 = new Tobacco(name, false, distance, openingtime);
                         tobaccoList.add(t1);
                     } else {
-                        Tobacco t1 = new Tobacco(name, true,  distance, openUntil);
+                        Tobacco t1 = new Tobacco(name, true, distance, openUntil);
                         tobaccoList.add(t1);
                     }
                 } catch (JSONException e) {
@@ -201,10 +194,10 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if (gpsLoc == null) {
-            Toast.makeText(getActivity(), R.string.NoGPSpos, Toast.LENGTH_LONG).show();
-        } else if (gpsLoc != null) {
-            String uri = "http://maps.google.com/maps?saddr=" + gpsLoc.getLatitude() + "," + gpsLoc.getLongitude() +
+        if (myLoc == null) {
+            Toast.makeText(getActivity(), R.string.NoAvaibleLoc, Toast.LENGTH_LONG).show();
+        } else if (myLoc != null) {
+            String uri = "http://maps.google.com/maps?saddr=" + myLoc.getLatitude() + "," + myLoc.getLongitude() +
                     "&daddr=" + tobaccoList.get(position).getLatitude() + "," + tobaccoList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
@@ -214,10 +207,5 @@ public class TobaccoFragmentList extends ListFragment implements AdapterView.OnI
     @Override
     public void onPause() {
         super.onPause();
-        if (lm != null) {
-            lm.removeUpdates(locListener);
-        }
     }
-
-
 }

@@ -10,7 +10,7 @@
     <string name="Unknown">Unknown</string>
     <string name="MapView">Mapview</string>
     <string name="ListView">Listview</string>
-    <string name="NoGPSpos">GPS position unavaible!</string>
+    <string name="NoAvaibleLoc">Unknown position!</string>
     <string name="OpeningHours">Nyitvatartás:</string>
     <string name="Monday">Monday</string>
     <string name="Tuesday">Tuesday</string>
@@ -30,5 +30,6 @@
     <string name="TobaccoShops">Tobacco Shops</string>
     <string name="CashMachine">Cash Machines</string>
     <string name="Other">Other options</string>
+    <string name="Unknown_distance">Unknown distance</string>
 
 </resources>
