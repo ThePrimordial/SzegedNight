@@ -87,6 +87,8 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
                 targetLocation.setLatitude(latitude);
                 double distance = myLoc.distanceTo(targetLocation) / 1000;
                 Party p1 = new Party(place, event, distance, date);
+                p1.setLongitude(longitude);
+                p1.setLatitude(latitude);
                 partyList.add(p1);
             }
         }
@@ -111,7 +113,6 @@ public class PartyFragmentList extends ListFragment implements AdapterView.OnIte
                     "&daddr=" + partyList.get(position).getLatitude() + "," + partyList.get(position).getLongitude();
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(i);
-            //Todo 0.00 0.000 a célkoordináta
         }
     }
 

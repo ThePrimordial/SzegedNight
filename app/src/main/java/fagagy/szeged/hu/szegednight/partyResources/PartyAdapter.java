@@ -2,6 +2,7 @@ package fagagy.szeged.hu.szegednight.partyResources;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,41 +51,39 @@ public class PartyAdapter extends BaseAdapter {
 
         final Party party = partyList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View partyView = inflater.inflate(R.layout.partyfragmentrow, null);
+        CardView cView = (CardView) inflater.inflate(R.layout.pubfragmentrow, parent, false);
 
-        TextView partyPlaceText = (TextView) partyView.findViewById(R.id.PartyPlace);
-        TextView partyEventText = (TextView) partyView.findViewById(R.id.PartyEvent);
-        TextView partyDateText = (TextView) partyView.findViewById(R.id.PartyDate);
-        TextView partyDistaceText = (TextView) partyView.findViewById(R.id.PartyDistance);
+        TextView partyPlaceDateText = (TextView) cView.findViewById(R.id.tw_Name);
+        TextView partyEventText = (TextView) cView.findViewById(R.id.tw_Open);
+        TextView partyDistanceText = (TextView) cView.findViewById(R.id.tw_Distance);
         Date now = new Date(System.currentTimeMillis());
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         DateFormat df2 = new SimpleDateFormat("MM-dd HH:mm");
         String formattedDate = df2.format(party.getDate());
-        partyDateText.setText(formattedDate);
 
         if (party.getDistance() == 0) {
-            partyDistaceText.setText(R.string.Unknown);
+            partyDistanceText.setText(R.string.Unknown);
         }
 
         if (party.getDistance() > 1) {
-            partyDistaceText.setText(numberFormat.format(party.getDistance()) + " km");
+            partyDistanceText.setText(numberFormat.format(party.getDistance()) + " km");
         } else if (party.getDistance() == 0 && party.getDate() == null) {
-            partyDistaceText.setText(null);
+            partyDistanceText.setText(null);
         } else {
             double dist = party.getDistance() * 1000;
             int intDistance = (int) dist;
-            partyDistaceText.setText(intDistance + " m");
+            partyDistanceText.setText(intDistance + " m");
         }
-        partyPlaceText.setText(party.getPlace());
+        partyPlaceDateText.setText(party.getPlace()+"  "+formattedDate);
         partyEventText.setText(party.getEvent());
 
         if (now.after(party.getDate())) {
-            partyDateText.setTextColor(Color.RED);
+            partyPlaceDateText.setTextColor(Color.parseColor("#f44336"));
         } else {
-            partyDateText.setTextColor(Color.GREEN);
+            partyPlaceDateText.setTextColor(Color.parseColor("#43a047"));
         }
-        return partyView;
+        return cView;
 
     }
 }

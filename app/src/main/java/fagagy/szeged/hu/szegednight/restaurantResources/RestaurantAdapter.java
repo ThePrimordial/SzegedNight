@@ -2,6 +2,7 @@ package fagagy.szeged.hu.szegednight.restaurantResources;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,19 +50,30 @@ public class RestaurantAdapter extends BaseAdapter {
 
         final Restaurant restaurant = restaurantsList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View resView = inflater.inflate(R.layout.restaurantfragmentrow, null);
+        CardView cView = (CardView) inflater.inflate(R.layout.pubfragmentrow, parent, false);
 
-        TextView resListOpenText = (TextView) resView.findViewById(R.id.RestaurantOpen);
-        TextView resListDistanceText = (TextView) resView.findViewById(R.id.RestaurantDistance);
-        TextView resListNameText = (TextView) resView.findViewById(R.id.RestaurantName);
+        TextView resListOpenText = (TextView) cView.findViewById(R.id.tw_Open);
+        TextView resListDistanceText = (TextView) cView.findViewById(R.id.tw_Distance);
+        TextView resListNameText = (TextView) cView.findViewById(R.id.tw_Name);
         DecimalFormat numberFormat = new DecimalFormat("#.00");
 
         if (restaurant.isOpen()) {
-            resListOpenText.setText(R.string.Open + "! " + restaurant.getOpenUntil() + ".00 " + R.string.till);
-            resListOpenText.setTextColor(Color.GREEN);
+            resListOpenText.setTextColor(Color.parseColor("#43a047"));
+            if ((restaurant.getOpenUntil()).equals("0")) {
+                resListOpenText.setText(R.string.OpenMidnight);
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb
+                        .append(cView.getContext().getResources().getString(R.string.Open))
+                        .append(" ")
+                        .append(cView.getContext().getResources().getString(R.string.Closing))
+                        .append(" ")
+                        .append(restaurant.getOpenUntil()).append(".00");
+                resListOpenText.setText(sb);
+            }
         } else {
             resListOpenText.setText(R.string.Closed);
-            resListOpenText.setTextColor(Color.RED);
+            resListOpenText.setTextColor(Color.parseColor("#f44336"));
         }
 
         if (restaurant.getDistance() == 0) {
@@ -75,7 +87,7 @@ public class RestaurantAdapter extends BaseAdapter {
         }
         resListNameText.setText(restaurant.getName());
 
-        return resView;
+        return cView;
     }
 
 }
