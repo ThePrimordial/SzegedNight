@@ -50,7 +50,7 @@ public class AtmAdapter extends BaseAdapter {
 
         final Atm atm = atmList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        CardView cView = (CardView) inflater.inflate(R.layout.pubfragmentrow, parent, false);
+        CardView cView = (CardView) inflater.inflate(R.layout.fragmentrow, parent, false);
 
         TextView atmName = (TextView) cView.findViewById(R.id.tw_Name);
         TextView atmDistance = (TextView) cView.findViewById(R.id.tw_Distance);

@@ -65,7 +65,6 @@ public class LocationObserver implements LocationListener {
 
         if (!gps_enabled && !network_enabled) {
 
-            Toast.makeText(context, R.string.NoAvaibleLoc, Toast.LENGTH_LONG).show();
         }
 
         else {
@@ -79,13 +78,6 @@ public class LocationObserver implements LocationListener {
                     lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                             minTime, minDistance, this);
 
-                }
-
-
-                else  {
-
-                    //ask the user to connect to any network ( Settings.ACTION_WIRELESS_SETTINGS)
-                    //TODO Dialog enable wifi gps or none
                 }
 
             }
@@ -171,7 +163,6 @@ public class LocationObserver implements LocationListener {
             return false;
         }
 
-        // Check whether the new location fix is more or less accurate
         int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
         boolean isLessAccurate = accuracyDelta > 0;
         boolean isMoreAccurate = accuracyDelta < 0;
@@ -190,7 +181,6 @@ public class LocationObserver implements LocationListener {
         return false;
     }
 
-    /** Checks whether two providers are the same */
     private boolean isSameProvider(String provider1, String provider2) {
         if (provider1 == null) {
             return provider2 == null;

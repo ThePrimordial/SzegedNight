@@ -1,7 +1,12 @@
 package fagagy.szeged.hu.szegednight.startingPageRescources;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -36,6 +42,7 @@ public class StartingPage extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
     private List<ParseObject> subscribedServerList = null;
+    private static boolean isGPSEnabledAsked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +50,20 @@ public class StartingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting_page_material);
 
+        if(!isGPSEnabledAsked) {
+            statusCheck();
+            isGPSEnabledAsked = true;
+        }
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Subscribed").fromLocalDatastore();
-
-
-        List <String> identifiers = new ArrayList<>();
+        List<String> identifiers = new ArrayList<>();
         identifiers.add("Cool Club");
         try {
             subscribedServerList = query.fromPin("Subscribed").find();
         } catch (ParseException ignored) {
         }
 
-        if(subscribedServerList.size() != 0) {
+        if (subscribedServerList.size() != 0) {
             identifiers.clear();
             for (int i = 0; i < subscribedServerList.size(); i++) {
                 identifiers.add(subscribedServerList.get(i).getString("Name"));
@@ -69,7 +78,7 @@ public class StartingPage extends AppCompatActivity {
 
         // Set the menu icon instead of the launcher icon.
         final ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ab.setHomeAsUpIndicator(R.drawable.home);
         ab.setDisplayHomeAsUpEnabled(true);
 
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
@@ -83,6 +92,9 @@ public class StartingPage extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
     }
+
+
+    //TODO start drawing after nav drawer sliding
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
@@ -135,7 +147,7 @@ public class StartingPage extends AppCompatActivity {
                         "<ul>\n" +
                         "    <li>\n" +
                         "        <p align=\"left\">\n" +
-                        "            GPS használata szükséges. Ha nincs bekapcsolva csak a nyitvatartást láthatod a távolságot nem, valamint " +
+                        "            GPS vagy Internet használata szükséges. Ha nincs bekapcsolva csak a nyitvatartást láthatod a távolságot nem, valamint " +
                         "ha megérintesz egy helyet nem fog tudni odavezetni." +
                         "\n" +
                         "        </p>\n" +
@@ -242,7 +254,7 @@ public class StartingPage extends AppCompatActivity {
                         "<ul>\n" +
                         "    <li>\n" +
                         "        <p align=\"left\">\n" +
-                        "            GPS használata szükséges. Ha nincs bekapcsolva csak a nyitvatartást láthatod a távolságot nem, valamint " +
+                        "            GPS vagy Internet használata szükséges. Ha nincs bekapcsolva csak a nyitvatartást láthatod a távolságot nem, valamint " +
                         "ha megérintesz egy helyet nem fog tudni odavezetni." +
                         "\n" +
                         "        </p>\n" +
@@ -303,9 +315,40 @@ public class StartingPage extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
                 startActivity(Intent.createChooser(intent, ""));
                 break;
-            default:break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void statusCheck() {
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }
+    }
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View infoView = View.inflate(this, R.layout.gpsenable, null);
+        TextView infoText = (TextView) infoView.findViewById(R.id.tw_Question);
+        builder.setCancelable(false)
+                .setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                })
+                .setView(infoView)
+                .setIcon(android.R.drawable.ic_dialog_alert);
+        infoText.setText(R.string.GpsEnableQuestion);
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
@@ -313,8 +356,24 @@ public class StartingPage extends AppCompatActivity {
         super.onPause();
     }
 
+    private Boolean exit = false;
+
     @Override
     public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, R.string.pressBackToExit,
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
+        }
     }
 }
 

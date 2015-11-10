@@ -50,7 +50,7 @@ public class PubAdapter extends BaseAdapter {
 
         final Pub pub = pubList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View pubView = inflater.inflate(R.layout.pubfragmentrow, null);
+        View pubView = inflater.inflate(R.layout.fragmentrow, null);
 
         TextView pubListOpenText = (TextView) pubView.findViewById(R.id.tw_Open);
         TextView pubListDistanceText = (TextView) pubView.findViewById(R.id.tw_Distance);

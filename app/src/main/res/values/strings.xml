@@ -4,6 +4,7 @@
     <string name="Open">Open! </string>
     <string name="Closed">Closed :(</string>
     <string name="Closing">Closing at: </string>
+    <string name="google_maps_debug_key">AIzaSyBDyIWOx2Z7zzZK6dY4bAmDv5S5dJYVR1o</string>
     <string name="google_maps_key">AIzaSyASp8Ijd9UXKT6wxhJ6qDQRG8aYGfXjBSE</string>
     <string name="Info">Info</string>
     <string name="Help">Ask for correction</string>
@@ -11,7 +12,7 @@
     <string name="MapView">Mapview</string>
     <string name="ListView">Listview</string>
     <string name="NoAvaibleLoc">Unknown position!</string>
-    <string name="OpeningHours">Nyitvatartás:</string>
+    <string name="OpeningHours">Opening hours</string>
     <string name="Monday">Monday</string>
     <string name="Tuesday">Tuesday</string>
     <string name="Wednesday">Wednesday</string>
@@ -31,5 +32,9 @@
     <string name="CashMachine">Cash Machines</string>
     <string name="Other">Other options</string>
     <string name="Unknown_distance">Unknown distance</string>
+    <string name="pressBackToExit">Press Back again to Exit.</string>
+    <string name="GpsEnableQuestion">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
 
 </resources>

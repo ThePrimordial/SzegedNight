@@ -50,7 +50,7 @@ public class RestaurantAdapter extends BaseAdapter {
 
         final Restaurant restaurant = restaurantsList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        CardView cView = (CardView) inflater.inflate(R.layout.pubfragmentrow, parent, false);
+        CardView cView = (CardView) inflater.inflate(R.layout.fragmentrow, parent, false);
 
         TextView resListOpenText = (TextView) cView.findViewById(R.id.tw_Open);
         TextView resListDistanceText = (TextView) cView.findViewById(R.id.tw_Distance);

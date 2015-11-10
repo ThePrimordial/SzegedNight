@@ -52,7 +52,7 @@ public class TobaccoAdapter extends BaseAdapter {
 
         final Tobacco tobacco = tobaccoList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        CardView cView = (CardView) inflater.inflate(R.layout.pubfragmentrow, parent, false);
+        CardView cView = (CardView) inflater.inflate(R.layout.fragmentrow, parent, false);
 
         TextView tobaccoListOpenText = (TextView) cView.findViewById(R.id.tw_Open);
         TextView tobaccoListDistanceText = (TextView) cView.findViewById(R.id.tw_Distance);

@@ -30,7 +30,6 @@ public class LoadingScreenActivity extends Activity {
     private ShimmerTextView shimmerText;
 
     //TODO GPS, Network enabling option
-    //TODO cant be parentactivity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,8 +51,10 @@ public class LoadingScreenActivity extends Activity {
                 Intent i = new Intent();
                 i.setClass(getApplicationContext(), StartingPage.class);
                 startActivity(i);
+                finish();
             }
-        }
+            }
+
 
             @Override
             protected Void doInBackground (Void...params){
@@ -79,19 +80,19 @@ public class LoadingScreenActivity extends Activity {
                 } catch (ParseException ignored) {
 
                 }
+
                 return null;
             }
 
 
         @Override
         protected void onPostExecute(Void result) {
-
             Toast.makeText(getApplicationContext(), R.string.SuccesfulDatabaseUpdate, Toast.LENGTH_LONG).show();
             shimmer.cancel();
             Intent i = new Intent();
             i.setClass(getApplicationContext(), StartingPage.class);
             startActivity(i);
-
+            finish();
         }
     }
 

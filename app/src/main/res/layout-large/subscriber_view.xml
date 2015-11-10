@@ -92,6 +92,7 @@
         android:text="Akciók:"
         android:paddingLeft="5dp"
         android:textSize="23sp"
+        android:gravity="center"
         android:textStyle="bold"
         android:paddingBottom="15dp"
         />

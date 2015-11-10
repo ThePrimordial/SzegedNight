@@ -51,7 +51,7 @@ public class PartyAdapter extends BaseAdapter {
 
         final Party party = partyList.get(position);
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        CardView cView = (CardView) inflater.inflate(R.layout.pubfragmentrow, parent, false);
+        CardView cView = (CardView) inflater.inflate(R.layout.fragmentrow, parent, false);
 
         TextView partyPlaceDateText = (TextView) cView.findViewById(R.id.tw_Name);
         TextView partyEventText = (TextView) cView.findViewById(R.id.tw_Open);

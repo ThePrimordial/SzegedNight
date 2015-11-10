@@ -4,6 +4,7 @@
     <string name="Open">Nyitva! </string>
     <string name="Closed">Zárva :(</string>
     <string name="Closing">Zárás: </string>
+    <string name="google_maps_debug_key">AIzaSyBDyIWOx2Z7zzZK6dY4bAmDv5S5dJYVR1o</string>
     <string name="google_maps_key">AIzaSyASp8Ijd9UXKT6wxhJ6qDQRG8aYGfXjBSE</string>
     <string name="Info">Info</string>
     <string name="Help">Javítás kérése</string>
@@ -31,5 +32,9 @@
     <string name="CashMachine">Bankautomaták</string>
     <string name="Other">Egyéb</string>
     <string name="Unknown_distance">Ismeretlen távolság</string>
+    <string name="pressBackToExit">Nyomd meg a nyilat még egyszer a kilépéshez!</string>
+    <string name="GpsEnableQuestion">Úgy látszik ki van kapcsolva a GPS-ed, szeretnéd aktiválni a pontosabb helymeghatározáshoz? (nagyobb akkumulátorhasználatot igényel)</string>
+    <string name="No">Nem</string>
+    <string name="Yes">Igen</string>
 
 </resources>

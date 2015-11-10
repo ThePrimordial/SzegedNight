@@ -33,31 +33,25 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
 
-        <com.github.jorgecastilloprz.FABProgressCircle
+        <view
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            class="mbanje.kurt.fabbutton.FabButton"
             android:id="@+id/fabProgressCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:layout_gravity="bottom|end"
-            app:arcColor="@color/colorPrimary"
-            app:reusable="true"
-            app:finalIcon="@drawable/ic_done"
-            >
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="@color/black"
-            app:pressedTranslationZ="12dp"
-            app:elevation="6dp"
-            app:fabSize="normal"
-            app:borderWidth="0dp"
-            app:reusable="true"
+            android:layout_gravity="bottom|right|end"
+            android:layout_margin="16dp"
+            android:color="@color/colorPrimary"
+            android:src="@drawable/refresh"
+            android:visibility="visible"
             android:clickable="true"
-            android:src="@drawable/refresh"/>
-
-        </com.github.jorgecastilloprz.FABProgressCircle>
+            android:max="100"
+            app:fbb_autoStart="true"
+            app:fbb_progressColor="@color/colorPrimary"
+            app:fbb_progressWidthRatio="0.1"
+            app:fbb_endBitmap="@drawable/ic_fab_complete"
+            app:fbb_showEndBitmap="true"
+            app:fbb_hideProgressOnComplete="true"
+            />
 
     </android.support.design.widget.CoordinatorLayout>
 

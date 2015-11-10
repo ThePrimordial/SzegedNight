@@ -43,7 +43,7 @@ public class PubFragmentList extends ListFragment implements OnItemClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = View.inflate(getActivity(), R.layout.pubfragmentrow, null);
+        View v = View.inflate(getActivity(), R.layout.fragmentrow, null);
         TAG = getContext().getResources().getString(R.string.ListView);
         observer = new LocationObserver(v.getContext(), 20000, 50, 30000);
         observer.start();

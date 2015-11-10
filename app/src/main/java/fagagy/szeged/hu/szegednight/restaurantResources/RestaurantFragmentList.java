@@ -38,7 +38,7 @@ public class RestaurantFragmentList extends ListFragment implements OnItemClickL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = View.inflate(getActivity(), R.layout.restaurantfragmentrow, null);
+        View v = View.inflate(getActivity(), R.layout.fragmentrow, null);
         observer = new LocationObserver(v.getContext(), 20000, 50, 30000);
         observer.start();
         myLoc = observer.getLastKnownLocation();

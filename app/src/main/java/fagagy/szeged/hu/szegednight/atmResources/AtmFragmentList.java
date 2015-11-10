@@ -37,7 +37,7 @@ public class AtmFragmentList extends ListFragment implements AdapterView.OnItemC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         TAG = getContext().getResources().getString(R.string.ListView);
-        View v = View.inflate(getActivity(), R.layout.atmfragmentrow, null);
+        View v = View.inflate(getActivity(), R.layout.fragmentrow, null);
 
         observer = new LocationObserver(v.getContext(), 20000, 50, 30000);
         observer.start();

@@ -94,6 +94,7 @@
         android:paddingLeft="5dp"
         android:textSize="26sp"
         android:textStyle="bold"
+        android:gravity="center"
         android:paddingBottom="15dp"
         />
 
