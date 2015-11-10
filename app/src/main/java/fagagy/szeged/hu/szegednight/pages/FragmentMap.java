@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,6 +31,7 @@ public class FragmentMap extends Fragment {
     private GoogleMap googleMap;
     public static String TAG = "Mapview";
     private Location location;
+    private boolean googlePlayServicesAvaible;
 
 
     public static FragmentMap newInstance(String type) {
@@ -102,22 +105,44 @@ public class FragmentMap extends Fragment {
             }
         }
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(46.253010, 20.141425), 14);
-        googleMap.animateCamera(cameraUpdate);
-
-        LocationObserver observer = new LocationObserver(context, 20000, 50, 30000);
-        observer.start();
-        location = observer.getLastKnownLocation();
-
-        if (location != null) {
-            double myLat = location.getLatitude();
-            double myLong = location.getLongitude();
-            MarkerOptions marker = new MarkerOptions().position(
-                    new LatLng(myLat, myLong)).title("Saját Pozíció");
-            googleMap.addMarker(marker).showInfoWindow();
-
-            cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLong), 15);
+        googlePlayServicesAvaible = checkGooglePlayServiceAvailability(getContext(), -1);
+        if (googlePlayServicesAvaible) {
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(46.253010, 20.141425), 14);
             googleMap.animateCamera(cameraUpdate);
+
+            LocationObserver observer = new LocationObserver(context, 20000, 50, 30000);
+            observer.start();
+            location = observer.getLastKnownLocation();
+
+            if (location != null) {
+                double myLat = location.getLatitude();
+                double myLong = location.getLongitude();
+                MarkerOptions marker = new MarkerOptions().position(
+                        new LatLng(myLat, myLong)).title("Saját Pozíció");
+                googleMap.addMarker(marker).showInfoWindow();
+
+                cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(myLat, myLong), 15);
+                googleMap.animateCamera(cameraUpdate);
+            }
+        } else {
+            if (location != null) {
+                double myLat = location.getLatitude();
+                double myLong = location.getLongitude();
+                MarkerOptions marker = new MarkerOptions().position(
+                        new LatLng(myLat, myLong)).title("Saját Pozíció");
+                googleMap.addMarker(marker).showInfoWindow();
+            }
+        }
+    }
+
+    public static boolean checkGooglePlayServiceAvailability(Context context, int versionCode) {
+
+        int statusCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
+        if ((statusCode == ConnectionResult.SUCCESS)
+                && (GooglePlayServicesUtil.GOOGLE_PLAY_SERVICES_VERSION_CODE >= versionCode)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
