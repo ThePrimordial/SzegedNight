@@ -46,11 +46,17 @@ public class LoadingScreenActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
+            if (!isNetworkAvailable()) {
+                Toast.makeText(getApplicationContext(), R.string.NoInternetConnection, Toast.LENGTH_LONG).show();
+                shimmer.cancel();
+                Intent i = new Intent();
+                i.setClass(getApplicationContext(), StartingPage.class);
+                startActivity(i);
+            }
         }
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            if (isNetworkAvailable()) {
+            @Override
+            protected Void doInBackground (Void...params){
                 try {
                     List<ParseObject> serverList;
                     List<ParseObject> deleteList;
@@ -73,22 +79,14 @@ public class LoadingScreenActivity extends Activity {
                 } catch (ParseException ignored) {
 
                 }
+                return null;
             }
-            return null;
-        }
 
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            if (!isNetworkAvailable()) {
-                Toast.makeText(LoadingScreenActivity.this, R.string.NoInternetConnection, Toast.LENGTH_SHORT).show();
-            }
-        }
 
         @Override
         protected void onPostExecute(Void result) {
-            if (isNetworkAvailable()) {
-                Toast.makeText(getApplicationContext(), R.string.SuccesfulDatabaseUpdate, Toast.LENGTH_LONG).show();
-            }
+
+            Toast.makeText(getApplicationContext(), R.string.SuccesfulDatabaseUpdate, Toast.LENGTH_LONG).show();
             shimmer.cancel();
             Intent i = new Intent();
             i.setClass(getApplicationContext(), StartingPage.class);

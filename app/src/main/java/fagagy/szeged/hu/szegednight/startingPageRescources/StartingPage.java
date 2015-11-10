@@ -312,5 +312,9 @@ public class StartingPage extends AppCompatActivity {
     public void onPause() {
         super.onPause();
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }
 

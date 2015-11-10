@@ -37,12 +37,12 @@
         <activity
             android:name=".startingPageRescources.StartingPage"
             android:screenOrientation="portrait"
-            android:label="SzegedNights">
+            android:label="@string/app_name">
         </activity>
         <activity
             android:name=".pubResources.PubBrowser"
             android:screenOrientation="portrait"
-            android:label="Kocsmák">
+            android:label="@string/Pubs">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".startingPageRescources.StartingPage" />
@@ -50,7 +50,7 @@
         <activity
             android:name=".restaurantResources.RestaurantBrowser"
             android:screenOrientation="portrait"
-            android:label="Gyorséttermek">
+            android:label="@string/Restaurants">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".startingPageRescources.StartingPage" />
@@ -58,7 +58,7 @@
         <activity
             android:name=".atmResources.AtmBrowser"
             android:screenOrientation="portrait"
-            android:label="Bankautomaták">
+            android:label="@string/CashMachine">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".startingPageRescources.StartingPage" />
@@ -66,7 +66,7 @@
         <activity
             android:name=".tobaccoResources.TobaccoBrowser"
             android:screenOrientation="portrait"
-            android:label="Dohányboltok">
+            android:label="@string/TobaccoShops">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".startingPageRescources.StartingPage" />
@@ -74,7 +74,7 @@
         <activity
             android:name=".partyResources.PartyBrowser"
             android:screenOrientation="portrait"
-            android:label="Parties">
+            android:label="@string/Events">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".startingPageRescources.StartingPage" />

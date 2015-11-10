@@ -108,14 +108,17 @@ public class SubscribedViewGenerator {
         observer.start();
         myLoc = observer.getLastKnownLocation();
 
-        Location.distanceBetween(latitude, longitude, myLoc.getLatitude(), myLoc.getLongitude(), results);
+        if(myLoc != null && latitude != 0.0 && longitude != 0.0) {
+            Location.distanceBetween(latitude, longitude, myLoc.getLatitude(), myLoc.getLongitude(), results);
+            if (results[0] >= 1000) {
+                returnedValue = numberFormat.format(results[0] / 1000) + " km";
+            } else
+                returnedValue = String.format("%d", (long) results[0]) + " m";
 
-        if(results[0] >= 1000){
-            returnedValue = numberFormat.format(results[0]/1000) + " km";
-        }else
-            returnedValue = String.format("%d", (long)results[0]) + " m";
+            return returnedValue;
+        }
 
-        return returnedValue ;
+        return context.getResources().getString(R.string.Unknown_distance);
     }
 
     public StringBuilder generateOpeningHours(List<ParseObject> pubServerList, final int pubRowNumber, Context context) {
